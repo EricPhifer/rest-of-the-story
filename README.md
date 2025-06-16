@@ -1,5 +1,15 @@
-# Vue 3 + Vite
+# Documentation Template
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Code base for a consignment shop in Elizabeth, CO.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Developer Notes
+
+Site developed with Vue 3 in Vite, TailwindCSS, Sanity CMS and GraphQL.
+
+## Pragmatic Principles
+
+These a the principles (taken from The Pragmatic Programmer by David Thomas & Andrew Hunt) that this website is built off of and I expect it will be an ongoing process of refinement.
+
+1. DRY: Don't Repeat Yourself
+2. ETC: Easier to Change
+3. Orthogonal Architecture
