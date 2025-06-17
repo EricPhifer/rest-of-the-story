@@ -2,6 +2,7 @@
 defineOptions({ 
   name: 'AboutPage',
 })
+myUndefinedFunction();
 </script>
 
 <template>
