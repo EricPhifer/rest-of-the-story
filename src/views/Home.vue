@@ -6,7 +6,8 @@ defineOptions({
 
 <template>
   <div class="home-page">
-    <h1>Welcome to the Home Page</h1>
-    <p>This is the main content area of the home page.</p>
+    <h1>Coming Soon!</h1>
+    <p>Welcome to The Rest of the Story Consignment</p>
+    <p>Located at 114 Tabor St in Elizabeth, CO</p>
   </div>
 </template>
