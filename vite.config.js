@@ -15,5 +15,12 @@ export default defineConfig({
 
   build: {
     sourcemap: true
-  }
+  }, 
+
+  resolve: {
+    alias: {
+      '@': '/src',
+      'vue': 'vue/dist/vue.esm-bundler.js'
+    }
+  },
 })

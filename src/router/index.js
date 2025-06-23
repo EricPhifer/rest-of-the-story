@@ -1,29 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import PageView from '@/views/PageView.vue'
 
 const routes = [
+
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue'),
+    redirect: '/home'
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
+    path: '/:slug(.*)*',
+    name: 'Page',
+    component: PageView
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
+    path: '/legal/:slug',
+    name: 'LegalPage',
+    component: () => import('../views/LegalPage.vue')
   },
   {
-    path: '/consign',
-    name: 'Consign',
-    component: () => import('../views/Consign.vue'),
+    path: '/blog/:slug',
+    name: 'BlogPost',
+    component: () => import('../views/BlogPost.vue')
   },
+  {
+    path: '/faq',
+    name: 'FaqPage',
+    component: () => import('../views/FaqPage.vue')
+  }
+
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })
