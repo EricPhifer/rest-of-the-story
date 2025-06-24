@@ -3,9 +3,18 @@ import groq from 'groq'
 
 const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0]{
-    primaryColor{hex},
-    secondaryColor{hex},
-    accentColor{hex}
+    whiteColor{hex},
+    offWhiteColor{hex},
+    blackColor{hex},
+    offBlackColor{hex},
+    primaryLightColor{hex},
+    primaryDarkColor{hex},
+    secondaryLightColor{hex},
+    secondaryDarkColor{hex},
+    alertLightColor{hex},
+    alertDarkColor{hex},
+    accentLightColor{hex},
+    accentDarkColor{hex}
   }
 `
 

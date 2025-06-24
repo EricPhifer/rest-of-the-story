@@ -1,6 +1,5 @@
 <script setup>
 import PortableText from '@portabletext/vue'
-import { defineProps } from 'vue'
 
 defineProps({
   block: {

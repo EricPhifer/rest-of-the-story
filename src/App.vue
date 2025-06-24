@@ -11,7 +11,7 @@
 <script setup>
   import { onMounted } from 'vue';
   import { client } from '@/sanity';
-  import { siteSettings } from '@/queries/siteSettings';
+  import { siteSettingsQuery } from '@/queries/siteSettings';
 
   // Import components
   import Map from './components/footer/main/Map.vue';
@@ -19,7 +19,7 @@
   import Copyright from './components/footer/copyright/Copyright.vue';
 
   onMounted(async () => {
-    const settings = await client.fetch(siteSettings)
+    const settings = await client.fetch(siteSettingsQuery)
     if (settings?.primaryColor?.hex) {
       document.documentElement.style.setProperty('--color-primary', settings.primaryColor.hex)
     }

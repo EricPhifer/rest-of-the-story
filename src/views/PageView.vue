@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import client from '@/sanity'
+import { client } from '@/sanity'
 import pageQuery from '@/queries/pages'
 
 import NotFound from '@/components/NotFound.vue'
