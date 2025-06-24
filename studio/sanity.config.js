@@ -1,7 +1,8 @@
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
+import { defineConfig } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { visionTool } from '@sanity/vision'
+import { schemaTypes } from './schemaTypes'
+import { colorInput } from '@sanity/color-input'
 import { muxInput } from 'sanity-plugin-mux-input'
 
 export default defineConfig({
@@ -11,7 +12,12 @@ export default defineConfig({
   projectId: 'xbjigamf',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool(), muxInput()],
+  plugins: [
+    structureTool(), 
+    visionTool(), 
+    muxInput(),
+    colorInput()
+  ],
 
   schema: {
     types: schemaTypes,

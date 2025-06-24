@@ -1,5 +1,5 @@
 export default {
-  name: 'threeSectionContent',
+  name: 'threeCardSection',
   type: 'object',
   title: 'Three Section Content',
   fields: [
@@ -47,10 +47,12 @@ export default {
                   type: 'string'
                 },
                 {
-                  name: 'url',
-                  title: 'Button URL',
-                  type: 'url'
-                }
+                  name: 'internalLink',
+                  title: 'Internal Link',
+                  type: 'reference',
+                  to: [{ type: 'page' }],
+                  description: 'Choose a page from your site.'
+                },
               ]
             }
           ]

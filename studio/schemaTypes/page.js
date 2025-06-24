@@ -31,6 +31,7 @@ export default {
         { type: 'textImageSection' },
         { type: 'threeCardSection' },
         { type: 'contactInfoSection' },
+        { type: 'contactCardSection' },
         { type: 'formSection' },
       ]
     }

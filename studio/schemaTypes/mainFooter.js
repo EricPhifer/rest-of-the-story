@@ -43,7 +43,13 @@ export default {
           type: 'object',
           fields: [
             { name: 'text', type: 'string', title: 'Text' },
-            { name: 'url', type: 'url', title: 'URL' }
+            {
+              name: 'internalLink',
+              title: 'Internal Link',
+              type: 'reference',
+              to: [{ type: 'page' }],
+              description: 'Choose a page from your site.'
+            },
           ]
         }
       ]

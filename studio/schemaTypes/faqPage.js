@@ -32,8 +32,9 @@ export default {
             },
             {
               name: 'answer',
-              type: 'text',
-              title: 'Answer'
+              title: 'Answer',
+              type: 'array',
+              of: [{ type: 'block' }]
             }
           ]
         }

@@ -33,10 +33,12 @@ export default {
           title: 'Button Text'
         },
         {
-          name: 'url',
-          type: 'url',
-          title: 'Link URL'
-        }
+          name: 'internalLink',
+          title: 'Internal Link',
+          type: 'reference',
+          to: [{ type: 'page' }],
+          description: 'Choose a page from your site.'
+        },
       ]
     }
   ],

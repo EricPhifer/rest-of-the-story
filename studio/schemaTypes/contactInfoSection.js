@@ -1,5 +1,5 @@
 export default {
-  name: 'contactInformationSection',
+  name: 'contactInfoSection',
   type: 'object',
   title: 'Contact Information Section',
   fields: [
