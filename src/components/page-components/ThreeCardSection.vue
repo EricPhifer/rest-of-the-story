@@ -28,7 +28,7 @@ defineProps({
           </div>
         </div>
         <h3 class="text-xl font-semibold mb-2">{{ card.heading }}</h3>
-        <div class="prose prose-sm max-w-none mb-4">
+        <div data-testid="body" class="prose prose-sm max-w-none mb-4">
           <PortableText :value="card.body" />
         </div>
         <a

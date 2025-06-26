@@ -1,7 +1,7 @@
 <!-- src/components/FormSection.vue -->
 <script setup>
 import { ref } from 'vue'
-import PortableText from '@portabletext/vue'
+import { PortableText } from '@portabletext/vue'
 
 const props = defineProps({
   block: Object
@@ -23,7 +23,10 @@ function handleSubmit() {
   <section class="my-12 px-4 max-w-4xl mx-auto">
     <div class="mb-6 text-center">
       <h2 class="text-3xl font-bold">{{ block.formTitle }}</h2>
-      <div v-if="block.formDescription" class="prose mx-auto mt-2">
+      <div 
+        v-if="block.formDescription" 
+        class="prose mx-auto mt-2"
+      >
         <PortableText :value="block.formDescription" />
       </div>
     </div>

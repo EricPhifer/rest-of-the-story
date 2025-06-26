@@ -11,7 +11,7 @@
 <script setup>
   import { onMounted } from 'vue';
   import { client } from '@/sanity';
-  import { siteSettingsQuery } from '@/queries/siteSettings';
+  import siteSettingsQuery from '@/queries/siteSettings';
 
   // Import components
   import Map from './components/footer/main/Map.vue';

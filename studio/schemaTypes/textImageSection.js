@@ -16,7 +16,13 @@ export default {
         hotspot: true // Enables image cropping
       }
     },
-      {
+    {
+      name: 'altText',
+      title: 'Alt Text for Image',
+      type: 'string',
+      description: 'Briefly describe the image for non-sighted users. This text will be used for accessibility purposes and when the image cannot be displayed.'
+    },
+    {
       name: 'imagePosition',
       type: 'string',
       title: 'Image Position',

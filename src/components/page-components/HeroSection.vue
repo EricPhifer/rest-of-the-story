@@ -1,7 +1,7 @@
 <script setup>
 import { PortableText } from '@portabletext/vue'
 
-defineProps({
+const { block } = defineProps({
   block: {
     type: Object,
     required: true

@@ -17,6 +17,7 @@ const pageQuery = groq`
             url
           }
         },
+        altText,
         button {
           text,
           url
@@ -38,6 +39,7 @@ const pageQuery = groq`
             url
           }
         },
+        altText,
         imagePosition
       }),
 

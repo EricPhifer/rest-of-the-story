@@ -1,3 +1,4 @@
+<!-- src/components/footer/main/Footer.vue -->
 <template>
   <footer class="bg-[#2C3E3F] text-white py-12">
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -5,7 +6,12 @@
       <!-- Left: Logo, Nav Links, Search -->
       <div>
         <router-link to="/" class="inline-block mb-4">
-          <img v-if="footer.main.logo" :src="footer.main.logo.asset.url" alt="Logo" class="h-16" />
+          <img
+            v-if="footer.main.logo?.asset?.url"
+            :src="footer.main.logo.asset.url"
+            alt="Logo"
+            class="h-16"
+          />
         </router-link>
         <nav class="space-x-4 mb-6">
           <router-link
@@ -66,7 +72,12 @@
         </a>
 
         <p class="font-semibold uppercase mb-2">Subscribe to our Newsletter</p>
-        <form :action="footer.main.newsletterForm.formAction" method="POST" target="_blank" class="flex">
+        <form
+          :action="footer.main.newsletterForm.formAction"
+          method="POST"
+          target="_blank"
+          class="flex"
+        >
           <input
             type="email"
             name="email"
@@ -89,16 +100,40 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { client } from '@/sanity'
-import footer from '@/queries/footer'
+import footerMainQuery from '@/queries/footer'
 import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
 
-const footerRef = ref({ 
- main: {}, 
- contact: {}, 
- social: [] 
+// Rename the ref to exactly "footer" so the template's `footer.xxx` works
+const footer = ref({
+  main: {
+    logo: null,
+    navLinks: [],
+    blogSection: {
+      heading: '',
+      body: '',
+      button: { text: '', url: '' }
+    },
+    // This was accidentally nested under blogSection before:
+    newsletterForm: {
+      placeholder: '',
+      buttonText: '',
+      formAction: ''
+    }
+  },
+  contact: {
+    address: '',
+    phone: '',
+    email: ''
+  },
+  social: []
 })
 
 onMounted(async () => {
-  footerRef.value = await client.fetch(footerMainQuery)
+  try {
+    const data = await client.fetch(footerMainQuery)
+    footer.value = data
+  } catch (err) {
+    console.error('Failed to load footer:', err)
+  }
 })
 </script>

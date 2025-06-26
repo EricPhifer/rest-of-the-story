@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { client } from '@/sanity'
 import pageQuery from '@/queries/pages'
 
+// Import components
 import NotFound from '@/components/NotFound.vue'
 import HeroSection from '@/components/page-components/HeroSection.vue'
 import TextSection from '@/components/page-components/TextSection.vue'
@@ -13,8 +14,8 @@ import ButtonSection from '@/components/page-components/ButtonSection.vue'
 import TextImageSection from '@/components/page-components/TextImageSection.vue'
 import ThreeCardSection from '@/components/page-components/ThreeCardSection.vue'
 import ContactInfoSection from '@/components/page-components/ContactInfoSection.vue'
-import contactCardSection from '@/components/page-components/ContactCardSection.vue'
-import formSection from '@/components/page-components/FormSection.vue'
+import ContactCardSection from '@/components/page-components/ContactCardSection.vue'
+import FormSection from '@/components/page-components/FormSection.vue'
 
 const route = useRoute()
 const page = ref(null)
@@ -31,8 +32,8 @@ function resolveComponent(type) {
     textImageSection: TextImageSection,
     threeCardSection: ThreeCardSection,
     contactInfoSection: ContactInfoSection,
-    contactCardSection: contactCardSection,
-    formSection: formSection,
+    contactCardSection: ContactCardSection,
+    formSection: FormSection,
   }[type] || null
 }
 

@@ -1,15 +1,15 @@
 <script setup>
-import PortableText from '@portabletext/vue'
+  import { PortableText } from '@portabletext/vue'
 
-defineProps({
-  block: {
-    type: Object,
-    required: true
-  }
-})
+  const { block } = defineProps({
+    block: {
+      type: Object,
+      required: true
+    }
+  })
 
-const imageUrl = block.image?.asset?.url
-const imagePosition = block.imagePosition || 'right'
+  const imageUrl = block.image?.asset?.url
+  const imagePosition = block.imagePosition || 'right'
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const imagePosition = block.imagePosition || 'right'
       <div v-if="imageUrl" class="w-full md:w-1/2">
         <img
           :src="imageUrl"
-          :alt="block.heading || 'Section image'"
+          :alt="block.altText || 'Section image'"
           class="rounded shadow max-w-full h-auto object-cover"
         />
       </div>

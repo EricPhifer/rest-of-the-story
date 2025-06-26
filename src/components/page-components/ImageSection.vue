@@ -1,15 +1,15 @@
 <!-- This component displays a full-width image section with a heading, body text, and a button. -->
 <script setup>
-import { PortableText } from '@portabletext/vue'
+  import { PortableText } from '@portabletext/vue'
 
-defineProps({
-  block: {
-    type: Object,
-    required: true
-  }
-})
+  const { block } = defineProps({
+    block: {
+      type: Object,
+      required: true
+    }
+  })
 
-const imageUrl = block.image?.asset?.url
+  const imageUrl = block.image?.asset?.url
 </script>
 
 <template>

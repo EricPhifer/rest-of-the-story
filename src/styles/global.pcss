@@ -1,11 +1,30 @@
 :root {
+  --color-white: var(--color-white, #FFFFFF);
+  --color-off-white: var(--color-off-white, #F7F3F0);
+  --color-black: var(--color-black, #231E20);
+  --color-off-black: var(--color-off-black, #283B3E);
+  --color-primary: var(--color-primary-light, #EEE7E1);
+  --color-primary-dark: var(--color-primary-dark, #9B867A);
+  --color-secondary-dark: var(--color-secondary-dark, #415E76);
+  --color-secondary-light: var(--color-secondary-light, #CAD7E2);
+  --color-alert-dark: var(--color-alert-dark, #415E76);
+  --color-alert-light: var(--color-alert-light, #CAD7E2);
+  --color-accent-dark: var(--color-accent-dark, #415E76);
+  --color-accent-light: var(--color-accent-light, #CAD7E2);
+
+  --color-background: var(--color-off-white);
+  --color-text: var(--color-black);
+  --color-text-hover: var(--color-off-black);
+  --color-text-links: var(--color-secondary-dark);
+  --color-text-links-hover: var(--color-secondary-dark);
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color-text);
+  background-color: var(--color-background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,11 +34,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-text-links);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-text-links-hover);
 }
 
 body {

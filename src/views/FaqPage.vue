@@ -43,7 +43,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { client } from '@/sanity'
-import faqPageQuery from '../queries/faqPageQuery'
+import faqPageQuery from '@/queries/faqPage'
 
 const faqs = ref([])
 const openIndex = ref(null)
@@ -54,9 +54,14 @@ const toggle = (index) => {
 }
 
 onMounted(async () => {
-  const data = await client.fetch(faqPageQuery)
-  faqs.value = data.faqs || []
-  heroImage.value = data.heroImage?.asset?.url || ''
+  try {
+    const data = await client.fetch(faqPageQuery)
+    faqs.value = data.faqs || []
+    heroImage.value = data.heroImage?.asset?.url || ''
+  } catch (err) {
+    // swallow error so we don’t crash when fetch rejects
+    console.error('FaqPage fetch failed:', err)
+  }
 })
 </script>
 

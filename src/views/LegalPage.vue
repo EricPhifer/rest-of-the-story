@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import client from '@/sanity/client'
-import legalPageQuery from '../queries/legalPageQuery'
+import { client } from '@/sanity'
+import legalPageQuery from '@/queries/legalPages'
 import { PortableText } from '@portabletext/vue'
 
 const route = useRoute()

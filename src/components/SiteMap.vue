@@ -42,13 +42,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { client } from '@/sanity'
-import sitemapSectionQuery from '../queries/sitemapSection'
+import sitemapQuery from '@/queries/sitemap'
 
 const title = ref('')
 const linkGroups = ref([])
 
 onMounted(async () => {
-  const data = await client.fetch(sitemapSectionQuery)
+  const data = await client.fetch(sitemapQuery)
   title.value = data.title
   linkGroups.value = data.linkGroups || []
 })

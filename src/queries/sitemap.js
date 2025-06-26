@@ -1,7 +1,7 @@
 // queries/sitemapSection.js
 import groq from 'groq'
 
-const sitemapSectionQuery = groq`
+const sitemapQuery = groq`
   *[_type == "sitemapSection"][0]{
     title,
     linkGroups[] {
@@ -18,4 +18,4 @@ const sitemapSectionQuery = groq`
   }
 `
 
-export default sitemapSectionQuery
+export default sitemapQuery
