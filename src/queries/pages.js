@@ -131,7 +131,7 @@ const pageQuery = groq`
       })
       
       ...select(_type == "footerSection" => {
-        mapUrl
+        mapEmbedBlocks
       })
       
       ...select(_type == "copyrightSection" => {

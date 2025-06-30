@@ -46,7 +46,7 @@ describe('Footer.vue', () => {
           formAction: 'https://subscribe.example.com'
         },
         mapContent: [
-          { mapUrl: 'https://maps.example.com' }
+          { mapEmbedBlocks: 'https://maps.example.com' }
         ],
         copyrightContent: [
           {

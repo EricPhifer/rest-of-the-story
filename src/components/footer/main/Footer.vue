@@ -3,7 +3,7 @@
     <!-- Map Embed -->
     <Map
       v-if="footer.main.mapContent?.length"
-      :mapUrl="footer.main.mapContent[0].mapUrl"
+      :mapEmbedBlocks="footer.main.mapContent[0].mapEmbedBlocks"
       class="w-full"
     ></Map>
 
@@ -206,7 +206,7 @@
   const RouterLink = {
     props: { to: { type: String, required: true } },
     setup(props, { slots, attrs }) {
-      return () => h('a', { ...attrs, href: props.to }, slots.default && slots.default())
+      return () => h('a', { ...attrs, href: props.to }, slots.default?.())
     }
   }
 

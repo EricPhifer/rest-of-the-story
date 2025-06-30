@@ -1,56 +1,44 @@
-// src/stores/useFooterStore.js
 import { defineStore } from 'pinia'
 import { client } from '@/sanity'
 import footerMainQuery from '@/queries/footer'
 
 export const useFooterStore = defineStore('footer', {
   state: () => ({
-    main: {
-      logo: null,
-      navLinks: [],
-      blogSection: {
-        heading: '',
-        body: '',
-        buttonText: '',
-        buttonSlug: ''
-      },
-      newsletterForm: {
-        placeholder: '',
-        buttonText: '',
-        formAction: ''
-      },
-      mapContent: [],          // [ { mapUrl } ]
-      contactInfo: {           // matches the contactInfo object
-        address: '',
-        addressIcon: '',
-        phone: '',
-        phoneIcon: '',
-        email: '',
-        emailIcon: ''
-      },
-      socialMediaLinks: [],    // [ { platform, url, icon } ]
-      copyrightContent: []     // [ { companyName, legalPages, contributors } ]
-    },
+    main: null,
     isLoading: false,
     loaded: false,
-    error: null
+    error: null,
   }),
 
+  // ---- Getters for each piece of data your footer needs ----
+  getters: {
+    logoUrl:    (state) => state.main?.logo?.asset?.url || '',
+    navLinks:   (state) => state.main?.navLinks || [],
+
+    mapEmbedBlocks:     (state) => state.main?.mapContent?.[0]?.mapEmbedBlocks || '',
+
+    blogSection:      (state) => state.main?.blogSection || {},
+    newsletterForm:   (state) => state.main?.newsletterForm || {},
+
+    contactInfo:      (state) => state.main?.contactInfo || {},
+    socialMediaLinks: (state) => state.main?.socialMediaLinks || [],
+
+    copyright:        (state) => state.main?.copyrightContent?.[0] || {},
+  },
+
+  // ---- One action to fetch the entire footer ----
   actions: {
     async fetchFooter() {
       this.isLoading = true
       this.error = null
-
       try {
         const { main } = await client.fetch(footerMainQuery)
-
-        if (main) {
-          // Replace the whole `main` object in your store
-          this.main = main
-          this.loaded = true
-        } else {
-          console.warn('Footer query returned no data')
+        if (!main) {
+          console.warn('No footer document found')
+          return
         }
+        this.main   = main
+        this.loaded = true
       } catch (err) {
         console.error('Failed to load footer:', err)
         this.error = err

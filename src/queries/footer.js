@@ -30,7 +30,7 @@ const footerMainQuery = groq`
     },
 
     // Embedded map
-    mapContent[]{ mapUrl },
+    mapContent[]{ mapEmbedBlocks },
 
     // Contact info (address / phone / email)
     contactInfo {

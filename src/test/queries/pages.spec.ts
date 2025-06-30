@@ -44,7 +44,7 @@ describe('pageQuery', () => {
     'formTitle',
     'fields[]',
     '...select(_type == "footerSection"',
-    'mapUrl',
+    'mapEmbedBlocks',
     '...select(_type == "copyrightSection"',
     'legalPages[]',
     'credits[]'

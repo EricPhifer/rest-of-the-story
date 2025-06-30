@@ -1,23 +1,27 @@
+// schemas/mapEmbed.js
 export default {
   name: 'mapEmbed',
   type: 'object',
   title: 'Map Embed',
   fields: [
     {
-      name: 'mapUrl',
-      type: 'url',
-      title: 'Google Maps Embed URL',
-      description: 'Paste the full embed URL from Google Maps'
+      name: 'mapEmbedBlocks',
+      type: 'array',
+      title: 'Embed Blocks',
+      of: [{ type: 'block' }],
+      description: 'Use the block editor to add your embed HTML'
     }
   ],
   preview: {
     select: {
-      title: 'mapUrl'
+      blocks: 'mapEmbedBlocks'
     },
-    prepare({ title }) {
+    prepare({ blocks = [] }) {
+      const firstText = (blocks[0]?.children[0]?.text || '').slice(0, 50)
       return {
-        title: title || 'Google Map Embed'
-      };
+        title: 'Google Map Embed',
+        subtitle: firstText ? firstText + '…' : 'No content'
+      }
     }
   }
 }
