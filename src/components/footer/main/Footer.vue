@@ -186,43 +186,43 @@
 </template>
 
 <script setup>
-import { getActivePinia, setActivePinia, createPinia } from 'pinia'
-import { h } from 'vue'
-// Store
-import { useFooterStore } from '@/store/useFooterStore'
-// Icons
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// Components
-import Map from './Map.vue'
-import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
-import Copyright from '../copyright/Copyright.vue'
+  import { getActivePinia, setActivePinia, createPinia } from 'pinia'
+  import { h } from 'vue'
+  // Store
+  import { useFooterStore } from '@/store/useFooterStore'
+  // Icons
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  // Components
+  import Map from '@/components/footer/main/Map.vue'
+  import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
+  import Copyright from '@/components/footer/copyright/Copyright.vue'
 
-// Ensure Pinia is active even in tests
-if (!getActivePinia()) {
-  setActivePinia(createPinia())
-}
-
-// Stub <RouterLink> so tests don’t require vue-router
-const RouterLink = {
-  props: { to: { type: String, required: true } },
-  setup(props, { slots, attrs }) {
-    return () => h('a', { ...attrs, href: props.to }, slots.default && slots.default())
+  // Ensure Pinia is active even in tests
+  if (!getActivePinia()) {
+    setActivePinia(createPinia())
   }
-}
 
-const footer = useFooterStore()
+  // Stub <RouterLink> so tests don’t require vue-router
+  const RouterLink = {
+    props: { to: { type: String, required: true } },
+    setup(props, { slots, attrs }) {
+      return () => h('a', { ...attrs, href: props.to }, slots.default && slots.default())
+    }
+  }
 
-// Turn "fa-brands fa-facebook" → ['fab','facebook']
-function parseIcon(str) {
-  const parts = str.split(' ')
-  const stylePart = parts.find((s) => s.startsWith('fa-'))?.slice(3)
-  const namePart  = parts.find((s) => s.startsWith('fa-') && !s.includes(stylePart))?.slice(3)
-  const prefixMap = { brands: 'fab', solid: 'fas', regular: 'far' }
-  return [prefixMap[stylePart] || 'fas', namePart]
-}
+  const footer = useFooterStore()
 
-// Fetch on mount, but only once
-if (!footer.loaded) {
-  footer.fetchFooter()
-}
+  // Turn "fa-brands fa-facebook" → ['fab','facebook']
+  function parseIcon(str) {
+    const parts = str.split(' ')
+    const stylePart = parts.find((s) => s.startsWith('fa-'))?.slice(3)
+    const namePart  = parts.find((s) => s.startsWith('fa-') && !s.includes(stylePart))?.slice(3)
+    const prefixMap = { brands: 'fab', solid: 'fas', regular: 'far' }
+    return [prefixMap[stylePart] || 'fas', namePart]
+  }
+
+  // Fetch on mount, but only once
+  if (!footer.loaded) {
+    footer.fetchFooter()
+  }
 </script>
