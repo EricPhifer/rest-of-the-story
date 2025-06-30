@@ -1,34 +1,60 @@
-// ./queries/footerMainQuery.js
+// src/queries/footerMainQuery.js
 import groq from 'groq'
 
 const footerMainQuery = groq`
 {
   "main": *[_type == "mainFooter"][0]{
+    // Logo
     logo { asset->{ url } },
-    navLinks[] {
+
+    // Nav links
+    navLinks[]{
+      _key,
       label,
-      internalLink-> { slug }
+      "slug": internalLink->slug.current
     },
+
+    // Blog teaser
     blogSection {
       heading,
       body,
-      button { text, url }
+      "buttonText": button.text,
+      "buttonSlug": button.internalLink->slug.current
     },
+
+    // Newsletter form
     newsletterForm {
       placeholder,
       buttonText,
       formAction
+    },
+
+    // Embedded map
+    mapContent[]{ mapUrl },
+
+    // Contact info (address / phone / email)
+    contactInfo {
+      address,
+      addressIcon,
+      phone,
+      phoneIcon,
+      email,
+      emailIcon
+    },
+
+    // Social media links
+    socialMediaLinks[] {
+      platform,
+      url,
+      icon
+    },
+
+    // Copyright & credits
+    copyrightContent[] {
+      companyName,
+      legalPages[]-> { title, slug },
+      contributors[] { _key, name, url }
     }
-  },
-  "contact": *[_type == "contactInformationSection"][0]{
-    address,
-    phone,
-    email
-  },
-  "social": *[_type == "contactCardSection"][0].socialMedia[]{
-    label,
-    icon,
-    url
   }
 }
 `

@@ -1,16 +1,16 @@
 :root {
-  --color-white: var(--color-white, #FFFFFF);
-  --color-off-white: var(--color-off-white, #F7F3F0);
-  --color-black: var(--color-black, #231E20);
-  --color-off-black: var(--color-off-black, #283B3E);
-  --color-primary: var(--color-primary-light, #EEE7E1);
-  --color-primary-dark: var(--color-primary-dark, #9B867A);
-  --color-secondary-dark: var(--color-secondary-dark, #415E76);
-  --color-secondary-light: var(--color-secondary-light, #CAD7E2);
-  --color-alert-dark: var(--color-alert-dark, #415E76);
-  --color-alert-light: var(--color-alert-light, #CAD7E2);
-  --color-accent-dark: var(--color-accent-dark, #415E76);
-  --color-accent-light: var(--color-accent-light, #CAD7E2);
+  --color-white: #FFFFFF;
+  --color-off-white: #F7F3F0;
+  --color-black: #231E20;
+  --color-off-black: #283B3E;
+  --color-primary-light: #EEE7E1;
+  --color-primary-dark: #9B867A;
+  --color-secondary-light: #CAD7E2;
+  --color-secondary-dark: #415E76;
+  --color-accent-light: #D5E0D5;
+  --color-accent-dark: #4A6A4E;
+  --color-alert-light: #ECC3C1;
+  --color-alert-dark: #7D2C26;
 
   --color-background: var(--color-off-white);
   --color-text: var(--color-black);
@@ -18,9 +18,9 @@
   --color-text-links: var(--color-secondary-dark);
   --color-text-links-hover: var(--color-secondary-dark);
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-primary), sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 500;
 
   color-scheme: light dark;
   color: var(--color-text);
@@ -36,9 +36,11 @@ a {
   font-weight: 500;
   color: var(--color-text-links);
   text-decoration: inherit;
+  cursor: pointer;
 }
 a:hover {
   color: var(--color-text-links-hover);
+  border-bottom: 1px solid var(--color-text-links-hover);
 }
 
 body {
@@ -51,22 +53,30 @@ body {
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
+  line-height: 1.2;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-secondary), serif;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  border-radius: 0 3px 3px 0 0;
+  border: 3px solid transparent;
+  padding: 0.4rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.15s;
 }
 button:hover {
-  border-color: #646cff;
+  border: 3px solid var(--color-accent-dark);
+
 }
 button:focus,
 button:focus-visible {
@@ -78,9 +88,7 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 

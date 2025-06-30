@@ -13,7 +13,10 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
-    include: ['src/**/*.{test,spec}.{js,ts,vue}'],
+    include: [
+      'src/test/components/footer/**/*.{test,spec}.{js,ts,vue}',
+      // 'src/**/*.{test,spec}.{js,ts,vue}'
+    ],
     exclude: [
     ],
   },

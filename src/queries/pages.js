@@ -8,7 +8,6 @@ const pageQuery = groq`
       _key,
       _type,
 
-      // Hero Section
       ...select(_type == "heroSection" => {
         heading,
         body,
@@ -24,13 +23,11 @@ const pageQuery = groq`
         }
       }),
 
-      // Text Section
       ...select(_type == "textSection" => {
         heading,
         body
       }),
 
-      // Text & Image Section
       ...select(_type == "textImageSection" => {
         heading,
         body,
@@ -43,7 +40,6 @@ const pageQuery = groq`
         imagePosition
       }),
 
-      // Image Section
       ...select(_type == "imageSection" => {
         heading,
         body,
@@ -58,7 +54,6 @@ const pageQuery = groq`
         }
       }),
 
-      // Video Section
       ...select(_type == "videoSection" => {
         title,
         video {
@@ -68,7 +63,6 @@ const pageQuery = groq`
         }
       })
 
-       // Contact Information Section
       ...select(_type == "contactInformationSection" => {
         storeHours,
         address,
@@ -79,7 +73,6 @@ const pageQuery = groq`
         emailIcon
       })
       
-       // Three Section Content
       ...select(_type == "threeSectionContent" => {
         cards[] {
           number,
@@ -97,7 +90,6 @@ const pageQuery = groq`
         }
       })
       
-      // Button Section
       ...select(_type == "buttonSection" => {
         buttons[] {
           text,
@@ -108,7 +100,6 @@ const pageQuery = groq`
         }
       })
 
-       // Contact Card Section
       ...select(_type == "contactCardSection" => {
         phone {
           label,
@@ -127,7 +118,6 @@ const pageQuery = groq`
         }
       })
 
-       // Form Section
       ...select(_type == "formSection" => {
         formTitle,
         formDescription,
@@ -140,12 +130,10 @@ const pageQuery = groq`
         }
       })
       
-      // Map Embed Section
       ...select(_type == "footerSection" => {
         mapUrl
       })
       
-      // Copyright Section
       ...select(_type == "copyrightSection" => {
         companyName,
         legalPages[]->{

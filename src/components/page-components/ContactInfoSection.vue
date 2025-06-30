@@ -1,5 +1,6 @@
 <!-- src/components/ContactInformationSection.vue -->
 <script setup>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  defineProps({
    block: Object
  })
@@ -24,7 +25,7 @@
       <!-- Address -->
       <div class="mb-4 flex items-start gap-3">
         <span class="text-xl">
-          <i :class="`icon-${block.addressIcon}`"></i>
+          <FontAwesomeIcon :icon="['fas', `${block.addressIcon}`]" ></FontAwesomeIcon>
         </span>
         <p>{{ block.address }}</p>
       </div>
@@ -32,7 +33,7 @@
       <!-- Phone -->
       <div class="mb-4 flex items-start gap-3">
         <span class="text-xl">
-          <i :class="`icon-${block.phoneIcon}`"></i>
+          <FontAwesomeIcon :icon="['fas', `${block.phoneIcon}`]"></FontAwesomeIcon>
         </span>
         <a :href="`tel:${block.phone}`" class="hover:underline">{{ block.phone }}</a>
       </div>
@@ -40,7 +41,7 @@
       <!-- Email -->
       <div class="flex items-start gap-3">
         <span class="text-xl">
-          <i :class="`icon-${block.emailIcon}`"></i>
+          <FontAwesomeIcon :icon="['fas', `${block.emailIcon}`]"></FontAwesomeIcon>
         </span>
         <a :href="`mailto:${block.email}`" class="hover:underline">{{ block.email }}</a>
       </div>

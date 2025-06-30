@@ -1,9 +1,17 @@
 // ./schemas/mainFooter.js
 export default {
   name: 'mainFooter',
-  title: 'Main Footer Sections',
+  title: 'Footer',
   type: 'document',
   fields: [
+       {
+      name: 'mapContent',
+      type: 'array',
+      title: 'Map Footer Content',
+      of: [
+        { type: 'mapEmbed' },
+      ]
+    },
     {
       name: 'logo',
       title: 'Logo',
@@ -30,6 +38,17 @@ export default {
           }
         }
       ]
+    },
+    {
+      name: 'contactInfo',
+      title: 'Contact Information',
+      type: 'contactInfo',
+    },
+    {
+      name: 'socialMediaLinks',
+      title: 'Social Media Links',
+      type: 'array',
+      of: [{ type: 'socialMediaLink' }],
     },
     {
       name: 'blogSection',
@@ -59,9 +78,29 @@ export default {
       title: 'Newsletter Form',
       type: 'object',
       fields: [
-        { name: 'placeholder', type: 'string', title: 'Email Placeholder' },
-        { name: 'buttonText', type: 'string', title: 'Button Text' },
-        { name: 'formAction', type: 'url', title: 'Aweber Form Action URL' }
+        { 
+          name: 'placeholder', 
+          type: 'string', 
+          title: 'Email Placeholder' 
+        },
+        { 
+          name: 'buttonText', 
+          type: 'string', 
+          title: 'Button Text' 
+        },
+        { 
+          name: 'formAction', 
+          type: 'url', 
+          title: 'Aweber Form Action URL'
+        }
+      ]
+    },
+    {
+      name: 'copyrightContent',
+      type: 'array',
+      title: 'Copyright Footer Content',
+      of: [
+        { type: 'copyrightFooter' },
       ]
     }
   ],

@@ -1,6 +1,9 @@
-<!-- src/components/Map.vue -->
+<!-- src/components/footer/main/Map.vue -->
 <template>
-  <section class="w-full h-[400px] relative overflow-hidden" v-if="mapUrl">
+  <section
+    v-if="mapUrl"
+    class="w-full h-[400px] relative overflow-hidden"
+  >
     <iframe
       class="absolute top-0 left-0 w-full h-full border-0"
       :src="mapUrl"
@@ -12,7 +15,7 @@
 </template>
 
 <script setup>
- defineProps({
-   mapUrl: String
- });
+const props = defineProps({
+  mapUrl: String
+})
 </script>

@@ -64,6 +64,31 @@ export default {
       title: 'Alert Dark Color',
       type: 'color',
     },
+
+    // Favicon
+    {
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'image',
+      description: 'Used in browser tab or PWA. Should be square (e.g., 512x512).',
+      options: {
+        hotspot: true
+      }
+    },
+
+    // Typography Settings
+    {
+      name: 'primaryFont',
+      title: 'Primary Typography',
+      type: 'string',
+      description: 'Font family used for primary content (e.g., "Inter", "Roboto", "Georgia").'
+    },
+    {
+      name: 'secondaryFont',
+      title: 'Secondary Typography',
+      type: 'string',
+      description: 'Font used for accents or headings.'
+    }
   ],
   preview: {
     prepare() {

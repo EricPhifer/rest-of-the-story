@@ -1,4 +1,5 @@
 <script setup>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  defineProps({ block: Object })
 </script>
 
@@ -9,7 +10,10 @@
 
         <!-- Phone Card -->
         <div v-if="block.phone" class="flex flex-col items-center text-center bg-white rounded shadow-md p-6 w-full sm:w-60">
-          <i :class="['text-3xl text-indigo-500 mb-2', block.phone.icon]" aria-hidden="true" />
+          <FontAwesomeIcon 
+            :icon="['fas', `${block.phone.icon}`]"    
+            class="text-3xl text-indigo-500 mb-2"   
+            aria-hidden="true" />
           <p class="font-semibold mb-1">{{ block.phone.label }}</p>
           <a :href="`tel:${block.phone.value}`" class="text-indigo-600 hover:underline break-all">
             {{ block.phone.value }}
@@ -18,7 +22,10 @@
 
         <!-- Email Card -->
         <div v-if="block.email" class="flex flex-col items-center text-center bg-white rounded shadow-md p-6 w-full sm:w-60">
-          <i :class="['text-3xl text-indigo-500 mb-2', block.email.icon]" aria-hidden="true" />
+          <FontAwesomeIcon 
+            :icon="['fas', `${block.email.icon}`]" 
+            class="text-3xl text-indigo-500 mb-2" 
+            aria-hidden="true" />
           <p class="font-semibold mb-1">{{ block.email.label }}</p>
           <a :href="`mailto:${block.email.value}`" class="text-indigo-600 hover:underline break-all">
             {{ block.email.value }}
@@ -37,7 +44,9 @@
               :aria-label="item.label"
               class="text-indigo-500 hover:text-indigo-700 text-2xl"
             >
-              <i :class="item.icon"></i>
+              <FontAwesomeIcon 
+                :icon="['fab', `${item.icon}`]">
+              </FontAwesomeIcon>
             </a>
           </div>
           <p class="font-semibold">Follow Us</p>

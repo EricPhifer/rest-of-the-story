@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/vue'
 import Footer from '@/components/footer/main/Footer.vue'
 import { client } from '@/sanity'
 import { vi, describe, it, beforeEach, expect } from 'vitest'
+import { createPinia } from 'pinia'
 
 // 1) Mock the Sanity client
 vi.mock('@/sanity', () => ({
@@ -43,7 +44,23 @@ describe('Footer.vue', () => {
           placeholder: 'Enter email',
           buttonText: 'Subscribe',
           formAction: 'https://subscribe.example.com'
-        }
+        },
+        mapContent: [
+          { mapUrl: 'https://maps.example.com' }
+        ],
+        copyrightContent: [
+          {
+            companyName: 'Test Company',
+            legalPages: [
+              { label: 'Privacy Policy', url: '/privacy' },
+              { label: 'Terms of Service', url: '/terms' }
+            ],
+            contributors: [
+              { name: 'Contributor 1', url: 'https://contributor1.example.com' },
+              { name: 'Contributor 2', url: 'https://contributor2.example.com' }
+            ]
+          }
+        ]
       },
       contact: {
         address: '123 Street',
@@ -56,7 +73,12 @@ describe('Footer.vue', () => {
     })
 
     // Act: render component
-    render(Footer, { global: { stubs } })
+    render(Footer, { 
+      global: { 
+        plugins: [createPinia()],
+        stubs 
+      } 
+    })
 
     // Wait for onMounted to finish
     await waitFor(() => {

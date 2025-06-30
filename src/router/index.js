@@ -15,17 +15,23 @@ const routes = [
   {
     path: '/legal/:slug',
     name: 'LegalPage',
-    component: () => import('../views/LegalPage.vue')
+    components: {
+      default: () => import('@/views/LegalPage.vue')
+    }
   },
   {
     path: '/blog/:slug',
     name: 'BlogPost',
-    component: () => import('../views/BlogPost.vue')
+    components: {
+      default: () => import('@/views/BlogPost.vue')
+    }
   },
   {
     path: '/faq',
     name: 'FaqPage',
-    component: () => import('../views/FaqPage.vue')
+    components: {
+      default: () => import('@/views/FaqPage.vue')
+    }
   }
 
 ]

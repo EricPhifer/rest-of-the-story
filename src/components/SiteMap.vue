@@ -17,7 +17,7 @@
           >
             <RouterLink
               v-if="link.internalLink"
-              :to="`/${link.internalLink.slug.current}`"
+              :to="`/${link.slug}`"
               class="text-blue-600 hover:underline"
             >
               {{ link.label || link.internalLink.title }}

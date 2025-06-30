@@ -14,7 +14,16 @@ const siteSettingsQuery = groq`
     alertLightColor{hex},
     alertDarkColor{hex},
     accentLightColor{hex},
-    accentDarkColor{hex}
+    accentDarkColor{hex},
+
+    favicon {
+      asset -> {
+        url
+      }
+    },
+
+    primaryFont,
+    secondaryFont
   }
 `
 

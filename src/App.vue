@@ -1,27 +1,30 @@
 <template>
-  <div class="min-h-screen bg-white text-gray-900">
+  <div class="bg-[var(--color-off-white)] flex flex-col">
     <!-- Navigation bar goes here later -->
-    <router-view />
-    <Map></Map>
+    <main class="min-h-screen flex-grow">
+      <router-view />
+    </main>
     <Footer></Footer>
-    <Copyright></Copyright>
   </div>
 </template>
 
 <script setup>
-  import { onMounted } from 'vue';
-  import { client } from '@/sanity';
-  import siteSettingsQuery from '@/queries/siteSettings';
-
   // Import components
-  import Map from './components/footer/main/Map.vue';
   import Footer from './components/footer/main/Footer.vue';
-  import Copyright from './components/footer/copyright/Copyright.vue';
+  import { useSiteSettingsStore } from '@/store/useSiteSettingsStore'
 
-  onMounted(async () => {
-    const settings = await client.fetch(siteSettingsQuery)
-    if (settings?.primaryColor?.hex) {
-      document.documentElement.style.setProperty('--color-primary', settings.primaryColor.hex)
+  const siteSettingsStore = useSiteSettingsStore()
+  
+  siteSettingsStore.fetchSiteSettings().then(() => {
+    const url = siteSettingsStore.settings?.favicon?.asset?.url
+    if (url) {
+      let link = document.querySelector("link[rel~='icon']")
+      if (!link) {
+        link = document.createElement('link')
+        link.rel = 'icon'
+        document.head.appendChild(link)
+      }
+      link.href = url
     }
   })
 </script>
