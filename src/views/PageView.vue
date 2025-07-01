@@ -1,58 +1,72 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { client } from '@/sanity'
-import pageQuery from '@/queries/pages'
+  import { onMounted, ref, watch } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { client } from '@/sanity'
+  import pageQuery from '@/queries/pages'
 
-// Import components
-import NotFound from '@/components/NotFound.vue'
-import HeroSection from '@/components/page-components/HeroSection.vue'
-import TextSection from '@/components/page-components/TextSection.vue'
-import ImageSection from '@/components/page-components/ImageSection.vue'
-import VideoSection from '@/components/page-components/VideoSection.vue'
-import ButtonSection from '@/components/page-components/ButtonSection.vue'
-import TextImageSection from '@/components/page-components/TextImageSection.vue'
-import ThreeCardSection from '@/components/page-components/ThreeCardSection.vue'
-import ContactInfoSection from '@/components/page-components/ContactInfoSection.vue'
-import ContactCardSection from '@/components/page-components/ContactCardSection.vue'
-import FormSection from '@/components/page-components/FormSection.vue'
+  // Import components
+  import NotFound from '@/components/NotFound.vue'
+  import HeroSection from '@/components/page-components/HeroSection.vue'
+  import TextSection from '@/components/page-components/TextSection.vue'
+  import ImageSection from '@/components/page-components/ImageSection.vue'
+  import VideoSection from '@/components/page-components/VideoSection.vue'
+  import ButtonSection from '@/components/page-components/ButtonSection.vue'
+  import TextImageSection from '@/components/page-components/TextImageSection.vue'
+  import ThreeCardSection from '@/components/page-components/ThreeCardSection.vue'
+  import ContactInfoSection from '@/components/page-components/ContactInfoSection.vue'
+  import ContactCardSection from '@/components/page-components/ContactCardSection.vue'
+  import FormSection from '@/components/page-components/FormSection.vue'
 
-const route = useRoute()
-const page = ref(null)
-const loading = ref(true)
-const notFound = ref(false)
+  const page = ref(null)
+  const error = ref(null)
+  const loading = ref(false)
 
-function resolveComponent(type) {
-  return {
-    heroSection: HeroSection,
-    textSection: TextSection,
-    imageSection: ImageSection,
-    videoSection: VideoSection,
-    buttonSection: ButtonSection,
-    textImageSection: TextImageSection,
-    threeCardSection: ThreeCardSection,
-    contactInfoSection: ContactInfoSection,
-    contactCardSection: ContactCardSection,
-    formSection: FormSection,
-  }[type] || null
-}
+  const props = defineProps({
+    slug: {
+      type: String,
+      default: 'home',
+    },
+  })
 
-onMounted(async () => {
-  const slug = route.params.slug || 'home'
-  try {
-    const result = await client.fetch(pageQuery, { slug })
-    if (result) {
-      page.value = result
-    } else {
-      notFound.value = true
-    }
-  } catch (err) {
-    console.error('Fetch error:', err)
-    notFound.value = true
-  } finally {
-    loading.value = false
+  function resolveComponent(type) {
+    return {
+      heroSection: HeroSection,
+      textSection: TextSection,
+      imageSection: ImageSection,
+      videoSection: VideoSection,
+      buttonSection: ButtonSection,
+      textImageSection: TextImageSection,
+      threeCardSection: ThreeCardSection,
+      contactInfoSection: ContactInfoSection,
+      contactCardSection: ContactCardSection,
+      formSection: FormSection,
+    }[type] || null
   }
-})
+
+  async function fetchPage(slug) {
+    loading.value = true
+    error.value   = null
+    page.value    = null
+    try {
+      const data = await client.fetch(pageQuery, { slug })
+      if (!data) throw new Error('Page not found')
+      page.value = data
+    } catch (err) {
+      error.value = err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  onMounted(() => {
+    fetchPage(props.slug)
+  })
+
+  // if you navigate client‐side to a different slug, re‐run the fetch
+  watch(
+    () => props.slug,
+    newSlug => fetchPage(newSlug)
+  )
 </script>
 
 <template>
@@ -60,10 +74,7 @@ onMounted(async () => {
     <p class="text-center py-10">Loading...</p>
   </div>
 
-  <NotFound v-else-if="notFound"></NotFound>
-
-  <div v-else>
-    <h1 class="text-3xl font-bold my-4">{{ page.title }}</h1>
+  <div v-else-if="!error && page">
     <component
       v-for="block in page.content"
       :is="resolveComponent(block._type)"
@@ -71,4 +82,6 @@ onMounted(async () => {
       :block="block"
     />
   </div>
+
+  <NotFound v-else></NotFound>
 </template>

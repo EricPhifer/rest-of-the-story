@@ -7,7 +7,8 @@ export default {
     {
       name: 'address',
       title: 'Address',
-      type: 'text',
+      type: 'array',
+      of: [{ type: 'block' }],
       validation: (Rule) => Rule.required(),
     },
     {
@@ -61,15 +62,15 @@ export default {
       },
     },
   ],
-  preview: {
+ preview: {
     select: {
-      address: 'address',
+      addressText: 'join(address[].children[].text, " ")'
     },
-    prepare({ address }) {
+    prepare({ addressText }) {
       return {
         title: 'Contact Information',
-        subtitle: address || '— no address set —',
-      };
-    },
-  },
+        subtitle: addressText || '— no address set —'
+      }
+    }
+  }
 };

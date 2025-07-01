@@ -1,44 +1,67 @@
 <script setup>
-import { PortableText } from '@portabletext/vue'
-defineProps({
-  block: Object
-})
+  import { PortableText } from '@portabletext/vue'
+  import { urlFor } from '@/sanity'
+
+  // pull in the block prop
+  const { block } = defineProps({
+    block: Object
+  })
 </script>
 
 <template>
-  <section class="my-12 px-4 max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-3 gap-8">
-      <div
-        v-for="(card, index) in block.cards"
-        :key="index"
-        class="flex flex-col items-center text-center p-6 border border-gray-200 rounded-lg shadow-sm bg-white"
+  <section class="cards">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <article
+        v-for="(card, i) in block.cards"
+        :key="i"
+        role="region"
+        :aria-labelledby="`three-card-heading-${i}`"
+        :class="card.iconImage ? 
+        'overflow-hidden bg-[var(--color-white)]' : 
+        'bg-[var(--color-accent-dark)] text-[var(--color-white)]'"
       >
-        <div class="mb-4">
+        <!-- image at top, covers full card width -->
+        <div v-if="card.iconImage?.asset?.url" class="h-48 w-full">
           <img
-            v-if="card.iconImage?.asset?.url"
-            :src="card.iconImage.asset.url"
-            alt=""
-            class="h-16 w-16 object-contain mx-auto"
+            :src="urlFor(card.iconImage)"
+            :alt="card.altText || card.heading || ''"
+            class="w-full h-full object-cover"
           />
-          <div
-            v-else-if="card.number"
-            class="text-3xl font-bold text-indigo-600"
-          >
-            {{ card.number }}
+        </div>
+        <div v-else-if="card.number" class="flex justify-center text-[var(--color-black)]">
+          <div class="bg-white w-[65px] h-[65px] p-2 border-3 border-[var(--color-accent-dark)] rounded-full drop-shadow -translate-y-4">
+            <span class="text-5xl">{{ card.number }}</span>
           </div>
         </div>
-        <h3 class="text-xl font-semibold mb-2">{{ card.heading }}</h3>
-        <div data-testid="body" class="prose prose-sm max-w-none mb-4">
-          <PortableText :value="card.body" />
-        </div>
-        <a
-          v-if="card.button?.text && card.button?.url"
-          :href="card.button.url"
-          class="mt-auto inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+        <span v-else></span>
+
+        <!-- content -->
+        <div 
+          :class="'flex flex-col flex-grow p-6', 
+          card.iconImage ? 
+          'text-[var(--color-primary-dark)]' : 
+          ''"
         >
-          {{ card.button.text }}
-        </a>
-      </div>
+          <!-- heading -->
+          <h3 :class="card.iconImage ? 'text-left text-[var(--color-primary-dark)]' : 'text-center'" :id="`three-card-heading-${i}`">
+            {{ card.heading }}
+          </h3>
+
+          <!-- body -->
+          <div class="prose prose-sm">
+            <PortableText :value="card.body" />
+          </div>
+
+          <!-- CTA -->
+          <RouterLink
+            v-if="card.button?.text && card.button?.url"
+            :to="card.button.url"
+            class="cta"
+          >
+            {{ card.button.text }}
+          </RouterLink>
+        </div>
+      </article>
     </div>
   </section>
 </template>

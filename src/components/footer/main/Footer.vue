@@ -16,7 +16,7 @@
             <RouterLink to="/" class="inline-block mb-4">
               <img
                 v-if="footer.main.logo?.asset?.url"
-                :src="footer.main.logo.asset.url"
+                :src="urlFor(footer.main.logo.asset.url)"
                 alt="Logo"
                 class="h-24"
               />
@@ -196,6 +196,7 @@
   import Map from '@/components/footer/main/Map.vue'
   import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
   import Copyright from '@/components/footer/copyright/Copyright.vue'
+  import { urlFor } from '@/sanity'
 
   // Ensure Pinia is active even in tests
   if (!getActivePinia()) {

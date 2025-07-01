@@ -13,13 +13,16 @@ const pageQuery = groq`
         body,
         image {
           asset->{
+            _id,
             url
-          }
+          },
+          hotspot,
+          crop
         },
         altText,
         button {
           text,
-          url
+          "url": internalLink->slug
         }
       }),
 
@@ -33,8 +36,11 @@ const pageQuery = groq`
         body,
         image {
           asset->{
+            _id,
             url
-          }
+          },
+          hotspot,
+          crop
         },
         altText,
         imagePosition
@@ -45,8 +51,11 @@ const pageQuery = groq`
         body,
         image {
           asset->{
+            _id,
             url
-          }
+          },
+          hotspot,
+          crop
         },
         button {
           text,
@@ -61,34 +70,47 @@ const pageQuery = groq`
             playbackId
           }
         }
-      })
+      }),
 
-      ...select(_type == "contactInformationSection" => {
-        storeHours,
-        address,
-        addressIcon,
-        phone,
-        phoneIcon,
-        email,
-        emailIcon
-      })
+     ...select(_type == "contactInfoSection" => {
+        hours[] {
+          days,
+          closed,
+          open,
+          close,
+          note
+        },
+        contacts[] {
+          address,
+          addressIcon,
+          phone,
+          phoneIcon,
+          email,
+          emailIcon
+        }
+      }),
+
       
-      ...select(_type == "threeSectionContent" => {
+      ...select(_type == "threeCardSection" => {
         cards[] {
           number,
           heading,
           body,
           iconImage {
             asset->{
+              _id,
               url
-            }
+            },
+            hotspot,
+            crop
           },
+          altText,
           button {
             text,
-            url
+            "url": internalLink->slug
           }
         }
-      })
+      }),
       
       ...select(_type == "buttonSection" => {
         buttons[] {
@@ -98,7 +120,7 @@ const pageQuery = groq`
             slug
           }
         }
-      })
+      }),
 
       ...select(_type == "contactCardSection" => {
         phone {
@@ -116,7 +138,7 @@ const pageQuery = groq`
           url,
           icon
         }
-      })
+      }),
 
       ...select(_type == "formSection" => {
         formTitle,
@@ -128,11 +150,11 @@ const pageQuery = groq`
           required,
           options
         }
-      })
+      }),
       
       ...select(_type == "footerSection" => {
         mapEmbedBlocks
-      })
+      }),
       
       ...select(_type == "copyrightSection" => {
         companyName,
@@ -144,7 +166,7 @@ const pageQuery = groq`
           name,
           url
         }
-      })
+      }),
     }
   }
 `;

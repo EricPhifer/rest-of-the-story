@@ -5,8 +5,9 @@ export default {
   fields: [
     {
       name: 'heading',
-      type: 'string',
-      title: 'Heading'
+      type: 'array',
+      title: 'Heading',
+      of: [{ type: 'block' }],
     },
     {
       name: 'body',
@@ -44,12 +45,26 @@ export default {
   ],
   preview: {
     select: {
-      title: 'heading',
+      headingBlocks: 'heading',  // grabs the array of block objects
       media: 'image'
     },
-    prepare({ title, media }) {
+    prepare({ headingBlocks, media }) {
+      // default fallback
+      let title = 'Hero Section'
+
+      if (Array.isArray(headingBlocks)) {
+        // extract text from each block’s children, join into strings
+        const texts = headingBlocks
+          .filter(b => b._type === 'block' && Array.isArray(b.children))
+          .map(b => b.children.map(child => child.text).join(''))
+
+        // pick the first non-empty string, or keep fallback
+        const first = texts.find(t => t && t.trim().length)
+        if (first) title = first
+      }
+
       return {
-        title: title || 'Hero Section',
+        title,
         media
       }
     }

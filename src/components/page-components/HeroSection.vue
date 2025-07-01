@@ -1,47 +1,55 @@
 <script setup>
 import { PortableText } from '@portabletext/vue'
+import { RouterLink } from 'vue-router'
 
-const { block } = defineProps({
+const props = defineProps({
   block: {
     type: Object,
     required: true
   }
 })
 
-const imageUrl = block.image?.asset?.url
-const button = block.button
+const imageUrl = props.block.image?.asset?.url
+const button   = props.block.button
 </script>
 
 <template>
-  <section class="bg-white py-16 md:py-24">
-    <div class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8">
-      <!-- Text Content -->
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h1 v-if="block.heading" class="text-4xl md:text-5xl font-bold mb-6">
-          {{ block.heading }}
-        </h1>
+  <section
+    v-if="imageUrl"
+    :style="`background-image: url(${imageUrl})`"
+    class="hero relative h-[60vh] md:h-[80vh] bg-center bg-cover bg-no-repeat overflow-hidden"
+    role="region"
+    aria-labelledby="hero-heading"
+  >
+    <!-- decorative overlay -->
+    <div class="absolute inset-0 bg-[var(--color-secondary-dark)]/40" aria-hidden="true" />
 
-        <div v-if="block.body" class="prose prose-lg max-w-none mb-6">
+    <!-- content: full-size flex centering -->
+    <div class="relative z-10 flex items-center justify-center h-full w-full px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center text-center">
+        <!-- heading -->
+        <PortableText
+          v-if="block.heading"
+          :value="block.heading"
+          id="hero-heading"
+          class="text-3xl md:text-5xl font-bold mb-4 text-white"
+        >
+          {{ block.heading }}
+        </PortableText>
+
+        <!-- body copy -->
+        <div class="subtitle max-w-2xl mb-6 text-white">
           <PortableText :value="block.body" />
         </div>
 
-        <div v-if="button?.text && button?.url">
-          <a
-            :href="button.url"
-            class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition"
-          >
-            {{ button.text }}
-          </a>
-        </div>
-      </div>
-
-      <!-- Image -->
-      <div v-if="imageUrl" class="w-full md:w-1/2">
-        <img
-          :src="imageUrl"
-          :alt="block.heading || 'Hero image'"
-          class="w-full h-auto rounded-lg shadow"
-        />
+        <!-- call-to-action -->
+        <RouterLink
+          v-if="button?.text && button?.url"
+          :to="button.url"
+          class="cta inline-block"
+        >
+          {{ button.text }}
+        </RouterLink>
       </div>
     </div>
   </section>

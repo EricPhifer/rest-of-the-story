@@ -1,5 +1,6 @@
 <script setup>
   import { PortableText } from '@portabletext/vue'
+  import { urlFor } from '@/sanity'
 
   const { block } = defineProps({
     block: {
@@ -9,11 +10,11 @@
   })
 
   const imageUrl = block.image?.asset?.url
-  const imagePosition = block.imagePosition || 'right'
+  const imagePosition = block.imagePosition
 </script>
 
 <template>
-  <section class="my-12">
+  <section class="text-section my-36 py-24 mx-12 bg-[var(--color-primary-light)]">
     <div
       class="flex flex-col md:flex-row items-center gap-6"
       :class="{
@@ -24,7 +25,7 @@
       <!-- Image -->
       <div v-if="imageUrl" class="w-full md:w-1/2">
         <img
-          :src="imageUrl"
+          :src="urlFor(imageUrl)"
           :alt="block.altText || 'Section image'"
           class="rounded shadow max-w-full h-auto object-cover"
         />
@@ -32,7 +33,7 @@
 
       <!-- Text -->
       <div class="w-full md:w-1/2">
-        <h2 v-if="block.heading" class="text-2xl font-semibold mb-4">
+        <h2 v-if="block.heading">
           {{ block.heading }}
         </h2>
 

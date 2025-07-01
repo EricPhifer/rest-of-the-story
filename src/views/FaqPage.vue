@@ -5,7 +5,7 @@
   <div class="relative h-64 md:h-96 w-full">
     <img
       v-if="heroImage"
-      :src="heroImage"
+      :src="urlFor(heroImage)"
       alt="FAQ Hero"
       class="w-full h-full object-cover"
     />
@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { client } from '@/sanity'
+import { client, urlFor } from '@/sanity'
 import faqPageQuery from '@/queries/faqPage'
 
 const faqs = ref([])

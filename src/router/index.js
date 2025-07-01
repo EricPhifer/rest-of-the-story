@@ -2,38 +2,44 @@ import { createRouter, createWebHistory } from 'vue-router'
 import PageView from '@/views/PageView.vue'
 
 const routes = [
-
-  {
-    path: '/',
-    redirect: '/home'
-  },
-  {
-    path: '/:slug(.*)*',
-    name: 'Page',
-    component: PageView
-  },
+  // 1. Root → /home
+  { path: '/', redirect: '/home' },
+ 
+  // 2. Legal pages
   {
     path: '/legal/:slug',
     name: 'LegalPage',
-    components: {
-      default: () => import('@/views/LegalPage.vue')
-    }
+    component: () => import('@/views/LegalPage.vue'),
+    props: true
   },
+
+  // 3. Blog posts
   {
     path: '/blog/:slug',
     name: 'BlogPost',
-    components: {
-      default: () => import('@/views/BlogPost.vue')
-    }
+    component: () => import('@/views/BlogPost.vue'),
+    props: true
   },
+
+  // 4. FAQ
   {
     path: '/faq',
     name: 'FaqPage',
-    components: {
-      default: () => import('@/views/FaqPage.vue')
+    component: () => import('@/views/FaqPage.vue')
+  },
+
+  // 5. Your catch-all for regular pages (must be last)
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Page',
+    component: PageView,
+    // pass the full pathMatch as “slug” to your PageView
+     props: route => {
+      let slug = route.params.pathMatch
+      if (Array.isArray(slug)) slug = slug.join('/')
+      return { slug: slug || 'home' }
     }
   }
-
 ]
 
 export const router = createRouter({
