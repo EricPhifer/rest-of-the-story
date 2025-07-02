@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "sync:algolia": "node scripts/syncAlgolia.js",
+    "sync:algolia": "node scripts/syncAlgolia.cjs",
     "dev": "vite",
     "build": "npm run sync:algolia && vite build",
     "preview": "vite preview",
