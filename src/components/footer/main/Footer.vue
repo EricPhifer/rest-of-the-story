@@ -32,10 +32,10 @@
               </RouterLink>
             </nav>
           </div>
-          <div>
+          <!-- <div class="footer-search">
             <h6>Find Something New</h6>
             <AlgoliaSearchInput />
-          </div>
+          </div> -->
         </div>
 
         <!-- Center: Contact & Social -->

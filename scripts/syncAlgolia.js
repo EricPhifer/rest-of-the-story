@@ -15,13 +15,6 @@ const {
   VITE_ALGOLIA_INDEX_NAME
 } = process.env
 
-console.log('Project ID:', VITE_SANITY_PROJECT_ID)
-console.log('Dataset:', VITE_SANITY_DATASET)
-console.log('Algolia App ID:', VITE_ALGOLIA_APP_ID)
-console.log('Algolia Index Name:', VITE_ALGOLIA_INDEX_NAME)
-console.log('Algolia Admin Key:', VITE_ALGOLIA_ADMIN_KEY ? '******' : 'Not set')
-console.log('Sanity API Token:', SANITY_API_TOKEN ? '******' : 'Not set')
-
 if (
   !VITE_SANITY_PROJECT_ID ||
   !VITE_SANITY_DATASET    ||
@@ -60,7 +53,7 @@ async function run() {
     ...pages.map(p => ({
       objectID: `page-${p._id}`,
       title:    p.title,
-      excerpt:  p.content[0]?.children?.[0]?.text.slice(0, 140) || '',
+      excerpt: Array.isArray(p.content) && p.content[0]?.children?.[0]?.text ? p.content[0].children[0].text.slice(0, 140) : '',
       url:      `/${p.slug.current}`,
       type:     'page',
       priority: 1
