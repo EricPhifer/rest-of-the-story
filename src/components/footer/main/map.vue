@@ -9,22 +9,22 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+  import { computed } from 'vue'
 
-const props = defineProps({
-  mapEmbedBlocks: {
-    type: Array,
-    default: () => []
-  }
-})
+  const props = defineProps({
+    mapEmbedBlocks: {
+      type: Array,
+      default: () => []
+    }
+  })
 
-// Pull out the text from each block’s children and join into one HTML string
-const htmlString = computed(() => {
-  return props.mapEmbedBlocks
-    .map(block =>
-      // each block has a `children` array; each child has `.text`
-      block.children.map(child => child.text).join('')
-    )
-    .join('\n')
-})
+  // Pull out the text from each block’s children and join into one HTML string
+  const htmlString = computed(() => {
+    return props.mapEmbedBlocks
+      .map(block =>
+        // each block has a `children` array; each child has `.text`
+        block.children.map(child => child.text).join('')
+      )
+      .join('\n')
+  })
 </script>

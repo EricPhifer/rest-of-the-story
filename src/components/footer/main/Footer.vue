@@ -193,7 +193,7 @@
   // Icons
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   // Components
-  import Map from '@/components/footer/main/Map.vue'
+  import Map from './Map.vue'
   import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
   import Copyright from '@/components/footer/copyright/Copyright.vue'
   import { urlFor } from '@/sanity'
