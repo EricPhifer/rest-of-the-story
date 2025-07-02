@@ -1,7 +1,7 @@
 // scripts/syncAlgolia.js
-import algoliasearch from 'algoliasearch'
-import { createClient } from '@sanity/client'
-import dotenv from 'dotenv'
+const algoliasearch = require('algoliasearch')
+const { createClient } = require('@sanity/client')
+const dotenv = require('dotenv')
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ const {
 if (
   !VITE_SANITY_PROJECT_ID ||
   !VITE_SANITY_DATASET    ||
-  !SANITY_API_TOKEN  ||
+  !SANITY_API_TOKEN       ||
   !VITE_ALGOLIA_APP_ID    ||
   !VITE_ALGOLIA_ADMIN_KEY ||
   !VITE_ALGOLIA_INDEX_NAME
@@ -29,11 +29,11 @@ if (
 
 // 2. Sanity client
 const sanity = createClient({
-  projectId:    VITE_SANITY_PROJECT_ID,
-  dataset:      VITE_SANITY_DATASET,
-  apiVersion:   '2023-06-01',
-  useCdn:       false,
-  token:        SANITY_API_TOKEN,
+  projectId:  VITE_SANITY_PROJECT_ID,
+  dataset:    VITE_SANITY_DATASET,
+  apiVersion: '2023-06-01',
+  useCdn:     false,
+  token:      SANITY_API_TOKEN,
 })
 
 // 3. Algolia client
@@ -44,8 +44,8 @@ const algolia = algoliasearch(
 
 async function run() {
   // fetch your documents
-  const pages = await sanity.fetch(`*[_type=='page']{_id, title, slug, content}`)
-  const posts = await sanity.fetch(`*[_type=='post']{_id, title, excerpt, slug}`)
+  const pages    = await sanity.fetch(`*[_type=='page']{_id, title, slug, content}`)
+  const posts    = await sanity.fetch(`*[_type=='post']{_id, title, excerpt, slug}`)
   const products = await sanity.fetch(`*[_type=='product']{_id, name, description, slug}`)
 
   // normalize to a flat array
@@ -53,7 +53,9 @@ async function run() {
     ...pages.map(p => ({
       objectID: `page-${p._id}`,
       title:    p.title,
-      excerpt: Array.isArray(p.content) && p.content[0]?.children?.[0]?.text ? p.content[0].children[0].text.slice(0, 140) : '',
+      excerpt:  Array.isArray(p.content) && p.content[0]?.children?.[0]?.text
+                  ? p.content[0].children[0].text.slice(0, 140)
+                  : '',
       url:      `/${p.slug.current}`,
       type:     'page',
       priority: 1
@@ -77,18 +79,16 @@ async function run() {
   ]
 
   // 4. Save them in one shot
-  // v5 client method, no initIndex
   const index = algolia.initIndex(VITE_ALGOLIA_INDEX_NAME)
   const response = await index.saveObjects(records, {
     autoGenerateObjectIDIfNotExist: false
   })
 
   console.log(`✅  Synced ${response.objectIDs?.length || 0} records to ${VITE_ALGOLIA_INDEX_NAME}`)
-  
+
   if (!response.objectIDs) {
     console.warn('⚠️  No objectIDs returned from Algolia response:', response)
   }
-
 }
 
 run().catch(err => {
