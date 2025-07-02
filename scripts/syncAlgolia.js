@@ -1,7 +1,7 @@
 // scripts/syncAlgolia.js
-import { algoliasearch }      from 'algoliasearch'
-import { createClient }       from '@sanity/client'
-import dotenv                 from 'dotenv'
+import algoliasearch from 'algoliasearch'
+import { createClient } from '@sanity/client'
+import dotenv from 'dotenv'
 
 dotenv.config()
 
