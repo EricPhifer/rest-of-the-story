@@ -2,12 +2,15 @@ import groq from 'groq';
 
 const faqPageQuery = groq`
   *[_type == "faqPage"][0]{
+    title,
     heroImage {
       asset->{
-        url
-      }
+        _id
+      },
+      crop,
+      hotspot
     },
-    faqs[] {
+    faqs[]{
       question,
       answer
     }

@@ -3,6 +3,9 @@ import page from './pageSchemas/page'
 import faqPage from './pageSchemas/faqPage'
 import legalPage from './pageSchemas/legalPage'
 
+// Navigation Imports
+import navigation from './navSchemas/navigation'
+
 // Components Imports
 import heroSection from './sectionSchemas/heroSection'
 import textSection from './sectionSchemas/textSection'
@@ -46,6 +49,9 @@ export const schemaTypes = [
  legalPage,
  faqPage,
  
+ // Navigation Schemas
+ navigation,
+
  // Components Schemas
  heroSection,
  textSection,

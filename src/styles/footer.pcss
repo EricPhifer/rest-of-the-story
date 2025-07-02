@@ -1,9 +1,5 @@
-h6 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: left;
-  margin-bottom: 0.5rem;
+h2 {
+    @apply text-xl font-bold uppercase text-left mb-2 sm:mb-4;
 }
 
 footer a {
@@ -38,7 +34,7 @@ footer .buttonesque {
 
 }
 
-footer .contact-us a:has(.info) {
+footer .center a:has(.info) {
   border-bottom: 1px solid transparent;
   &:hover {
     border-bottom: 1px solid var(--color-accent-light);
@@ -46,7 +42,7 @@ footer .contact-us a:has(.info) {
   }
 }
 
-footer .contact-us a:has(.social) {
+footer .center a:has(.social) {
   & svg:hover {
     color: var(--color-accent-light);
   }
@@ -58,5 +54,39 @@ section.copyright a{
   &:hover {
     color: var(--color-accent-light);
     text-decoration: underline;
+  }
+}
+
+/* Responsive alignment */
+footer .left {
+  order: 1;
+  width: 100%; 
+  &:logo-links,
+  &:footer-search {
+  }
+  @media only screen and (max-width: 523px) {
+    order: 2;
+    width: 50%;
+    justify-self: center;
+    align-self: center;
+    &:logo-links,
+    &:footer-search {
+    }
+  }
+}
+footer .center {
+  order: 2;
+  width: 100%;
+  &:contact-us,
+  &:follow-us {
+  }
+  @media only screen and (max-width: 523px) {
+    order: 1;
+    width: 50%;
+    justify-self: center;
+    align-self: center;
+    &:contact-us,
+    &:follow-us {
+    }
   }
 }

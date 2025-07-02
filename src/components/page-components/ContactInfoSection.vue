@@ -12,12 +12,17 @@
 </script>
 
 <template>
-  <section class="contact my-24 py-12 bg-gray-50 text-gray-900">
+  <section 
+    id="contact"
+    class="contact my-24 py-12 bg-gray-50 text-gray-900 overflow-x-hidden"
+    role="region"
+    aria-labelledby="contact-heading"
+  >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold mb-8">Contact Us</h2>
+      <h2 class="text-2xl font-semibold mb-8" id="contact-heading">Contact Us</h2>
 
       <!-- two-column on lg+, single-column on sm/md -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div class="grid grid-cols-1  sm:grid-cols-2 gap-16">
         <!-- Store Hours (left column) -->
         <div>
           <h3 class="text-lg font-bold mb-4 text-left">
@@ -49,10 +54,10 @@
           <div
             v-for="(contact, idx) in block.contacts"
             :key="idx"
-            class="space-y-4 text-xl "
+            class="space-y-4 text-base sm:text-lg lg:text-xl"
           >
             <div class="flex items-start gap-3">
-              <span class="text-3xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.addressIcon]" />
               </span>
               <div class="text-left">
@@ -63,7 +68,7 @@
             </div>
 
             <div class="flex items-start gap-3">
-              <span class="text-3xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.phoneIcon]" />
               </span>
               <a
@@ -75,7 +80,7 @@
             </div>
 
             <div class="flex items-start gap-3">
-              <span class="text-3xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.emailIcon]" />
               </span>
               <a

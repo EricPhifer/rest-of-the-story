@@ -4,13 +4,13 @@ import groq from 'groq'
 const sitemapQuery = groq`
   *[_type == "sitemapSection"][0]{
     title,
-    linkGroups[] {
+    linkGroups[]{
       categoryTitle,
-      links[] {
+      links[]{
         label,
         internalLink->{
           title,
-          slug
+          slug { current }
         },
         externalUrl
       }

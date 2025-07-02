@@ -4,6 +4,9 @@ import PageView from '@/views/PageView.vue'
 const routes = [
   // 1. Root → /home
   { path: '/', redirect: '/home' },
+  { path: '/about', redirect: '/home#about' },
+  { path: '/consign', redirect: '/home#consign' },
+  { path: '/contact', redirect: '/home#contact' },
  
   // 2. Legal pages
   {
@@ -23,7 +26,7 @@ const routes = [
 
   // 4. FAQ
   {
-    path: '/faq',
+    path: '/faqs',
     name: 'FaqPage',
     component: () => import('@/views/FaqPage.vue')
   },

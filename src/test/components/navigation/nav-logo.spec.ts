@@ -2,7 +2,7 @@
 /// <reference types="vitest" />
 import { render, screen } from '@testing-library/vue'
 import { describe, it, expect } from 'vitest'
-import NavLogo from '@/components/navigation/nav-logo.vue'
+import NavLogo from '@/components/navigation/Logo.vue'
 
 describe('NavLogo.vue', () => {
   it('renders a link to home with the logo image', () => {

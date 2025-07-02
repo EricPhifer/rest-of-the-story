@@ -30,3 +30,15 @@
      focus:ring-[var(--color-accent-dark)]/50;
  }
 
+  @media screen and (orientation: landscape) and (max-width: 1080px) {
+    .hero {
+      height: 90svh;
+    }
+    .hero h1 {
+      @apply text-3xl leading-tight;
+    }
+    .hero p {
+      @apply text-lg max-w-xl;
+    }
+  }
+

@@ -1,6 +1,7 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 /// <reference types="vitest" />
 import { defineConfig } from 'vite'
+import pkg from './package.json'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
@@ -24,4 +25,8 @@ export default defineConfig({
       'vue': 'vue/dist/vue.esm-bundler.js'
     }
   },
+
+  define: {
+    __APP_VERSION__: JSON. stringify(pkg.version),
+  }
 })
