@@ -17,7 +17,7 @@
       default: () => []
     }
   })
-
+  
   // Pull out the text from each block’s children and join into one HTML string
   const htmlString = computed(() => {
     return props.mapEmbedBlocks
