@@ -193,11 +193,10 @@
   // Icons
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   // Components
+  import Map from './Map.vue'
   import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
   import Copyright from '@/components/footer/copyright/Copyright.vue'
   import { urlFor } from '@/sanity'
-  
-  const Map = defineAsyncComponent(() => import('./Map.vue'))
 
   // Ensure Pinia is active even in tests
   if (!getActivePinia()) {
