@@ -78,14 +78,17 @@ async function run() {
 
   // 4. Save them in one shot
   // v5 client method, no initIndex
-  const { objectIDs } = await algolia.saveObjects({
-    indexName: VITE_ALGOLIA_INDEX_NAME,
-    objects:   records,
-    // optional: auto‐generate if you omitted objectID
+  const index = algolia.initIndex(VITE_ALGOLIA_INDEX_NAME)
+  const response = await index.saveObjects(records, {
     autoGenerateObjectIDIfNotExist: false
   })
 
-  console.log(`✅  Synced ${objectIDs.length} records to ${VITE_ALGOLIA_INDEX_NAME}`)
+  console.log(`✅  Synced ${response.objectIDs?.length || 0} records to ${VITE_ALGOLIA_INDEX_NAME}`)
+  
+  if (!response.objectIDs) {
+    console.warn('⚠️  No objectIDs returned from Algolia response:', response)
+  }
+
 }
 
 run().catch(err => {
