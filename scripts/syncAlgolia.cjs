@@ -1,5 +1,5 @@
 // scripts/syncAlgolia.cjs
-const algoliasearch = require('algoliasearch')
+const algoliasearch = require('algoliasearch').default
 const { createClient } = require('@sanity/client')
 const dotenv = require('dotenv')
 
