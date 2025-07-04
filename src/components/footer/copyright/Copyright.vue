@@ -4,13 +4,16 @@
   >
     <!-- Legal Pages -->
     <div v-if="legalPages.length" class="space-x-1">
-      <template v-for="(page, idx) in legalPages" :key="page._id || page.slug.current">
-        <router-link
-          :to="`/${page.slug.current}`"
+      <template 
+        v-for="(page, idx) in legalPages" 
+        :key="page._id || page.slug.current"
+      >
+        <RouterLink
+          :to="`/legal/${page.slug.current}`"
           class="hover:underline"
         >
           {{ page.title }}
-        </router-link>
+        </RouterLink>
         <span v-if="idx < legalPages.length - 1">|</span>
       </template>
     </div>
@@ -32,36 +35,33 @@
         >
           {{ c.name }}
         </a>
-        <span v-if="idx < credits.length - 2">, </span>
-        <span v-else-if="idx === credits.length - 2"> &amp; </span>
+        <span v-if="idx < credits.length - 2">
+          , 
+        </span>
+        <span v-else-if="idx === credits.length - 2"> 
+          &amp; 
+        </span>
       </template>
     </div>
   </section>
 </template>
 
 <script setup>
-import { h } from 'vue'
-import { getActivePinia, setActivePinia, createPinia } from 'pinia'
+  import { h } from 'vue'
+  import { RouterLink } from 'vue-router'
+  import { getActivePinia, setActivePinia, createPinia } from 'pinia'
 
-// Activate Pinia in tests, just in case
-if (!getActivePinia()) {
-  setActivePinia(createPinia())
-}
-
-// Stub router-link here as well
-const RouterLink = {
-  props: { to: { type: String, required: true } },
-  setup(props, { slots, attrs }) {
-    return () => h('a', { ...attrs, href: props.to }, slots.default && slots.default())
+  // Activate Pinia in tests, just in case
+  if (!getActivePinia()) {
+    setActivePinia(createPinia())
   }
-}
 
-const props = defineProps({
-  companyName: { type: String, required: true },
-  legalPages:  { type: Array,  default: () => [] },
-  credits:     { type: Array,  default: () => [] }
-})
+  const props = defineProps({
+    companyName: { type: String, required: true },
+    legalPages:  { type: Array,  default: () => [] },
+    credits:     { type: Array,  default: () => [] }
+  })
 
-const { companyName, legalPages, credits } = props
-const currentYear = new Date().getFullYear()
+  const { companyName, legalPages, credits } = props
+  const currentYear = new Date().getFullYear()
 </script>

@@ -16,11 +16,18 @@ const routes = [
     props: true
   },
 
-  // 3. Blog posts
+  //  • Blog home
+  {
+    path: '/blog',
+    name: 'BlogHome',
+    component: () => import('@/views/blog/BlogHome.vue')
+  },
+
+  //  • Individual posts
   {
     path: '/blog/:slug',
     name: 'BlogPost',
-    component: () => import('@/views/BlogPost.vue'),
+    component: () => import('@/views/blog/BlogPost.vue'),
     props: true
   },
 

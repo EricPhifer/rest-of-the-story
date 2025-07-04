@@ -1,8 +1,8 @@
 <script setup>
   import { onMounted, ref, watch } from 'vue'
-  import { useRoute } from 'vue-router'
   import { client } from '@/sanity'
   import pageQuery from '@/queries/pages'
+  import { useHead } from '@vueuse/head'
 
   // Import components
   import NotFound from '@/components/NotFound.vue'
@@ -51,6 +51,20 @@
       const data = await client.fetch(pageQuery, { slug })
       if (!data) throw new Error('Page not found')
       page.value = data
+
+      useHead({
+        title: data.seo?.title || data.title,
+        meta: [
+          { name:    'description',               content: data.seo?.description || data.excerpt || '' },
+          { property: 'og:title',                 content: data.seo?.title    || data.title },
+          { property: 'og:description',           content: data.seo?.description || data.excerpt || '' },
+          { property: 'og:url',                   content: `${window.location.origin}/${props.slug}` },
+          // optional: main image if you have one
+          ...(data.mainImage?.asset?.url
+            ? [{ property: 'og:image', content: data.mainImage.asset.url }]
+            : []),
+        ]
+      })
     } catch (err) {
       error.value = err
     } finally {

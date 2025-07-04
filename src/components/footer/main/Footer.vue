@@ -53,7 +53,9 @@
                   class="info text-xl mt-0.5 text-[var(--color-white)]">
                 </FontAwesomeIcon>
                 <span class="text-lg text-left whitespace-pre-line leading-snug">
-                  {{ footer.main.contactInfo.address }}
+                  <PortableText 
+                    :value="footer.main.contactInfo.address">
+                  </PortableText>
                 </span>
               </li>
               <li v-if="footer.main.contactInfo.phone" class="flex items-start gap-2">
@@ -190,7 +192,7 @@
       :legalPages="footer.main.copyrightContent[0].legalPages"
       :credits="footer.main.copyrightContent[0].contributors"
       class="w-full"
-    />
+    ></Copyright>
   </div>
 </template>
 
@@ -206,6 +208,7 @@
   import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
   import Copyright from '@/components/footer/copyright/Copyright.vue'
   import { urlFor } from '@/sanity'
+  import { PortableText } from '@portabletext/vue'
 
   // Ensure Pinia is active even in tests
   if (!getActivePinia()) {

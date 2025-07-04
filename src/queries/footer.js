@@ -52,7 +52,7 @@ const footerMainQuery = groq`
     // Copyright & credits
     copyrightContent[] {
       companyName,
-      legalPages[]-> { title, slug },
+      legalPages[]->{ _id, title, slug },
       contributors[] { _key, name, url }
     }
   }

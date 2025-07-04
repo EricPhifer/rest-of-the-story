@@ -18,6 +18,7 @@ export default {
         maxLength: 96
       },
       validation: Rule => Rule.required()
+      // —Optionally add a uniqueness check here if you want to prevent two pages sharing the same slug.
     },
     {
       name: 'body',
@@ -27,8 +28,6 @@ export default {
     }
   ],
   preview: {
-    select: {
-      title: 'title'
-    }
+    select: { title: 'title' }
   }
 };

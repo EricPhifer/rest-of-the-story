@@ -1,5 +1,6 @@
 // src/main.js
 import { createApp } from 'vue'
+import { createHead } from '@vueuse/head'
 import './styles/app.pcss'
 import App from './App.vue'
 import InstantSearch from 'vue-instantsearch/vue3/es'
@@ -33,6 +34,7 @@ Sentry.init({
 app.component('font-awesome-icon', FontAwesomeIcon)
 
 // use plugins
+app.use(createHead())
 app.use(store)
 app.use(router)
 app.use(InstantSearch)
