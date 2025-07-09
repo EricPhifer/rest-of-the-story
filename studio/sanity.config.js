@@ -4,7 +4,6 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 import { colorInput } from '@sanity/color-input'
 import { muxInput } from 'sanity-plugin-mux-input'
-import heicUploader from './plugins/heicUploader'
 
 export default defineConfig({
   name: 'the-rest-of-the-story',
@@ -14,7 +13,6 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    heicUploader(),
     structureTool(), 
     visionTool(), 
     muxInput(),

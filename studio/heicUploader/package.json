@@ -1,5 +1,5 @@
 {
-  "name": "sanity-plugin-heicUploader",
+  "name": "sanity-plugin-heic-uploader",
   "version": "1.0.0",
   "description": "Convert HEIC images to JPEG on upload.",
   "keywords": [
@@ -43,7 +43,8 @@
     "watch": "pkg-utils watch --strict"
   },
   "dependencies": {
-    "@sanity/incompatible-plugin": "^1.0.5"
+    "@sanity/incompatible-plugin": "^1.0.5",
+    "heic2any": "^0.0.4"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "^7.9.3",
