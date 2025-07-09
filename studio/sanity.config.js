@@ -14,11 +14,11 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
+    heicUploader(),
     structureTool(), 
     visionTool(), 
     muxInput(),
-    colorInput(),
-    heicUploader
+    colorInput()
   ],
 
   schema: {
