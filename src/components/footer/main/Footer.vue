@@ -115,7 +115,7 @@
             </p>
             <RouterLink
               :to="`/${footer.main.blogSection.buttonSlug}`"
-              class="buttonesque px-4 py-2 rounded mb-6 border self-end"
+              class="buttonesque-dark px-4 py-2 rounded mb-6 border self-end"
             >
               {{ footer.main.blogSection.buttonText }}
             </RouterLink>

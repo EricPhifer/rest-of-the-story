@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   block: {
@@ -7,34 +7,35 @@ const props = defineProps({
     required: true
   }
 })
-
-const router = useRouter()
-
-function navigateInternal(ref) {
-  if (ref && ref.slug?.current) {
-    router.push({ name: 'Page', params: { slug: ref.slug.current } })
-  }
-}
 </script>
 
 <template>
-  <section class="my-10 flex justify-center">
+  <section 
+    class="my-12 px-4 sm:px-6 lg:px-12"
+    role="region"
+    aria-labelledby="button-section-heading"
+  >
+    <h2 id="button-section-heading" class="sr-only">Actions</h2>
     <div class="flex flex-wrap gap-4 justify-center">
-      <template v-for="(btn, index) in block.buttons" :key="index">
-        <button
-          v-if="btn.internalLink"
-          @click="navigateInternal(btn.internalLink)"
-          class="px-5 py-3 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition"
+      <template v-for="(btn, i) in block.buttons" :key="i">
+        <!-- Internal Link -->
+        <RouterLink
+          v-if="btn.internalLink?.slug?.current"
+          :to="{ name: 'Page', params: { slug: btn.internalLink.slug.current } }"
+          class="buttonesque block w-full sm:inline-block sm:w-auto px-5 py-3 font-medium rounded transition bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          :aria-label="`Go to ${btn.text}`"
         >
           {{ btn.text }}
-        </button>
+        </RouterLink>
 
+        <!-- External Link -->
         <a
-          v-else-if="btn.url"
+          v-else
           :href="btn.url"
           target="_blank"
-          rel="noopener"
-          class="px-5 py-3 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition"
+          rel="noopener noreferrer"
+          class="buttonesque block w-full sm:inline-block sm:w-auto px-5 py-3 font-medium rounded transition bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          :aria-label="`Open external link: ${btn.text}`"
         >
           {{ btn.text }}
         </a>

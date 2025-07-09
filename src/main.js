@@ -4,6 +4,7 @@ import { createHead } from '@vueuse/head'
 import './styles/app.pcss'
 import App from './App.vue'
 import InstantSearch from 'vue-instantsearch/vue3/es'
+import '@mux/mux-player'
 // Route and store imports
 import { router } from './router'
 import { store } from './store'
