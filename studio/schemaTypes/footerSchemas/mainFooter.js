@@ -28,9 +28,14 @@ export default {
           fields: [
             { name: 'label', type: 'string', title: 'Label' },
             {
+              title: 'Internal Links',
               name: 'internalLink',
               type: 'reference',
-              to: [{ type: 'page' }]
+              to: [
+                { type: 'page' },
+                { type: 'faqPage' },
+                { type: 'sitemapPage' }
+              ]
             }
           ],
           preview: {

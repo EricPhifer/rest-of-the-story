@@ -38,7 +38,14 @@ const routes = [
     component: () => import('@/views/FaqPage.vue')
   },
 
-  // 5. Your catch-all for regular pages (must be last)
+  // 5. SiteMap
+  {
+    path: '/sitemap',
+    name: 'Sitemap',
+    component: () => import('@/views/SiteMap.vue')
+  },
+
+  // 6. Your catch-all for regular pages (must be last)
   {
     path: '/:pathMatch(.*)*',
     name: 'Page',

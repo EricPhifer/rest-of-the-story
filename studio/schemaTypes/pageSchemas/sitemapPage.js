@@ -1,16 +1,23 @@
-// schemas/sitemapSection.js
 export default {
-  name: 'sitemapSection',
-  title: 'Sitemap Section',
+  name: 'sitemapPage',
   type: 'document',
+  title: 'Sitemap Page',
   fields: [
-    {
+     {
       name: 'title',
-      title: 'Sitemap Title',
       type: 'string',
-      description: 'Optional title for the sitemap page (not required).'
-    },
-    {
+      title: 'Page Title'
+     },
+     {
+        name: 'slug',
+        title: 'Slug',
+        type: 'slug',
+        options: {
+          source: () => 'sitemap',
+          slugify: () => 'sitemap'
+        }
+      },
+      {
       name: 'linkGroups',
       title: 'Link Groups',
       type: 'array',
@@ -67,5 +74,11 @@ export default {
         }
       ]
     }
-  ]
+
+  ],
+  preview: {
+    select: {
+      title: 'title',
+    }
+  }
 }

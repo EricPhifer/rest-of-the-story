@@ -9,6 +9,15 @@ export default {
       title: 'Page Title'
      },
      {
+        name: 'slug',
+        title: 'Slug',
+        type: 'slug',
+        options: {
+          source: () => 'faqs',
+          slugify: () => 'faqs'
+        }
+     },
+     {
       name: 'heroImage',
       type: 'image',
       title: 'Hero Image',

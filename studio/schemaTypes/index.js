@@ -2,11 +2,13 @@
 import page from './pageSchemas/page'
 import faqPage from './pageSchemas/faqPage'
 import legalPage from './pageSchemas/legalPage'
+import sitemapPage from './pageSchemas/sitemapPage'
 
 // Navigation Imports
 import navigation from './navSchemas/navigation'
 
 // Components Imports
+import formSection from './sectionSchemas/formSection'
 import heroSection from './sectionSchemas/heroSection'
 import textSection from './sectionSchemas/textSection'
 import imageSection from './sectionSchemas/imageSection'
@@ -16,12 +18,11 @@ import textImageSection from './sectionSchemas/textImageSection'
 import threeCardSection from './sectionSchemas/threeCardSection'
 import contactInfoSection from './sectionSchemas/contactInfoSection'
 import contactCardSection from './sectionSchemas/contactCardSection'
-import formSection from './sectionSchemas/formSection'
 
 // General Information Imports
+import contactInfo from './infoSchemas/contactInfo'
 import storeHoursEntry from './infoSchemas/storeHoursEntry'
 import socialMediaLink from './infoSchemas/socialMediaLink'
-import contactInfo from './infoSchemas/contactInfo'
 
 // Card Imports
 import phoneCard from './cardSchemas/phoneCard'
@@ -29,9 +30,9 @@ import emailCard from './cardSchemas/emailCard'
 import socialLinksCard from './cardSchemas/socialLinksCard'
 
 // Footer Imports
-import copyrightFooter from './footerSchemas/copyrightFooter'
 import mapEmbed from './footerSchemas/mapEmbed'
 import mainFooter from './footerSchemas/mainFooter'
+import copyrightFooter from './footerSchemas/copyrightFooter'
 
 // Blog Imports
 import post from './blogSchemas/post'
@@ -40,7 +41,6 @@ import category from './blogSchemas/category'
 import blockContent from './blogSchemas/blockContent'
 
 // Setting Imports
-import siteMapSettings from './settingSchemas/siteMapSettings'
 import siteSettings from './settingSchemas/siteSettings'
 
 export const schemaTypes = [
@@ -48,6 +48,7 @@ export const schemaTypes = [
  page,
  legalPage,
  faqPage,
+ sitemapPage,
  
  // Navigation Schemas
  navigation,
@@ -86,7 +87,6 @@ export const schemaTypes = [
  blockContent,
 
  // Setting Schemas
- siteMapSettings,
  siteSettings 
 
 ]

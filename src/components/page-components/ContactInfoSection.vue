@@ -14,7 +14,7 @@
 <template>
   <section 
     id="contact"
-    class="contact my-24 py-12 bg-gray-50 text-gray-900 overflow-x-hidden"
+    class="contact my-24 py-12 text-gray-900 overflow-x-hidden"
     role="region"
     aria-labelledby="contact-heading"
   >

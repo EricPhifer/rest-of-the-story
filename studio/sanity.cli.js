@@ -1,6 +1,7 @@
 import {defineCliConfig} from 'sanity/cli'
 
 export default defineCliConfig({
+  studioHost: 'the-rest-of-the-story',
   api: {
     projectId: 'xbjigamf',
     dataset: 'production'
