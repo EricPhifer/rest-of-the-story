@@ -21,7 +21,7 @@
     </h2>
 
     <mux-player
-      class="w-full aspect-video"
+      class="w-full md:w-3/4 aspect-video"
       :playback-id="block.video.asset.playbackId"
       metadata-viewer-user-id="guest"
       controls
