@@ -1,0 +1,6 @@
+# allow all crawlers full access
+User-agent: *
+Allow: /
+
+# point search engines at your sitemap
+Sitemap: https://therestofthestory.store/sitemap.xml

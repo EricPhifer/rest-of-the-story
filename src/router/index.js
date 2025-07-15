@@ -1,29 +1,65 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import PageView from '@/views/PageView.vue'
 
 const routes = [
+  // 1. Root → /home
+  { path: '/', redirect: '/home' },
+  { path: '/about', redirect: '/home#about' },
+  { path: '/consign', redirect: '/home#consign' },
+  { path: '/contact', redirect: '/home#contact' },
+ 
+  // 2. Legal pages
   {
-    path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue'),
+    path: '/legal/:slug',
+    name: 'LegalPage',
+    component: () => import('@/views/LegalPage.vue'),
+    props: true
   },
+
+  //  • Blog home
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
+    path: '/blog',
+    name: 'BlogHome',
+    component: () => import('@/views/blog/BlogHome.vue')
   },
+
+  //  • Individual posts
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
+    path: '/blog/:slug',
+    name: 'BlogPost',
+    component: () => import('@/views/blog/BlogPost.vue'),
+    props: true
   },
+
+  // 4. FAQ
   {
-    path: '/consign',
-    name: 'Consign',
-    component: () => import('../views/Consign.vue'),
+    path: '/faqs',
+    name: 'FaqPage',
+    component: () => import('@/views/FaqPage.vue')
   },
+
+  // 5. SiteMap
+  {
+    path: '/sitemap',
+    name: 'Sitemap',
+    component: () => import('@/views/SiteMap.vue')
+  },
+
+  // 6. Your catch-all for regular pages (must be last)
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Page',
+    component: PageView,
+    // pass the full pathMatch as “slug” to your PageView
+     props: route => {
+      let slug = route.params.pathMatch
+      if (Array.isArray(slug)) slug = slug.join('/')
+      return { slug: slug || 'home' }
+    }
+  }
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })

@@ -1,0 +1,14 @@
+/* legal-pages.pcss */
+.legal-pages h2 {
+  @apply w-full relative my-4 pb-4;
+}
+
+.legal-pages h2::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-[60%] border-b-4 border-[var(--color-accent)];
+}
+
+
+.legal-pages p {
+ @apply my-4;
+}

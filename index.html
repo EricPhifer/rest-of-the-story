@@ -1,15 +1,69 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
+    <!-- 1. Charset & viewport (essential) -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- 2. DNS-prefetch / preconnect for third-party origins -->
+    <link rel="dns-prefetch" href="//kit.fontawesome.com" />
+    <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin />
+    <link rel="dns-prefetch" href="//scripts.simpleanalyticscdn.com" />
+    <link rel="preconnect" href="https://scripts.simpleanalyticscdn.com" crossorigin />
+
+    <!-- 3. Favicon & manifest -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- 4. Canonical & robots -->
+    <link rel="canonical" href="https://therestofthestory.store/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- 5. Core meta -->
+    <title>The Rest of the Story Consignment</title>
+    <meta name="description" content="The Rest of the Story is a consignment store. We have high-quality, pre-loved clothing and essentials for families in Elizabeth, CO who want the best for their kids." />
+
+    <!-- 6. Social/Open Graph -->
+    <meta property="og:site_name" content="The Rest of the Story Consignment" />
+    <meta property="og:title" content="The Rest of the Story Consignment" />
+    <meta property="og:description" content="High-quality, pre-loved clothing and essentials for families in Elizabeth, CO." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://therestofthestory.store/" />
+    <!-- add your primary preview image here -->
+    <!--<meta property="og:image"       content="https://therestofthestory.store/og-image.jpg" />-->
+
+    <!-- 7. Twitter cards -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@YourTwitterHandle" />
+    <meta name="twitter:title" content="The Rest of the Story Consignment" />
+    <meta name="twitter:description" content="High-quality, pre-loved clothing and essentials for families in Elizabeth, CO." />
+    <!-- optionally: <meta name="twitter:image" content="https://therestofthestory.store/twitter-image.jpg" /> -->
+
+    <!-- 8. Algolia & other verifications -->
+    <meta name="algolia-site-verification" content="3890EDE2FAB8839B" />
+
+    <!-- 9. FontAwesome kit (preconnected above) -->
+    <script
+      src="https://kit.fontawesome.com/cf06d482b1.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+
+    <!-- 10. Critical inlined CSS (optional) -->
+    <!-- <style>…your critical-banner-and-header CSS…</style> -->
   </head>
+
   <body>
     <div id="app"></div>
+
+    <!-- 11. Your SPA entrypoint (type=module is deferred by default) -->
     <script type="module" src="/src/main.js"></script>
-    <!-- 100% privacy-first analytics -->
-    <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
+    <!-- 12. Privacy-first analytics (async) -->
+    <script
+      data-collect-dnt="true"
+      async
+      src="https://scripts.simpleanalyticscdn.com/latest.js"
+    ></script>
   </body>
 </html>

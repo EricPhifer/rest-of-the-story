@@ -1,0 +1,28 @@
+.cards {
+ @apply my-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+}
+
+.cards article {
+ @apply flex flex-col rounded-lg shadow-md;
+}
+
+.cards h3 {
+ @apply text-xl md:text-2xl mb-3;
+}
+
+.cards p {
+ @apply text-left mb-6;
+}
+
+.cards a {
+ @apply mt-auto inline-block 
+        bg-[var(--color-accent)]
+        hover:bg-[var(--color-primary-dark)]
+        text-white
+        uppercase
+        text-sm
+        font-semibold
+        px-4 py-2
+        rounded
+        transition;
+}

@@ -2,6 +2,7 @@
 node_modules/
 dist/
 .env
+.env.*
 
 # VSCode
 .vscode/
@@ -22,3 +23,6 @@ studio/.git
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Local Netlify folder
+.netlify

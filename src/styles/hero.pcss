@@ -1,0 +1,44 @@
+ /* Heading */
+ .hero h1 {
+   @apply text-3xl md:text-5xl font-bold leading-tight whitespace-pre-wrap text-white;
+   text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+ }
+
+ /* Subheading/body */
+ .hero .subtitle {
+   @apply text-lg md:text-2xl font-semibold leading-relaxed text-white;
+   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+ }
+
+ /* CTA button/link */
+ .hero .cta {
+   @apply
+     bg-[var(--color-off-white)]
+     hover:bg-[var(--color-accent-dark)]
+     text-[var(--color-accent-dark)]
+     hover:text-[var(--color-off-white)]
+     border-2
+     border-[var(--color-accent-dark)]
+     hover:border-[var(--color-off-white)]
+     px-4
+     py-2
+     rounded
+     transition
+     drop-shadow
+     focus:outline-none
+     focus:ring-4
+     focus:ring-[var(--color-accent-dark)]/50;
+ }
+
+  @media screen and (orientation: landscape) and (max-width: 1080px) {
+    .hero {
+      height: 90svh;
+    }
+    .hero h1 {
+      @apply text-3xl leading-tight;
+    }
+    .hero p {
+      @apply text-lg max-w-xl;
+    }
+  }
+
