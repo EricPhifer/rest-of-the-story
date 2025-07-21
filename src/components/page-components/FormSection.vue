@@ -20,7 +20,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <section class="my-12 px-4 max-w-4xl mx-auto">
+  <section class="form-section my-12 p-16 ">
     <div class="mb-6 text-center">
       <h2 class="text-3xl font-bold">{{ block.formTitle }}</h2>
       <div 
@@ -31,11 +31,24 @@ function handleSubmit() {
       </div>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="space-y-6">
-      <div v-for="(field, index) in block.fields" :key="index">
-        <label :for="field.name" class="block font-medium mb-1">{{ field.label }}</label>
+   <form @submit.prevent="handleSubmit" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <template v-for="(field, index) in block.fields" :key="index">
+      <!-- Make textareas span full width -->
+      <div :class="field.type === 'textarea' ? 'md:col-span-2' : ''">
+        <label
+          :for="field.name"
+          class="block font-bold mb-1"
+        >
+          {{ field.label }}
+          <span
+            v-if="!field.required"
+            class="text-sm ml-1"
+          >
+            (Optional)
+          </span>
+        </label>
 
-        <!-- Input Fields -->
+        <!-- Text / Email -->
         <input
           v-if="field.type === 'text' || field.type === 'email'"
           :type="field.type"
@@ -54,6 +67,7 @@ function handleSubmit() {
           :required="field.required"
           @input="e => handleInput(field.name, e.target.value)"
           class="w-full border border-gray-300 px-3 py-2 rounded"
+          rows="5"
         ></textarea>
 
         <!-- Select -->
@@ -66,13 +80,27 @@ function handleSubmit() {
           class="w-full border border-gray-300 px-3 py-2 rounded"
         >
           <option disabled value="">Please select</option>
-          <option v-for="(option, i) in field.options" :key="i" :value="option">{{ option }}</option>
+          <option
+            v-for="(option, i) in field.options"
+            :key="i"
+            :value="option"
+          >
+            {{ option }}
+          </option>
         </select>
       </div>
+    </template>
 
-      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+    <!-- Submit Button -->
+    <div class="md:col-span-2 flex justify-end mt-2">
+      <button
+        type="submit"
+        class="bg-[var(--color-secondary-dark)] text-white px-6 py-2 rounded hover:bg-[var(--color-secondary-light)] hover:text-[var(--color-secondary-dark)] transition-colors duration-200"
+      >
         Submit
       </button>
-    </form>
+    </div>
+  </form>
+
   </section>
 </template>

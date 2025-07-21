@@ -19,12 +19,18 @@
     aria-labelledby="contact-heading"
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold mb-8" id="contact-heading">Contact Us</h2>
+      <h2 
+        class="text-2xl font-semibold mb-8" 
+        id="contact-heading"
+      >
+        Contact Us
+      </h2>
 
-      <!-- two-column on lg+, single-column on sm/md -->
-      <div class="grid grid-cols-1  sm:grid-cols-2 gap-16">
+      <!-- two-column on sm+, single-column on sm/md -->
+      <div :class="['grid grid-cols-1 gap-16',
+      block.hours ? 'sm:grid-cols-2' : '']">
         <!-- Store Hours (left column) -->
-        <div>
+        <div v-if="block.hours">
           <h3 class="text-lg font-bold mb-4 text-left">
             Store Hours
           </h3>
@@ -50,11 +56,13 @@
         </div>
 
         <!-- Contact Entries (right column) -->
-        <div class="grid grid-cols-1 gap-10">
+        <div :class="block.hours ? 'grid grid-cols-1 gap-10' : ''">
           <div
             v-for="(contact, idx) in block.contacts"
             :key="idx"
-            class="space-y-4 text-base sm:text-lg lg:text-xl"
+            class=""
+            :class="['space-y-4 text-base sm:text-lg lg:text-xl',
+            block.hours ? '' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10']"
           >
             <div class="flex items-start gap-3">
               <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
