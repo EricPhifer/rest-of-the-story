@@ -7,7 +7,6 @@ const pageQuery = groq`
     content[] {
       _key,
       _type,
-
       ...select(_type == "heroSection" => {
         heading,
         body,
@@ -25,12 +24,10 @@ const pageQuery = groq`
           "url": internalLink->slug
         }
       }),
-
       ...select(_type == "textSection" => {
         heading,
         body
       }),
-
       ...select(_type == "textImageSection" => {
         heading,
         body,
@@ -45,7 +42,6 @@ const pageQuery = groq`
         altText,
         imagePosition
       }),
-
       ...select(_type == "imageSection" => {
         heading,
         body,
@@ -62,7 +58,6 @@ const pageQuery = groq`
           url
         }
       }),
-
       ...select(_type == "videoSection" => {
         title,
         video {
@@ -71,7 +66,6 @@ const pageQuery = groq`
           }
         }
       }),
-
      ...select(_type == "contactInfoSection" => {
         hours[] {
           days,
@@ -89,8 +83,6 @@ const pageQuery = groq`
           emailIcon
         }
       }),
-
-      
       ...select(_type == "threeCardSection" => {
         cards[] {
           number,
@@ -111,7 +103,6 @@ const pageQuery = groq`
           }
         }
       }),
-      
       ...select(_type == "buttonSection" => {
         buttons[] {
           text,
@@ -121,25 +112,24 @@ const pageQuery = groq`
           }
         }
       }),
-
       ...select(_type == "contactCardSection" => {
-        phone {
+        "phone": contactCards[_type == "phoneCard"][0]{
           label,
-          value,
+          "value": number,
           icon
         },
-        email {
+        "email": contactCards[_type == "emailCard"][0]{
           label,
-          value,
+          "value": address,
           icon
         },
-        socialMedia[] {
+        "socialLabel": contactCards[_type == "socialLinksCard"][0].label,
+        "socialMedia": contactCards[_type == "socialLinksCard"][0].links[]{
           label,
           url,
           icon
         }
       }),
-
       ...select(_type == "formSection" => {
         formTitle,
         formDescription,
@@ -151,11 +141,9 @@ const pageQuery = groq`
           options
         }
       }),
-      
       ...select(_type == "footerSection" => {
         mapEmbedBlocks
       }),
-      
       ...select(_type == "copyrightSection" => {
         companyName,
         legalPages[]->{
@@ -166,7 +154,7 @@ const pageQuery = groq`
           name,
           url
         }
-      }),
+      })
     }
   }
 `;
