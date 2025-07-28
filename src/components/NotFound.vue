@@ -1,9 +1,9 @@
 <!-- src/components/NotFound.vue -->
 <template>
   <div class="text-center py-20 text-gray-600">
-    <h2 class="text-4xl font-bold text-red-500">
+    <h1 class="text-4xl font-bold text-red-500">
       404
-    </h2>
+    </h1>
     <p class="mt-2 text-xl">
       Sorry, the page you’re looking for doesn’t exist.
     </p>
