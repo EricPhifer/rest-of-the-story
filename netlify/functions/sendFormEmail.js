@@ -45,8 +45,8 @@ export async function handler(event) {
 
     await client.sendEmail({
       From: 'info@therestofthestory.store',
-      To: 'eric@ericphiferllc.com', // For testing
-      // To: 'info@therestofthestory.store',
+      // To: 'eric@ericphiferllc.com', // For testing
+      To: 'info@therestofthestory.store',
       Subject: 'New Form Submission',
       HtmlBody: messageHtml,
       TextBody: Object.entries(data)
