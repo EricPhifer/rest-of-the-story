@@ -39,6 +39,9 @@ import post from './blogSchemas/post'
 import author from './blogSchemas/author'
 import category from './blogSchemas/category'
 import blockContent from './blogSchemas/blockContent'
+import finalNote from './blogSchemas/finalNote'
+import blogCardsSection from './blogSchemas/blogCardsSection'
+import blogCategoriesSection from './blogSchemas/blogCategoriesSection'
 
 // Setting Imports
 import siteSettings from './settingSchemas/siteSettings'
@@ -84,7 +87,10 @@ export const schemaTypes = [
  post, 
  author, 
  category, 
+ finalNote,
  blockContent,
+ blogCardsSection,
+ blogCategoriesSection,
 
  // Setting Schemas
  siteSettings 

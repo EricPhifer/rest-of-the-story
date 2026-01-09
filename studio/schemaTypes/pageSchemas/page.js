@@ -15,7 +15,8 @@ export default {
       title: 'Slug',
       options: {
         source: 'title',
-        maxLength: 96
+        maxLength: 96,
+        required: true
       }
     },
     {
@@ -33,6 +34,8 @@ export default {
         { type: 'contactInfoSection' },
         { type: 'contactCardSection' },
         { type: 'formSection' },
+        { type: 'blogCardsSection' },
+        { type: 'blogCategoriesSection' }
       ]
     }
   ]
