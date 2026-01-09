@@ -13,21 +13,6 @@ const routes = [
     props: true
   },
 
-  //  • Blog home
-  {
-    path: '/blog',
-    name: 'BlogHome',
-    component: () => import('@/views/blog/BlogHome.vue')
-  },
-
-  //  • Individual posts
-  {
-    path: '/blog/:slug',
-    name: 'BlogPost',
-    component: () => import('@/views/blog/BlogPost.vue'),
-    props: true
-  },
-
   // 4. FAQ
   {
     path: '/faqs',
@@ -41,8 +26,31 @@ const routes = [
     name: 'Sitemap',
     component: () => import('@/views/SiteMap.vue')
   },
+  
+  // Blog Categories List
+  {
+    path: '/blog-pages/category',
+    name: 'BlogCategoriesListPage',
+    component: () => import('@/views/blog-pages/BlogCategoriesListPage.vue')
+  },
 
-  // 6. Your catch-all for regular pages (must be last)
+  // Blog Category pages
+  {
+    path: '/blog-pages/category/:slug',
+    name: 'BlogCategoryPage',
+    component: () => import('@/views/blog-pages/BlogCategoryPage.vue'),
+    props: true
+  },
+
+  // Individual posts
+  {
+    path: '/blog-pages/:slug',
+    name: 'BlogPost',
+    component: () => import('@/views/blog-pages/BlogPost.vue'),
+    props: true
+  },
+
+   // 6. Your catch-all for regular pages (must be last)
   {
     path: '/:pathMatch(.*)*',
     name: 'Page',
@@ -53,10 +61,17 @@ const routes = [
       if (Array.isArray(slug)) slug = slug.join('/')
       return { slug: slug || 'home' }
     }
-  }
+  },
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })

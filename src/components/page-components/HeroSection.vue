@@ -1,6 +1,7 @@
 <script setup>
   import { PortableText } from '@portabletext/vue'
   import { RouterLink } from 'vue-router'
+  import { urlFor } from '@/sanity'
 
   const props = defineProps({
     block: {
@@ -14,7 +15,7 @@
   })
 
   const appVersion = __APP_VERSION__
-  const imageUrl = props.block.image?.asset?.url
+  const imageUrl = props.block.image
   const button   = props.block.button
 
   function isVersion1(version) {
@@ -42,7 +43,7 @@
 <template>
   <section
     v-if="imageUrl"
-    :style="`background-image: url(${imageUrl})`"
+    :style="`background-image: url(${urlFor(imageUrl, { width: 2000, height: 1200, fit: 'crop' })})`"
     class="hero relative h-[60svh] md:h-[80svh] bg-center bg-cover bg-no-repeat overflow-hidden"
     role="region"
     aria-labelledby="hero-heading"
