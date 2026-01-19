@@ -147,11 +147,13 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useHead } from '@vueuse/head'
 import { client } from '@/sanity'
 import { categoryOnly, postsForCategory } from '@/queries/blogCategories.js'
 import blogCategoriesQuery from '@/queries/blogCategories.js'
 import BlogCards from '@/components/Blogs/BlogCards.vue'
 import BlogCategories from '@/components/Blogs/BlogCategories.vue'
+import { truncateForDescription } from '@/composables/useStructuredData'
 
 const route = useRoute()
 
@@ -170,6 +172,31 @@ const loadingMore = ref(false)
 const otherCategories = computed(() => {
   if (!category.value?._id || !allCategories.value.length) return []
   return allCategories.value.filter(cat => cat._id !== category.value._id)
+})
+
+// SEO: Dynamic meta tags for category page
+useHead(() => {
+  const cat = category.value
+  if (!cat) return { title: 'Loading...' }
+
+  const title = `${cat.title} | Blog Categories`
+  const desc = truncateForDescription(cat.description || `Browse articles in the ${cat.title} category`)
+  const url = typeof window !== 'undefined' ? window.location.href : `/blog-pages/category/${cat.slug?.current}`
+  const image = cat.image?.asset?.url
+
+  return {
+    title,
+    meta: [
+      { name: 'description', content: desc },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: desc },
+      { property: 'og:url', content: url },
+      ...(image ? [{ property: 'og:image', content: image }] : [])
+    ],
+    link: [
+      { rel: 'canonical', href: url }
+    ]
+  }
 })
 
 watch(

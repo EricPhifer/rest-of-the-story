@@ -1,14 +1,54 @@
 <script setup>
   import { onMounted, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
+  import { useHead } from '@vueuse/head'
   import { client } from '@/sanity'
   import legalPageQuery from '@/queries/legalPages'
   import { PortableText } from '@portabletext/vue'
+  import { truncateForDescription } from '@/composables/useStructuredData'
 
   const route   = useRoute()
   const page    = ref(null)
   const loading = ref(true)
   const error   = ref(null)
+
+  // SEO: Dynamic meta tags
+  useHead(() => {
+    const p = page.value
+    if (!p) return { title: 'Loading...' }
+
+    const title = p.title
+    const desc = truncateForDescription(extractTextFromBody(p.body))
+    const url = typeof window !== 'undefined' ? window.location.href : `/legal/${p.slug?.current}`
+
+    return {
+      title,
+      meta: [
+        { name: 'description', content: desc },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: desc },
+        { property: 'og:url', content: url }
+      ],
+      link: [
+        { rel: 'canonical', href: url }
+      ]
+    }
+  })
+
+  function extractTextFromBody(body) {
+    if (!body || !Array.isArray(body)) return ''
+    return body
+      .filter(block => block._type === 'block')
+      .map(block => {
+        if (!block.children) return ''
+        return block.children
+          .filter(child => child._type === 'span')
+          .map(span => span.text)
+          .join('')
+      })
+      .join(' ')
+      .slice(0, 300)
+  }
 
   async function fetchPage() {
     loading.value = true

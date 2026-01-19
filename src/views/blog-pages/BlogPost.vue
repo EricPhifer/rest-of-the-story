@@ -96,10 +96,12 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useHead } from '@vueuse/head'
 import { PortableText } from '@portabletext/vue'
 import { client, urlFor } from '@/sanity'
 import { blogPostQuery } from '@/queries/blogPost.js'
 import FinalNote from '@/components/Blogs/FinalNote.vue'
+import { useBlogPostSchema, truncateForDescription } from '@/composables/useStructuredData'
 
 const route = useRoute()
 
@@ -128,6 +130,65 @@ watch(
   (slug) => slug && fetchPost(String(slug)),
   { immediate: true }
 )
+
+// SEO: Dynamic meta tags
+useHead(() => {
+  const p = post.value
+  if (!p) return { title: 'Loading...' }
+
+  const title = p.title
+  const desc = truncateForDescription(extractExcerpt(p.body))
+  const url = typeof window !== 'undefined' ? window.location.href : `/blog-pages/${p.slug}`
+  const image = p.mainImage?.asset?.url
+
+  return {
+    title,
+    meta: [
+      { name: 'description', content: desc },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: desc },
+      { property: 'og:url', content: url },
+      { property: 'og:type', content: 'article' },
+      ...(image ? [{ property: 'og:image', content: image }] : []),
+      ...(p.publishedAt ? [{ property: 'article:published_time', content: p.publishedAt }] : [])
+    ],
+    link: [
+      { rel: 'canonical', href: url }
+    ]
+  }
+})
+
+// SEO: Structured data for blog posts
+watch(
+  () => post.value,
+  (p) => {
+    if (p) {
+      useBlogPostSchema({
+        title: p.title,
+        slug: p.slug,
+        publishedAt: p.publishedAt,
+        mainImage: p.mainImage,
+        author: p.author
+      })
+    }
+  },
+  { immediate: true }
+)
+
+function extractExcerpt(body) {
+  if (!body || !Array.isArray(body)) return ''
+  return body
+    .filter(block => block._type === 'block')
+    .map(block => {
+      if (!block.children) return ''
+      return block.children
+        .filter(child => child._type === 'span')
+        .map(span => span.text)
+        .join('')
+    })
+    .join(' ')
+    .slice(0, 300)
+}
 
 const hasCategories = computed(() => Array.isArray(post.value?.categories) && post.value.categories.length > 0)
 
