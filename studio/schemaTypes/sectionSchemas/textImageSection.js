@@ -37,6 +37,22 @@ export default {
       initialValue: 'right'
     },
     {
+      name: 'imageFit',
+      type: 'string',
+      title: 'Image Display Mode',
+      description: 'Auto detects based on aspect ratio. Override if needed.',
+      options: {
+        list: [
+          { title: 'Auto (Recommended)', value: 'auto' },
+          { title: 'Cover (fill space, may crop)', value: 'cover' },
+          { title: 'Contain (show full image)', value: 'contain' }
+        ],
+        layout: 'radio',
+        direction: 'horizontal'
+      },
+      initialValue: 'auto'
+    },
+    {
       name: 'body',
       title: 'Body',
       type: 'array',

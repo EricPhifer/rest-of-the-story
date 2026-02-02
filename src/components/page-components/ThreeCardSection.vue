@@ -47,9 +47,9 @@ const { block } = defineProps({
           : 'bg-[var(--color-accent-dark)] text-[var(--color-white)]']"
       >
         <!-- icon or image -->
-        <div v-if="card.iconImage?.asset?.url" class="min-h-[12rem] w-full">
+        <div v-if="card.iconImage?.asset?.url" class="h-48 w-full overflow-hidden">
           <img
-            :src="urlFor(card.iconImage)"
+            :src="urlFor(card.iconImage, { width: 400, height: 192, fit: 'crop' })"
             :alt="card.altText || card.heading || ''"
             class="w-full h-full object-cover"
           />

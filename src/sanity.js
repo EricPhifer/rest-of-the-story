@@ -11,14 +11,20 @@ export const client = createClient({
 const builder = imageUrlBuilder(client)
 
 export function urlFor(source, options = {}) {
-  const width = options.width ?? 600
-  const height = options.height ?? 400
   let image = builder
     .image(source)   // automatically reads hotspot & crop
-    .width(width)    // choose your desired dimensions
-    .height(height)
     .auto('format')  // best format (jpeg/webp/avif)
 
-  if (options.fit) image = image.fit(options.fit)
+  // Only set dimensions if explicitly provided
+  if (options.width) image = image.width(options.width)
+  if (options.height) image = image.height(options.height)
+
+  // Default to 'max' fit to preserve aspect ratio, allow override
+  image = image.fit(options.fit ?? 'max')
+
+  // Optional max dimension (useful for constraining large images)
+  if (options.maxWidth) image = image.maxWidth(options.maxWidth)
+  if (options.maxHeight) image = image.maxHeight(options.maxHeight)
+
   return image.url()
 }

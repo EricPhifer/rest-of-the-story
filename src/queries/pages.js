@@ -29,9 +29,10 @@ const pageQuery = groq`
       ...select(_type == "textImageSection" => {
         heading,
         body,
-        image{asset->{_id, url}, hotspot, crop},
+        image{asset->{_id, url, metadata{dimensions}}, hotspot, crop},
         altText,
-        imagePosition
+        imagePosition,
+        imageFit
       }),
 
       ...select(_type == "imageSection" => {
