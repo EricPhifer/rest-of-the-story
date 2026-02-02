@@ -1,16 +1,5 @@
 <template>
-  <!-- Debug: Show loading/error states -->
-  <div v-if="footer.isLoading" class="w-full py-4 text-center text-gray-500">
-    Loading footer...
-  </div>
-  <div v-else-if="footer.error" class="w-full py-4 text-center text-red-500">
-    Footer error: {{ footer.error.message || footer.error }}
-  </div>
-  <div v-else-if="!footer.loaded" class="w-full py-4 text-center text-gray-500">
-    Footer not loaded (no data from Sanity)
-  </div>
-
-  <div v-if="footer.loaded" class="w-screen z-50">
+  <div v-if="footer.loaded" class="w-full z-50">
     <!-- Map Embed -->
     <Map
       v-if="footer.main.mapContent?.length"
@@ -18,179 +7,160 @@
       class="w-full"
     ></Map>
 
-    <footer class="w-full bg-[var(--color-secondary-dark)] text-white py-12 px-6">
-      <div class="max-w-7xl mx-auto flex flex-wrap items-stretch gap-8 md:gap-6">
+    <footer class="w-full bg-[var(--color-secondary-dark)] text-white py-8 sm:py-12 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Mobile: Stack vertically, Desktop: 3-column grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6">
 
-        <!-- Left: Logo, Nav Links, Search -->
-        <div class="left w-full flex flex-1 flex-wrap flex-col items-stretch">
-          <div class="logo-links flex-1 flex items-start gap-6">
-          <!-- Logo -->
+          <!-- Column 1: Logo & Nav Links -->
+          <div class="flex flex-col items-center md:flex-row md:items-start gap-4 lg:gap-6">
+            <!-- Logo -->
             <RouterLink to="/" class="inline-block flex-shrink-0">
               <img
                 v-if="footer.main.logo?.asset?.url"
                 :src="urlFor(footer.main.logo.asset.url)"
                 alt="The Rest of the Story Logo"
-                class="h-20 sm:h-24 min-w-[80px]"
+                class="h-16 sm:h-20 lg:h-24"
               />
             </RouterLink>
             <!-- Nav Links -->
-            <nav class="nav-links flex flex-col gap-2 text-left grow">
+            <nav class="flex flex-col items-center md:items-start gap-1">
               <RouterLink
                 v-for="link in footer.main.navLinks"
                 :key="link._key"
                 :to="`/${link.slug}`"
-                class="text-lg uppercase hover:text-[var(--color-accent-light)] hover:underline transition-colors duration-200"
+                class="text-base sm:text-lg uppercase hover:text-[var(--color-accent-light)] transition-colors duration-200"
               >
                 {{ link.label }}
               </RouterLink>
             </nav>
           </div>
-           <!-- Search -->
-          <div class="footer-search flex-1 mt-4">
-            <!-- <h6>Find Something New</h6>
-            <AlgoliaSearchInput /> -->
-          </div>
-        </div>
 
-        <!-- Center: Contact & Social -->
-        <div class="center w-full flex flex-1 flex-col gap-6">
-          <div class="contact-us"> 
-            <h2>Contact Us</h2>
-            <ul class="space-y-3 text-sm">
-              <li v-if="footer.main.contactInfo.address" class="flex items-start gap-2">
-                <FontAwesomeIcon 
-                  :icon="['fas', `${footer.main.contactInfo.addressIcon}`]" 
-                  aria-hidden="true"  
-                  class="info text-xl mt-0.5 text-[var(--color-white)]">
-                </FontAwesomeIcon>
-                <span class="text-lg text-left whitespace-pre-line leading-snug">
-                  <PortableText 
-                    :value="footer.main.contactInfo.address">
-                  </PortableText>
-                </span>
-              </li>
-              <li v-if="footer.main.contactInfo.phone" class="flex items-start gap-2">
-                <a :href="`tel:${footer.main.contactInfo.phone}`" class="flex items-start gap-2">
-                  <FontAwesomeIcon 
-                  :icon="['fas', `${footer.main.contactInfo.phoneIcon}`]" 
-                  aria-hidden="true"  
-                    class="info text-xl text-[var(--color-white)]">
-                  </FontAwesomeIcon>
-                  <span class="text-lg">
-                    {{ footer.main.contactInfo.phone }}
+          <!-- Column 2: Contact & Social -->
+          <div class="flex flex-col items-center md:items-start gap-6">
+            <!-- Contact Us -->
+            <div class="text-left">
+              <h2 class="text-xl font-bold mb-3">Contact Us</h2>
+              <ul class="list-none p-0 m-0 space-y-3">
+                <li v-if="footer.main.contactInfo.address" class="flex items-start gap-2 justify-start">
+                  <FontAwesomeIcon
+                    :icon="['fas', `${footer.main.contactInfo.addressIcon}`]"
+                    aria-hidden="true"
+                    class="text-lg mt-0.5 flex-shrink-0"
+                  />
+                  <span class="text-sm sm:text-base text-left whitespace-pre-line leading-snug">
+                    <PortableText :value="footer.main.contactInfo.address" />
                   </span>
+                </li>
+                <li v-if="footer.main.contactInfo.phone">
+                  <a
+                    :href="`tel:${footer.main.contactInfo.phone}`"
+                    class="flex items-center gap-2 justify-start hover:text-[var(--color-accent-light)]"
+                  >
+                    <FontAwesomeIcon
+                      :icon="['fas', `${footer.main.contactInfo.phoneIcon}`]"
+                      aria-hidden="true"
+                      class="text-lg flex-shrink-0"
+                    />
+                    <span class="text-sm sm:text-base">{{ footer.main.contactInfo.phone }}</span>
+                  </a>
+                </li>
+                <li v-if="footer.main.contactInfo.email">
+                  <a
+                    :href="`mailto:${footer.main.contactInfo.email}`"
+                    class="flex items-center gap-2 justify-start hover:text-[var(--color-accent-light)]"
+                  >
+                    <FontAwesomeIcon
+                      :icon="['fas', `${footer.main.contactInfo.emailIcon}`]"
+                      aria-hidden="true"
+                      class="text-lg flex-shrink-0"
+                    />
+                    <span class="text-sm sm:text-base break-all">{{ footer.main.contactInfo.email }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="text-left">
+              <h2 class="text-xl font-bold mb-3">Follow Us</h2>
+              <div class="flex justify-start gap-4">
+                <a
+                  v-for="item in footer.main.socialMediaLinks"
+                  :key="item.url"
+                  :href="item.url"
+                  target="_blank"
+                  rel="noopener"
+                  :aria-label="item.platform"
+                  class="hover:text-[var(--color-accent-light)] transition-colors"
+                >
+                  <FontAwesomeIcon
+                    :icon="parseIcon(item.icon)"
+                    aria-hidden="true"
+                    class="text-3xl sm:text-4xl lg:text-5xl"
+                  />
                 </a>
-              </li>
-              <li v-if="footer.main.contactInfo.email" class="flex items-start gap-2">
-                <a :href="`mailto:${footer.main.contactInfo.email}`" class="flex items-start gap-2">
-                  <FontAwesomeIcon 
-                  :icon="['fas', `${footer.main.contactInfo.emailIcon}`]" 
-                  aria-hidden="true"  
-                    class="info text-xl text-[var(--color-white)]">
-                  </FontAwesomeIcon>
-                  <span class="text-lg">
-                    {{ footer.main.contactInfo.email }}
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="follow-us">
-            <h2>Follow Us</h2>
-            <div class="flex space-x-4">
-              <a
-                v-for="item in footer.main.socialMediaLinks"
-                :key="item.url"
-                :href="item.url"
-                target="_blank"
-                rel="noopener"
-                class="text-2xl"
-                :aria-label="item.platform"
-              >
-                <FontAwesomeIcon 
-                  :icon="parseIcon(item.icon)" 
-                  aria-hidden="true"  
-                  class="social text-6xl text-[var(--color-white)]">
-                </FontAwesomeIcon>
-              </a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Right: Blog & Newsletter -->
-        <div class="right w-full flex-1 lg:w-1/3 order-3">
-          <div class="blog-cta flex flex-col mb-6">
-            <h2>{{ footer.main.blogSection.heading }}</h2>
-            <p class="text-sm mb-4 text-left">
-              {{ footer.main.blogSection.body }}
-            </p>
-            <RouterLink
-              :to="`/${footer.main.blogSection.buttonSlug}`"
-              class="buttonesque-dark px-4 py-2 rounded mb-6 border self-end"
-            >
-              {{ footer.main.blogSection.buttonText }}
-            </RouterLink>
-          </div>
-          <div class="subscribe">
-            <h2>Subscribe to our Newsletter</h2>
-            <form
-              :action="footer.main.newsletterForm.formAction"
-              method="POST"
-              target="_blank"
-              class="flex flex-wrap items-stretch gap-2 w-full max-w-full"
-            >
-              <!-- AWeber hidden fields -->
-              <input 
-                type="hidden" 
-                name="meta_web_form_id"   
-                value="940547841" />
-              <input 
-                type="hidden" 
-                name="meta_split_id"      
-                value="" />
-              <input 
-                type="hidden" 
-                name="listname"           
-                value="awlist6896633" />
-              <input 
-                type="hidden" 
-                name="redirect"           
-                value="https://www.aweber.com/thankyou-coi.htm?m=text" />
-              <input 
-                type="hidden" 
-                name="meta_adtracking"    
-                value="Simple_Subscribe" />
-              <input 
-                type="hidden" 
-                name="meta_message"       
-                value="1" />
-              <input 
-                type="hidden" 
-                name="meta_required"      
-                value="name,email" />
-
-              <!-- Visible subscriber fields -->
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                class="bg-white flex-1 px-3 py-2 text-black"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                :placeholder="footer.main.newsletterForm.placeholder"
-                class="bg-white flex-1 px-3 py-2 text-black"
-                required
-              />
-              <button
-                type="submit"
-                class="bg-[var(--color-off-white)] text-[var(--color-black)] px-4 py-2 font-semibold hover:bg-gray-200"
+          <!-- Column 3: Blog & Newsletter -->
+          <div class="flex flex-col items-center md:items-start md:col-span-2 lg:col-span-1">
+            <!-- Blog CTA -->
+            <div class="text-left mb-6 w-full max-w-sm">
+              <h2 class="text-xl font-bold mb-2">{{ footer.main.blogSection.heading }}</h2>
+              <p class="text-sm mb-4">
+                {{ footer.main.blogSection.body }}
+              </p>
+              <RouterLink
+                :to="`/${footer.main.blogSection.buttonSlug}`"
+                class="inline-block px-4 py-2 rounded border border-white hover:bg-white hover:text-[var(--color-secondary-dark)] transition-colors"
               >
-                {{ footer.main.newsletterForm.buttonText }}
-              </button>
-            </form>
+                {{ footer.main.blogSection.buttonText }}
+              </RouterLink>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="text-left w-full max-w-sm">
+              <h2 class="text-xl font-bold mb-3">Subscribe to our Newsletter</h2>
+              <form
+                :action="footer.main.newsletterForm.formAction"
+                method="POST"
+                target="_blank"
+                class="flex flex-col gap-2"
+              >
+                <!-- AWeber hidden fields -->
+                <input type="hidden" name="meta_web_form_id" value="940547841" />
+                <input type="hidden" name="meta_split_id" value="" />
+                <input type="hidden" name="listname" value="awlist6896633" />
+                <input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" />
+                <input type="hidden" name="meta_adtracking" value="Simple_Subscribe" />
+                <input type="hidden" name="meta_message" value="1" />
+                <input type="hidden" name="meta_required" value="name,email" />
+
+                <!-- Visible fields - stack on mobile -->
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  class="w-full px-3 py-2 text-black rounded-sm"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  :placeholder="footer.main.newsletterForm.placeholder"
+                  class="w-full px-3 py-2 text-black rounded-sm"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="w-full bg-[var(--color-off-white)] text-[var(--color-black)] px-4 py-2 font-semibold hover:bg-gray-200 rounded-sm transition-colors"
+                >
+                  {{ footer.main.newsletterForm.buttonText }}
+                </button>
+              </form>
+            </div>
           </div>
 
         </div>
@@ -203,7 +173,7 @@
       :legalPages="footer.main.copyrightContent[0].legalPages"
       :credits="footer.main.copyrightContent[0].contributors"
       class="w-full"
-    ></Copyright>
+    />
   </div>
 </template>
 
@@ -245,3 +215,14 @@
     }
   })
 </script>
+
+<style scoped>
+/* Override global ul styles in footer */
+ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+ul ::marker {
+  content: none;
+}
+</style>
