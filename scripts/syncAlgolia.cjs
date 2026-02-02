@@ -45,7 +45,7 @@ const algolia = algoliasearch(
 async function run() {
   // fetch your documents
   const pages    = await sanity.fetch(`*[_type=='page']{_id, title, slug, content}`)
-  const posts    = await sanity.fetch(`*[_type=='post']{_id, title, excerpt, slug}`)
+  const posts    = await sanity.fetch(`*[_type=='post']{_id, title, "excerpt": pt::text(body), slug}`)
   const products = await sanity.fetch(`*[_type=='product']{_id, name, description, slug}`)
 
   // normalize to a flat array
@@ -64,7 +64,7 @@ async function run() {
       objectID: `post-${p._id}`,
       title:    p.title,
       excerpt:  p.excerpt,
-      url:      `/blog/${p.slug.current}`,
+      url:      `/blog-pages/${p.slug.current}`,
       type:     'post',
       priority: 2
     })),

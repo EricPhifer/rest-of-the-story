@@ -10,11 +10,15 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client)
 
-export function urlFor(source) {
-  return builder
+export function urlFor(source, options = {}) {
+  const width = options.width ?? 600
+  const height = options.height ?? 400
+  let image = builder
     .image(source)   // automatically reads hotspot & crop
-    .width(600)      // choose your desired dimensions
-    .height(400)
+    .width(width)    // choose your desired dimensions
+    .height(height)
     .auto('format')  // best format (jpeg/webp/avif)
-    .url()
+
+  if (options.fit) image = image.fit(options.fit)
+  return image.url()
 }

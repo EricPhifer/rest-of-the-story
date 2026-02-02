@@ -1,18 +1,40 @@
  .hero {
-    max-height: calc(80vh - 96px);
+    max-height: calc(80svh - 96px);
     margin: 0 !important;
- }
+  }
+
+  @media (max-width: 500px) {
+    .hero {
+      max-height: calc(60svh - 96px);
+    }
+  }
+
+  @media (max-width: 380px) {
+    .hero {
+      max-height: calc(50svh - 96px);
+    }
+  }
 
  /* Heading */
  .hero h1 {
-   @apply text-3xl md:text-5xl font-bold leading-tight whitespace-pre-wrap text-white;
+   @apply text-base md:text-5xl font-bold leading-tight whitespace-pre-wrap text-white;
    text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+
  }
 
  /* Subheading/body */
  .hero .subtitle {
-   @apply text-lg md:text-2xl font-semibold leading-relaxed text-white;
+   @apply text-base md:text-2xl font-semibold leading-relaxed text-white;
    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+ }
+
+ @media (max-width: 380px) {
+    .hero h1 {
+      @apply text-sm leading-relaxed mb-2;
+    }
+    .hero .subtitle {
+      @apply text-sm leading-snug;
+    }
  }
 
  /* CTA button/link */

@@ -1,12 +1,20 @@
+// queries/blogPost.js
 import groq from 'groq';
+import { finalNoteProjection } from './finalNote';
 
 export const blogPostQuery = groq`
   *[_type == "post" && slug.current == $slug][0]{
+    _id,
     title,
-    body,
-    author->{name, image},
-    mainImage,
+    "slug": slug.current,
+    body[],
+    author->{
+      name,
+      image{asset->{url}, alt}
+    },
+    mainImage{asset->{url}, alt, crop, hotspot},
     publishedAt,
-    categories[]->{title}
+    categories[]->{title, slug},
+    ${finalNoteProjection}
   }
 `;

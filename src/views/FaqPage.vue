@@ -57,10 +57,12 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
+  import { useHead } from '@vueuse/head'
   import { client, urlFor } from '@/sanity'
   import { PortableText } from '@portabletext/vue'
   import faqPageQuery from '@/queries/faqPage'
+  import { useFaqSchema } from '@/composables/useStructuredData'
 
   const title       = ref('')    // page heading
   const heroImage   = ref(null)  // image object for urlFor()
@@ -70,6 +72,37 @@
   function toggle(i) {
     openIndex.value = openIndex.value === i ? null : i
   }
+
+  // SEO: Dynamic meta tags
+  useHead(() => {
+    const pageTitle = title.value || 'Frequently Asked Questions'
+    const desc = 'Find answers to common questions about The Rest of the Story Consignment store.'
+    const url = typeof window !== 'undefined' ? window.location.href : '/faqs'
+
+    return {
+      title: pageTitle,
+      meta: [
+        { name: 'description', content: desc },
+        { property: 'og:title', content: pageTitle },
+        { property: 'og:description', content: desc },
+        { property: 'og:url', content: url }
+      ],
+      link: [
+        { rel: 'canonical', href: url }
+      ]
+    }
+  })
+
+  // SEO: FAQ structured data
+  watch(
+    () => faqs.value,
+    (faqList) => {
+      if (faqList && faqList.length > 0) {
+        useFaqSchema(faqList)
+      }
+    },
+    { immediate: true }
+  )
 
   onMounted(async () => {
     try {

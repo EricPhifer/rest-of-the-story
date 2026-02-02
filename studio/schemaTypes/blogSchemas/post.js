@@ -35,9 +35,10 @@ export default defineType({
     }),
     defineField({
       name: 'categories',
-      title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      title: 'Categories',
+      of: [{ type: 'reference', to: [{ type: 'category' }] }],
+      validation: (Rule) => Rule.unique(),
     }),
     defineField({
       name: 'publishedAt',
@@ -48,6 +49,11 @@ export default defineType({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+    }),
+    defineField({
+      name: 'finalNote',
+      type: 'finalNote',
+      options: {collapsible: true, collapsed: false},
     }),
   ],
 

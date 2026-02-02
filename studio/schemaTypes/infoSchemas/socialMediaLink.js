@@ -23,9 +23,10 @@ export default {
       options: {
         list: [
           { title: 'Facebook', value: 'fa-brands fa-facebook' },
-          { title: 'Google',  value: 'fa-brands fa-google' },
-          { title: 'Instagram',  value: 'fa-brands fa-instagram' },
-          { title: 'Twitter',  value: 'fa-brands fa-twitter' },
+          { title: 'Google', value: 'fa-brands fa-google' },
+          { title: 'Instagram', value: 'fa-brands fa-instagram' },
+          { title: 'Nextdoor', value: 'fa-solid fa-house-chimney' },
+          { title: 'Twitter', value: 'fa-brands fa-twitter' },
         ],
       },
     },

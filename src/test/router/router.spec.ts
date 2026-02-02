@@ -36,7 +36,7 @@ describe('router/index.js', () => {
     expect(route).toBeDefined()
     if (!route) return
 
-    expect(route.path).toBe('/blog/:slug')
+    expect(route.path).toBe('/blog-pages/:slug')
     expect(typeof route.components.default).toBe('function')
   })
 
