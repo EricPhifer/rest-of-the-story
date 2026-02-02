@@ -105,9 +105,9 @@
           </div>
 
           <!-- Column 3: Blog & Newsletter -->
-          <div class="flex flex-col items-center md:items-start md:col-span-2 lg:col-span-1">
+          <div class="flex flex-col md:flex-row lg:flex-col items-center md:items-start gap-6 md:col-span-2 lg:col-span-1 w-full">
             <!-- Blog CTA -->
-            <div class="text-left mb-6 w-full max-w-sm">
+            <div class="text-left w-full max-w-sm md:max-w-none md:w-1/2 lg:w-full lg:max-w-sm lg:mb-0">
               <h2 class="text-xl font-bold mb-2">{{ footer.main.blogSection.heading }}</h2>
               <p class="text-sm mb-4">
                 {{ footer.main.blogSection.body }}
@@ -121,7 +121,7 @@
             </div>
 
             <!-- Newsletter -->
-            <div class="text-left w-full max-w-sm">
+            <div class="text-left w-full max-w-sm md:max-w-none md:w-1/2 lg:w-full lg:max-w-sm">
               <h2 class="text-xl font-bold mb-3">Subscribe to our Newsletter</h2>
               <form
                 :action="footer.main.newsletterForm.formAction"
