@@ -1,4 +1,15 @@
 <template>
+  <!-- Debug: Show loading/error states -->
+  <div v-if="footer.isLoading" class="w-full py-4 text-center text-gray-500">
+    Loading footer...
+  </div>
+  <div v-else-if="footer.error" class="w-full py-4 text-center text-red-500">
+    Footer error: {{ footer.error.message || footer.error }}
+  </div>
+  <div v-else-if="!footer.loaded" class="w-full py-4 text-center text-gray-500">
+    Footer not loaded (no data from Sanity)
+  </div>
+
   <div v-if="footer.loaded" class="w-screen z-50">
     <!-- Map Embed -->
     <Map
@@ -197,8 +208,8 @@
 </template>
 
 <script setup>
+  import { onMounted } from 'vue'
   import { getActivePinia, setActivePinia, createPinia } from 'pinia'
-  import { h } from 'vue'
   // Store
   import { useFooterStore } from '@/store/useFooterStore'
   // Icons
@@ -215,27 +226,30 @@
     setActivePinia(createPinia())
   }
 
-  // Stub <RouterLink> so tests don’t require vue-router
-  const RouterLink = {
-    props: { to: { type: String, required: true } },
-    setup(props, { slots, attrs }) {
-      return () => h('a', { ...attrs, href: props.to }, slots.default?.())
-    }
-  }
-
   const footer = useFooterStore()
 
   // Turn "fa-brands fa-facebook" → ['fab','facebook']
+  // Handles special cases like Nextdoor (no official FA icon)
   function parseIcon(str) {
+    if (!str) return ['fas', 'question'] // fallback for missing icons
+
+    // Handle platforms without official FontAwesome icons
+    const lowerStr = str.toLowerCase()
+    if (lowerStr.includes('nextdoor')) {
+      return ['fas', 'house-chimney'] // house icon for Nextdoor (neighborhood app)
+    }
+
     const parts = str.split(' ')
     const stylePart = parts.find((s) => s.startsWith('fa-'))?.slice(3)
     const namePart  = parts.find((s) => s.startsWith('fa-') && !s.includes(stylePart))?.slice(3)
     const prefixMap = { brands: 'fab', solid: 'fas', regular: 'far' }
-    return [prefixMap[stylePart] || 'fas', namePart]
+    return [prefixMap[stylePart] || 'fas', namePart || 'question']
   }
 
-  // Fetch on mount, but only once
-  if (!footer.loaded) {
-    footer.fetchFooter()
-  }
+  // Fetch footer data on mount
+  onMounted(() => {
+    if (!footer.loaded && !footer.isLoading) {
+      footer.fetchFooter()
+    }
+  })
 </script>
