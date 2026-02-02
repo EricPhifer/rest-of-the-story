@@ -229,16 +229,8 @@
   const footer = useFooterStore()
 
   // Turn "fa-brands fa-facebook" → ['fab','facebook']
-  // Handles special cases like Nextdoor (no official FA icon)
   function parseIcon(str) {
     if (!str) return ['fas', 'question'] // fallback for missing icons
-
-    // Handle platforms without official FontAwesome icons
-    const lowerStr = str.toLowerCase()
-    if (lowerStr.includes('nextdoor')) {
-      return ['fas', 'house-chimney'] // house icon for Nextdoor (neighborhood app)
-    }
-
     const parts = str.split(' ')
     const stylePart = parts.find((s) => s.startsWith('fa-'))?.slice(3)
     const namePart  = parts.find((s) => s.startsWith('fa-') && !s.includes(stylePart))?.slice(3)
