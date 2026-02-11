@@ -15,17 +15,7 @@
   import Footer from './components/footer/main/Footer.vue';
 
   const siteSettingsStore = useSiteSettingsStore()
-  
-  siteSettingsStore.fetchSiteSettings().then(() => {
-    const url = siteSettingsStore.settings?.favicon?.asset?.url
-    if (url) {
-      let link = document.querySelector("link[rel~='icon']")
-      if (!link) {
-        link = document.createElement('link')
-        link.rel = 'icon'
-        document.head.appendChild(link)
-      }
-      link.href = url
-    }
-  })
+
+  // Favicon and theme CSS vars are applied inside the store's fetchSiteSettings()
+  siteSettingsStore.fetchSiteSettings()
 </script>

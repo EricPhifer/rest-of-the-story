@@ -59,7 +59,7 @@ function errorsClear() {
 <template>
   <section class="form-section my-4 p-6 sm:my-12 sm:p-16">
     <div class="max-w-5xl mx-auto mb-6 text-center">
-      <h2 class="text-3xl font-bold">
+      <h2 id="form-section-title" class="text-3xl font-bold">
         {{ block.formTitle }}
       </h2>
       <div v-if="block.formDescription" class="prose mx-auto mt-2">
@@ -71,7 +71,7 @@ function errorsClear() {
       @submit.prevent="handleSubmit"
       class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4"
       role="form"
-      :aria-labelledby="block.formTitle"
+      aria-labelledby="form-section-title"
     >
       <!-- Honeypot for spam prevention -->
       <input

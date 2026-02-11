@@ -74,7 +74,7 @@
     :id="sectionId || undefined"
     class="text-section my-36 py-24 mx-6 sm:mx-12 bg-[var(--color-primary-light)]"
     role="region"
-    aria-labelledby="section-heading"
+    :aria-labelledby="block.heading ? `section-heading-${block._key}` : undefined"
   >
     <div
       class="flex flex-col md:flex-row items-center gap-6"
@@ -114,7 +114,7 @@
 
       <!-- Text -->
       <div class="w-full md:w-1/2">
-        <h2 v-if="block.heading" id="section-heading">
+        <h2 v-if="block.heading" :id="`section-heading-${block._key}`">
           {{ block.heading }}
         </h2>
 

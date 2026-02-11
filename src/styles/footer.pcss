@@ -61,36 +61,3 @@ section.copyright a{
   }
 }
 
-/* Responsive alignment */
-footer .left {
-  order: 1;
-  width: 100%; 
-  &:logo-links,
-  &:footer-search {
-  }
-  @media only screen and (max-width: 523px) {
-    order: 2;
-    width: 50%;
-    justify-self: center;
-    align-self: center;
-    &:logo-links,
-    &:footer-search {
-    }
-  }
-}
-footer .center {
-  order: 2;
-  width: 100%;
-  &:contact-us,
-  &:follow-us {
-  }
-  @media only screen and (max-width: 523px) {
-    order: 1;
-    width: 50%;
-    justify-self: center;
-    align-self: center;
-    &:contact-us,
-    &:follow-us {
-    }
-  }
-}

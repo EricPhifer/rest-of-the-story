@@ -97,7 +97,7 @@ const img = (source, w, h) => {
                 {{ formatExcerpt(post.excerpt) }}
               </p>
               <RouterLink
-                class="read-more-link mt-4 md:mt-auto self-end inline-flex items-center gap-2"
+                class="read-more-link mt-4 md:mt-auto self-end inline-flex items-center gap-2 px-4 py-2 rounded bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] transition-colors"
                 :to="postUrl(post)"
               >
                 Read More <FontAwesomeIcon :icon="['fas', 'angle-right']" aria-hidden="true" />
@@ -143,12 +143,13 @@ const img = (source, w, h) => {
 /* Specific styles for the Read More link */
 .text-section.blog-cards :deep(.read-more-link) {
   color: white;
-  font-weight: bold;
-  transition: color 200ms;
+  font-weight: 600;
+  border-bottom: none;
 }
 
 .text-section.blog-cards :deep(.read-more-link:hover),
 .text-section.blog-cards :deep(.read-more-link:focus) {
-  color: var(--color-accent);
+  color: white;
+  border-bottom: none;
 }
 </style>

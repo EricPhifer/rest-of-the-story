@@ -68,7 +68,7 @@ const img = (source, w, h) => {
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
         <li v-for="cat in categories" :key="cat.slug?.current || cat._id">
           <RouterLink
-            class="category-card block aspect-square rounded-lg overflow-hidden border border-lime-100 bg-lime-50/70 hover:bg-lime-50 transition-colors"
+            class="category-card block aspect-square rounded-lg overflow-hidden border-2 border-[var(--color-primary-light)] bg-[var(--color-primary-light)] hover:border-[var(--color-accent)] hover:shadow-lg transition-all duration-200"
             :to="catUrl(cat)"
           >
             <div class="flex flex-col h-full p-4 gap-2">

@@ -114,7 +114,7 @@
               </p>
               <RouterLink
                 :to="`/${footer.main.blogSection.buttonSlug}`"
-                class="inline-block px-4 py-2 rounded border border-white hover:bg-white hover:text-[var(--color-secondary-dark)] transition-colors"
+                class="inline-block px-4 py-2 rounded bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] transition-colors"
               >
                 {{ footer.main.blogSection.buttonText }}
               </RouterLink>
