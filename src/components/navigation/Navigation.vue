@@ -6,59 +6,96 @@
   >
     <Logo :logo="block.logo" />
 
-    <!-- Hamburger Icon (mobile or overflow fallback) -->
-    <button
-      class="md:hidden z-20"
-      @click="toggleMenu"
-      aria-label="Toggle navigation menu"
-      :aria-expanded="menuOpen.toString()"
-      aria-controls="mobile-menu"
-    >
-      <svg
-        v-if="!menuOpen"
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-primary-600"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <!-- Right-side controls: desktop nav + search + hamburger -->
+    <div class="flex items-center gap-2 md:gap-4">
+      <!-- Desktop Navigation -->
+      <nav
+        class="navigation hidden md:flex items-center gap-6"
+        role="navigation"
+        aria-label="Main navigation"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg
-        v-else
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-primary-600"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-
-    <!-- Desktop Navigation -->
-    <nav
-      class="navigation hidden md:flex flex-grow justify-end items-center gap-6 transition-all duration-300"
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      <ul class="flex gap-4" role="list">
-        <li
-          v-for="(link, i) in block.links"
-          :key="i"
-          role="listitem"
-        >
-          <RouterLink
-            :to="`/${link.slug}`"
-            class="text-primary-600 hover:underline font-semibold text-xl"
+        <ul class="flex gap-4" role="list">
+          <li
+            v-for="(link, i) in block.links"
+            :key="i"
+            role="listitem"
           >
-            {{ link.label }}
-          </RouterLink>
-        </li>
-      </ul>
-    </nav>
+            <RouterLink
+              :to="`/${link.slug}`"
+              class="text-primary-600 hover:underline font-semibold text-xl"
+            >
+              {{ link.label }}
+            </RouterLink>
+          </li>
+        </ul>
+      </nav>
 
-    <!-- Mobile / Overflow Menu -->
+      <!-- Search: a single, always-mounted #autocomplete (no teleport). On mobile
+           the widget renders as a compact button that opens a fullscreen modal, so
+           it's always visible here. On desktop it's an inline input that collapses
+           behind the toggle. -->
+      <div class="flex items-center">
+        <div
+          class="md:transition-all md:duration-300 md:ease-in-out"
+          :class="searchOpen
+            ? 'md:w-64 md:opacity-100 md:overflow-visible md:mr-1'
+            : 'md:w-0 md:opacity-0 md:overflow-hidden'"
+        >
+          <!-- Fixed inner width so the widget mounts with a real width on desktop
+               even while the outer wrapper is collapsed to 0. -->
+          <div class="md:w-64">
+            <AlgoliaSearch />
+          </div>
+        </div>
+
+        <!-- Desktop-only collapse toggle (mobile uses the widget's own button) -->
+        <button
+          type="button"
+          data-search-toggle
+          class="hidden md:inline-flex p-2 text-primary-600 hover:text-[var(--color-accent-dark)] transition-colors"
+          :aria-expanded="searchOpen.toString()"
+          aria-label="Toggle search"
+          @click="toggleSearch"
+        >
+          <FontAwesomeIcon
+            :icon="['fas', searchOpen ? 'xmark' : 'magnifying-glass']"
+            class="text-2xl"
+          />
+        </button>
+      </div>
+
+      <!-- Hamburger Icon (mobile) -->
+      <button
+        class="md:hidden z-20 p-1"
+        @click="toggleMenu"
+        aria-label="Toggle navigation menu"
+        :aria-expanded="menuOpen.toString()"
+        aria-controls="mobile-menu"
+      >
+        <svg
+          v-if="!menuOpen"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-primary-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-primary-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile / Overflow Menu (nav links) -->
     <transition name="fade">
       <nav
         v-if="menuOpen"
@@ -89,43 +126,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { client } from '@/sanity'
 import { navigationQuery } from '@/queries/navigation'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Logo from './Logo.vue'
+import AlgoliaSearch from '@/components/search/AlgoliaSearch.vue'
 
 const block = ref(null)
 const menuOpen = ref(false)
-
-const handleKeydown = (event) => {
-  if (event.key === 'Escape' || event.key === 'Esc') {
-    menuOpen.value = false
-  }
-}
-
-// Attach or detach Escape key listener based on menu state
-watch(menuOpen, (isOpen) => {
-  if (isOpen) {
-    window.addEventListener('keydown', handleKeydown)
-  } else {
-    window.removeEventListener('keydown', handleKeydown)
-  }
-})
-
-// Clean up on unmount
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown)
-})
+const searchOpen = ref(false)
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
 }
 
+const toggleSearch = async () => {
+  searchOpen.value = !searchOpen.value
+  if (searchOpen.value) {
+    // Focus the widget's input once revealed (desktop inline mode).
+    await nextTick()
+    document.querySelector('#autocomplete input')?.focus()
+  }
+}
+
+const handleKeydown = (event) => {
+  if (event.key === 'Escape' || event.key === 'Esc') {
+    menuOpen.value = false
+    searchOpen.value = false
+  }
+}
+
 onMounted(async () => {
+  window.addEventListener('keydown', handleKeydown)
   block.value = await client.fetch(navigationQuery)
 })
-</script>
 
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
+</script>
 
 <style scoped>
 .fade-enter-active, .fade-leave-active {

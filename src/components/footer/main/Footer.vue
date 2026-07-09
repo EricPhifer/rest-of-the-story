@@ -33,6 +33,15 @@
               >
                 {{ link.label }}
               </RouterLink>
+              <!-- Site search lives in the header; this jumps to it and focuses it -->
+              <button
+                type="button"
+                @click="focusSiteSearch"
+                class="mt-1 flex items-center gap-2 text-base sm:text-lg uppercase hover:text-[var(--color-accent-light)] transition-colors duration-200"
+              >
+                <FontAwesomeIcon :icon="['fas', 'magnifying-glass']" aria-hidden="true" />
+                <span>Search the site</span>
+              </button>
             </nav>
           </div>
 
@@ -186,7 +195,6 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   // Components
   import Map from './Map.vue'
-  import AlgoliaSearchInput from './AlgoliaSearchInput.vue'
   import Copyright from '@/components/footer/copyright/Copyright.vue'
   import { urlFor } from '@/sanity'
   import { PortableText } from '@portabletext/vue'
@@ -206,6 +214,22 @@
     const namePart  = parts.find((s) => s.startsWith('fa-') && !s.includes(stylePart))?.slice(3)
     const prefixMap = { brands: 'fab', solid: 'fas', regular: 'far' }
     return [prefixMap[stylePart] || 'fas', namePart || 'question']
+  }
+
+  // Jump to the header search and open it. On mobile the widget is a detached
+  // button that opens a fullscreen modal; on desktop it's collapsed behind the
+  // toggle, so we click the toggle and focus the revealed input.
+  function focusSiteSearch() {
+    document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' })
+    const container = document.getElementById('autocomplete')
+    const isMobile = window.matchMedia('(max-width: 767px)').matches
+    if (isMobile) {
+      // Mobile widget is a detached trigger (a div[role=button]) that opens a modal
+      container?.querySelector('.ais-AutocompleteDetachedSearchButton')?.click()
+    } else {
+      document.querySelector('[data-search-toggle]')?.click()
+      setTimeout(() => container?.querySelector('#autocomplete input, input')?.focus(), 350)
+    }
   }
 
   // Fetch footer data on mount

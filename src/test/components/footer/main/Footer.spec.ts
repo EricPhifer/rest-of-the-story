@@ -16,9 +16,6 @@ const stubs = {
   RouterLink: {
     props: ['to'],
     template: '<a :href="to"><slot /></a>'
-  },
-  AlgoliaSearchInput: {
-    template: '<div>AlgoliaSearchInputStub</div>'
   }
 }
 
@@ -90,8 +87,8 @@ describe('Footer.vue', () => {
       const navLink = screen.getByRole('link', { name: 'About' })
       expect(navLink).toHaveAttribute('href', '/about')
 
-      // AlgoliaSearchInput stub
-      expect(screen.getByText('AlgoliaSearchInputStub')).toBeInTheDocument()
+      // Search link (jumps to the header search)
+      expect(screen.getByRole('button', { name: /search the site/i })).toBeInTheDocument()
 
       // Blog section
       expect(screen.getByText('Blog')).toBeInTheDocument()

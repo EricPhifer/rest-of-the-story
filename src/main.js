@@ -3,7 +3,6 @@ import { createApp } from 'vue'
 import { createHead } from '@vueuse/head'
 import './styles/app.pcss'
 import App from './App.vue'
-import InstantSearch from 'vue-instantsearch/vue3/es'
 import '@mux/mux-player'
 // Route and store imports
 import { router } from './router'
@@ -18,7 +17,6 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
 import * as Sentry from '@sentry/vue'
-import 'instantsearch.css/themes/algolia-min.css'
 
 library.add(fas, far, fab)
 
@@ -38,7 +36,6 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(createHead())
 app.use(store)
 app.use(router)
-app.use(InstantSearch)
 
 // mount the app
 app.mount('#app')
