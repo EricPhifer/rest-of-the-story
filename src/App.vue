@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen bg-[var(--color-background)] flex flex-col">
+  <div class="w-full bg-[var(--color-background)] flex flex-col">
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:rounded focus:bg-[var(--color-surface)] focus:text-[var(--color-text)] focus:shadow-lg"

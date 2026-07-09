@@ -76,6 +76,7 @@
 
       <!-- Hamburger Icon (mobile) -->
       <button
+        ref="hamburgerRef"
         class="md:hidden z-20 p-1"
         @click="toggleMenu"
         aria-label="Toggle navigation menu"
@@ -110,11 +111,12 @@
       <nav
         v-if="menuOpen"
         id="mobile-menu"
+        ref="mobileMenuRef"
         class="navigation absolute top-full left-0 w-full bg-[var(--color-surface)] shadow-md md:hidden z-50"
         role="navigation"
         aria-label="Mobile navigation"
       >
-        <ul class="flex flex-col divide-y divide-gray-200" role="list">
+        <ul class="flex flex-col divide-y divide-[var(--color-border)]" role="list">
           <li
             v-for="(link, i) in block.links"
             :key="i"
@@ -124,7 +126,7 @@
             <RouterLink
               :to="`/${link.slug}`"
               class="block text-primary-600 hover:underline font-medium"
-              @click="menuOpen = false"
+              @click="closeMenu({ restoreFocus: false })"
             >
               {{ link.label }}
             </RouterLink>
@@ -149,14 +151,28 @@ const { theme, toggle: toggleTheme } = useTheme()
 const block = ref(null)
 const menuOpen = ref(false)
 const searchOpen = ref(false)
+const hamburgerRef = ref(null)
+const mobileMenuRef = ref(null)
 
-const toggleMenu = async () => {
-  menuOpen.value = !menuOpen.value
-  if (menuOpen.value) {
-    // move keyboard focus into the menu when it opens
-    await nextTick()
-    document.querySelector('#mobile-menu a')?.focus()
-  }
+function menuFocusables() {
+  if (!mobileMenuRef.value) return []
+  return [...mobileMenuRef.value.querySelectorAll('a[href], button:not([disabled])')]
+}
+
+const openMenu = async () => {
+  menuOpen.value = true
+  await nextTick()
+  menuFocusables()[0]?.focus()
+}
+
+const closeMenu = ({ restoreFocus = true } = {}) => {
+  if (!menuOpen.value) return
+  menuOpen.value = false
+  if (restoreFocus) hamburgerRef.value?.focus()
+}
+
+const toggleMenu = () => {
+  menuOpen.value ? closeMenu() : openMenu()
 }
 
 const toggleSearch = async () => {
@@ -170,8 +186,23 @@ const toggleSearch = async () => {
 
 const handleKeydown = (event) => {
   if (event.key === 'Escape' || event.key === 'Esc') {
-    menuOpen.value = false
+    closeMenu()
     searchOpen.value = false
+    return
+  }
+  // Trap Tab within the open mobile menu.
+  if (menuOpen.value && event.key === 'Tab') {
+    const items = menuFocusables()
+    if (!items.length) return
+    const first = items[0]
+    const last = items[items.length - 1]
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
   }
 }
 
