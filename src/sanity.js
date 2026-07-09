@@ -17,9 +17,12 @@ export function urlFor(source, options = {}) {
   let image = builder
     .image(source)   // automatically reads hotspot & crop
     .auto('format')  // best format (jpeg/webp/avif)
+    .quality(options.quality ?? 75) // ~30% smaller, no visible loss
 
   // Only set dimensions if explicitly provided
   if (options.width) image = image.width(options.width)
+  // Safety cap: never serve a multi-MB original when no size is requested
+  else if (!options.maxWidth) image = image.width(1600)
   if (options.height) image = image.height(options.height)
 
   // Default to 'max' fit to preserve aspect ratio, allow override

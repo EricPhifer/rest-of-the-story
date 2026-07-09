@@ -5,13 +5,16 @@ import { defineConfig } from 'vite'
 import pkg from './package.json'
 import vue from '@vitejs/plugin-vue'
 
+// Only emit + upload source maps to Sentry on Netlify deploy builds, so local
+// `npm run build` stays fast and doesn't push maps on every run.
+const uploadSourcemaps = !!process.env.NETLIFY
+
 export default defineConfig({
   plugins: [
     vue(),
-    sentryVitePlugin({
-      org: "phifer-web-solutions",
-      project: "javascript-vue"
-    }),
+    ...(uploadSourcemaps
+      ? [sentryVitePlugin({ org: "phifer-web-solutions", project: "javascript-vue" })]
+      : []),
     Sitemap({
       hostname: 'https://therestofthestory.store',
       dynamicRoutes: [
@@ -33,13 +36,20 @@ export default defineConfig({
   },
 
   build: {
-    sourcemap: true
-  }, 
+    sourcemap: uploadSourcemaps ? 'hidden' : false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vue: ['vue', 'vue-router', 'pinia'],
+          sanity: ['@sanity/client', '@sanity/image-url'],
+        }
+      }
+    }
+  },
 
   resolve: {
     alias: {
-      '@': '/src',
-      'vue': 'vue/dist/vue.esm-bundler.js'
+      '@': '/src'
     }
   },
 

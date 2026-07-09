@@ -18,8 +18,9 @@
             <RouterLink to="/" class="inline-block flex-shrink-0">
               <img
                 v-if="footer.main.logo?.asset?.url"
-                :src="urlFor(footer.main.logo.asset.url)"
-                alt="The Rest of the Story Logo"
+                :src="urlFor(footer.main.logo.asset.url, { width: 240 })"
+                alt="The Rest of the Story"
+                loading="lazy"
                 class="h-16 sm:h-20 lg:h-24"
               />
             </RouterLink>

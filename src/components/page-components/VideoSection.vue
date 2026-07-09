@@ -1,9 +1,17 @@
 <script setup>
+  import { onMounted } from 'vue'
+
   defineProps({
     block: {
       type: Object,
       required: true
     }
+  })
+
+  // Load the ~1.5MB Mux player only when a video section is actually rendered,
+  // instead of on every page. <mux-player> upgrades once the module registers it.
+  onMounted(() => {
+    import('@mux/mux-player')
   })
 </script>
 

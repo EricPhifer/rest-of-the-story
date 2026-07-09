@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- 2. DNS-prefetch / preconnect for third-party origins -->
-    <link rel="dns-prefetch" href="//kit.fontawesome.com" />
-    <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin />
     <link rel="dns-prefetch" href="//scripts.simpleanalyticscdn.com" />
     <link rel="preconnect" href="https://scripts.simpleanalyticscdn.com" crossorigin />
 
@@ -42,12 +40,8 @@
     <!-- 8. Algolia & other verifications -->
     <meta name="algolia-site-verification" content="3890EDE2FAB8839B" />
 
-    <!-- 9. FontAwesome kit (preconnected above) -->
-    <script
-      src="https://kit.fontawesome.com/cf06d482b1.js"
-      crossorigin="anonymous"
-      defer
-    ></script>
+    <!-- Icons are rendered by the @fortawesome/vue-fontawesome component
+         (registered in main.js) — no CDN kit needed. -->
 
     <!-- 10. Critical inlined CSS (optional) -->
     <!-- <style>…your critical-banner-and-header CSS…</style> -->

@@ -99,6 +99,7 @@
           <img
             :src="optimizedImageUrl"
             :alt="block.altText || block.heading || 'Section image'"
+            loading="lazy"
             class="rounded shadow"
             :class="{
               'object-contain': imageFit === 'contain' || (imageFit === 'auto' && imageType === 'square'),
