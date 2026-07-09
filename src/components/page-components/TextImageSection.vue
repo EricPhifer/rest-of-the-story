@@ -86,7 +86,7 @@
       <!-- Image Container - adaptive based on aspect ratio -->
       <div
         v-if="optimizedImageUrl"
-        class="w-full md:w-1/2 flex items-center justify-center"
+        class="w-full md:w-1/2 min-w-0 flex items-center justify-center"
       >
         <div
           class="image-container w-full flex items-center justify-center"
@@ -113,7 +113,7 @@
       </div>
 
       <!-- Text -->
-      <div class="w-full md:w-1/2">
+      <div class="w-full md:w-1/2 min-w-0">
         <h2 v-if="block.heading" :id="`section-heading-${block._key}`">
           {{ block.heading }}
         </h2>
@@ -130,6 +130,8 @@
 /* Base container styles */
 .image-container {
   overflow: hidden;
+  min-width: 0; /* allow shrink below the image's intrinsic width (mobile) */
+  max-width: 100%;
 }
 
 /* Square images (QR codes, logos, etc.) - contain and center */

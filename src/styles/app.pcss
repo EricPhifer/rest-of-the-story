@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Brand "primary" color scale (navy). Without this, Tailwind v4 emits no CSS for
+   primary-* utilities, leaving e.g. bg-primary-700 buttons with no background. */
+@theme {
+  --color-primary-600: #415e76;
+  --color-primary-700: #375069;
+  --color-primary-800: #2d4254;
+}
+
 @import './global.pcss';
 @import './legal-pages.pcss';
 /* page sections */
