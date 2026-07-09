@@ -1,12 +1,12 @@
 // tsconfig.json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
     },
     "types": ["vitest", "node", "@testing-library/jest-dom"],
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "esModuleInterop": true,
     "allowJs": true,
