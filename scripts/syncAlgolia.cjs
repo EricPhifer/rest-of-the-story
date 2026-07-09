@@ -1,5 +1,6 @@
 // scripts/syncAlgolia.cjs
-const algoliasearch = require('algoliasearch').default
+// algoliasearch v5 exports a named `algoliasearch` factory (no `.default`).
+const { algoliasearch } = require('algoliasearch')
 const { createClient } = require('@sanity/client')
 const dotenv = require('dotenv')
 
@@ -11,7 +12,7 @@ const {
   VITE_SANITY_DATASET,
   SANITY_API_TOKEN,
   VITE_ALGOLIA_APP_ID,
-  VITE_ALGOLIA_ADMIN_KEY,
+  ALGOLIA_ADMIN_KEY,
   VITE_ALGOLIA_INDEX_NAME
 } = process.env
 
@@ -20,7 +21,7 @@ if (
   !VITE_SANITY_DATASET    ||
   !SANITY_API_TOKEN       ||
   !VITE_ALGOLIA_APP_ID    ||
-  !VITE_ALGOLIA_ADMIN_KEY ||
+  !ALGOLIA_ADMIN_KEY      ||
   !VITE_ALGOLIA_INDEX_NAME
 ) {
   console.error('❌  Missing one or more required env variables.')
@@ -39,55 +40,73 @@ const sanity = createClient({
 // 3. Algolia client
 const algolia = algoliasearch(
   VITE_ALGOLIA_APP_ID,
-  VITE_ALGOLIA_ADMIN_KEY
+  ALGOLIA_ADMIN_KEY
 )
 
 async function run() {
-  // fetch your documents
-  const pages    = await sanity.fetch(`*[_type=='page']{_id, title, slug, content}`)
-  const posts    = await sanity.fetch(`*[_type=='post']{_id, title, "excerpt": pt::text(body), slug}`)
-  const products = await sanity.fetch(`*[_type=='product']{_id, name, description, slug}`)
+  // fetch your documents (published only — exclude Studio drafts)
+  const notDraft = `!(_id in path('drafts.**'))`
+  const pages = await sanity.fetch(`*[_type=='page' && ${notDraft}]{
+    _id, title, slug,
+    "description": coalesce(seo.description, pt::text(content[_type in ['textSection','textImageSection','heroSection']][0].body), "")
+  }`)
+  const posts = await sanity.fetch(`*[_type=='post' && ${notDraft}]{
+    _id, title, slug, "description": pt::text(body)
+  }`)
+  const products = await sanity.fetch(`*[_type=='product' && ${notDraft}]{
+    _id, "title": name, slug, description
+  }`)
 
-  // normalize to a flat array
+  // Field names match the Algolia Experience item template
+  // (item.title -> title, item.description -> description, item.category -> path).
+  // `url` is used for click-through navigation.
   const records = [
     ...pages.map(p => ({
-      objectID: `page-${p._id}`,
-      title:    p.title,
-      excerpt:  Array.isArray(p.content) && p.content[0]?.children?.[0]?.text
-                  ? p.content[0].children[0].text.slice(0, 140)
-                  : '',
-      url:      `/${p.slug.current}`,
-      type:     'page',
-      priority: 1
+      objectID:    `page-${p._id}`,
+      title:       p.title,
+      description: (p.description || '').slice(0, 200),
+      path:        `/${p.slug.current}`,
+      url:         `/${p.slug.current}`,
+      type:        'page',
+      priority:    1
     })),
     ...posts.map(p => ({
-      objectID: `post-${p._id}`,
-      title:    p.title,
-      excerpt:  p.excerpt,
-      url:      `/blog-pages/${p.slug.current}`,
-      type:     'post',
-      priority: 2
+      objectID:    `post-${p._id}`,
+      title:       p.title,
+      description: (p.description || '').slice(0, 200),
+      path:        `/blog-pages/${p.slug.current}`,
+      url:         `/blog-pages/${p.slug.current}`,
+      type:        'post',
+      priority:    2
     })),
     ...products.map(p => ({
-      objectID: `product-${p._id}`,
-      title:    p.name,
-      excerpt:  (p.description || '').slice(0, 140),
-      url:      `/shop/${p.slug.current}`,
-      type:     'product',
-      priority: 3
+      objectID:    `product-${p._id}`,
+      title:       p.title,
+      description: (p.description || '').slice(0, 200),
+      path:        `/shop/${p.slug.current}`,
+      url:         `/shop/${p.slug.current}`,
+      type:        'product',
+      priority:    3
     })),
   ]
 
-  // 4. Save them in one shot
-  const index = algolia.initIndex(VITE_ALGOLIA_INDEX_NAME)
-  const response = await index.saveObjects(records, {
-    autoGenerateObjectIDIfNotExist: false
+  // 4. Save them in one shot. v5 has no initIndex — saveObjects takes the index
+  //    name inline and returns an array of batch responses (each with objectIDs).
+  //    Every record already carries an explicit objectID.
+  const responses = await algolia.saveObjects({
+    indexName: VITE_ALGOLIA_INDEX_NAME,
+    objects: records,
   })
 
-  console.log(`✅  Synced ${response.objectIDs?.length || 0} records to ${VITE_ALGOLIA_INDEX_NAME}`)
+  const savedCount = responses.reduce(
+    (total, batch) => total + (batch.objectIDs?.length || 0),
+    0
+  )
 
-  if (!response.objectIDs) {
-    console.warn('⚠️  No objectIDs returned from Algolia response:', response)
+  console.log(`✅  Synced ${savedCount} records to ${VITE_ALGOLIA_INDEX_NAME}`)
+
+  if (savedCount === 0) {
+    console.warn('⚠️  No objectIDs returned from Algolia response:', responses)
   }
 }
 
