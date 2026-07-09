@@ -1,21 +1,21 @@
 <!-- src/pages/BlogPost.vue -->
 <template>
-  <div class="bg-[var(--color-off-white)] min-h-screen">
+  <div class="bg-[var(--color-background)] min-h-screen">
     <!-- Loading -->
     <section v-if="status === 'loading'" class="container mx-auto px-2 md:px-4 py-10">
-      <div class="h-64 rounded-lg bg-gray-100 animate-pulse mb-6"></div>
-      <div class="h-8 w-3/4 bg-gray-200 rounded mb-4 animate-pulse"></div>
+      <div class="h-64 rounded-lg bg-[var(--color-surface-muted)] animate-pulse mb-6"></div>
+      <div class="h-8 w-3/4 bg-[var(--color-surface-muted)] rounded mb-4 animate-pulse"></div>
       <div class="space-y-3">
-        <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
-        <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
-        <div class="h-4 bg-gray-200 rounded animate-pulse w-2/3"></div>
+        <div class="h-4 bg-[var(--color-surface-muted)] rounded animate-pulse"></div>
+        <div class="h-4 bg-[var(--color-surface-muted)] rounded animate-pulse w-5/6"></div>
+        <div class="h-4 bg-[var(--color-surface-muted)] rounded animate-pulse w-2/3"></div>
       </div>
     </section>
 
     <!-- Not found / error -->
     <section v-else-if="status === 'error'" class="container mx-auto px-2 md:px-4 py-24 text-center">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Post not found</h1>
-      <p class="text-gray-600 mb-6">We couldn’t find that article. It may have been moved or unpublished.</p>
+      <h1 class="text-3xl font-bold text-[var(--color-text)] mb-2">Post not found</h1>
+      <p class="text-[var(--color-text-muted)] mb-6">We couldn’t find that article. It may have been moved or unpublished.</p>
       <RouterLink
         to="/blog"
         class="inline-block px-4 py-2 rounded-md bg-primary-700 text-white hover:bg-primary-800"
@@ -30,7 +30,7 @@
       <nav aria-label="Breadcrumb" class="mb-6 text-left">
         <RouterLink to="/blog" class="text-sm text-primary-700 hover:underline">← All Articles</RouterLink>
         <template v-if="post.categories && post.categories.length > 0">
-          <span class="text-gray-400 mx-2">/</span>
+          <span class="text-[var(--color-text-muted)] mx-2">/</span>
           <RouterLink
             :to="`/blog-pages/category/${post.categories[0].slug?.current}`"
             class="text-sm text-primary-700 hover:underline"
@@ -52,10 +52,10 @@
 
       <!-- Title + meta -->
       <header class="mb-6">
-        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{{ post.title }}</h1>
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[var(--color-text)] leading-tight">{{ post.title }}</h1>
 
         <div class="mt-3 flex flex-wrap items-center gap-2">
-          <time v-if="post.publishedAt" :datetime="post.publishedAt" class="text-sm text-gray-600">
+          <time v-if="post.publishedAt" :datetime="post.publishedAt" class="text-sm text-[var(--color-text-muted)]">
             {{ formatDate(post.publishedAt) }}
           </time>
 
@@ -80,11 +80,11 @@
       </header>
 
       <!-- Body -->
-      <section class="blog-post-content prose prose-lg max-w-none text-gray-900 text-left">
+      <section class="blog-post-content prose prose-lg max-w-none text-[var(--color-text)] text-left">
         <PortableText :value="post.body" />
       </section>
 
-      <hr class="my-10 border-dashed border-gray-200" />
+      <hr class="my-10 border-dashed border-[var(--color-border)]" />
 
       <!-- Final Note -->
       <FinalNote v-if="post.finalNote?.enabled" :note="post.finalNote" class="mt-10" />

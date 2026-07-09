@@ -76,7 +76,7 @@
 <template>
   <section class="legal-pages max-w-3xl mx-auto py-12 px-4">
     <div v-if="loading">Loading…</div>
-    <div v-else-if="error" class="text-red-500">{{ error }}</div>
+    <div v-else-if="error" class="text-[var(--color-alert-dark)]">{{ error }}</div>
     <div class="my-12" v-else>
       <h1 
         class="text-3xl font-bold mb-12 p-3 border-4 border-[var(--color-accent)]"

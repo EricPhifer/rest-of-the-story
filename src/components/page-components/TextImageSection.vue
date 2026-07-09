@@ -72,7 +72,7 @@
 <template>
   <section
     :id="sectionId || undefined"
-    class="text-section my-36 py-24 mx-6 sm:mx-12 bg-[var(--color-primary-light)]"
+    class="text-section my-36 py-24 mx-6 sm:mx-12 bg-[var(--color-surface-muted)]"
     role="region"
     :aria-labelledby="block.heading ? `section-heading-${block._key}` : undefined"
   >

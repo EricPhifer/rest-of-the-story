@@ -13,9 +13,15 @@
   --color-alert-light: #ECC3C1;
   --color-alert-dark: #7D2C26;
 
+  /* Semantic tokens — components reference these so the theme can flip.
+     Light values here; the [data-theme="dark"] block below overrides them. */
   --color-background: var(--color-off-white);
+  --color-surface: var(--color-white);        /* cards, raised panels */
+  --color-surface-muted: var(--color-primary-light); /* subtle fills / hovers */
   --color-text: var(--color-black);
   --color-text-hover: var(--color-off-black);
+  --color-text-muted: #5b5350;                /* secondary/meta text */
+  --color-border: #d9d2cc;
   --color-text-links: var(--color-secondary-dark);
   --color-text-links-hover: var(--color-secondary-dark);
   --color-text-body: var(--color-off-black);
@@ -33,6 +39,28 @@
   -moz-osx-font-smoothing: grayscale;
 
   font-size-adjust: ex-height 0.53;
+}
+
+/* Dark theme. The inline script in index.html stamps data-theme on <html>
+   (stored preference, else the OS setting) before paint, so no @media
+   duplication or flash is needed. Brand blocks (navy footer/form, hero image
+   overlays) intentionally stay dark in both themes. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-background: #1e1a19;
+  --color-surface: #2a2523;
+  --color-surface-muted: #35302d;
+  --color-text: #efeae4;
+  --color-text-hover: #ffffff;
+  --color-text-body: #d8d1ca;
+  --color-text-muted: #b0a79f;
+  --color-border: #3d3835;
+  --color-text-links: #9db8d4;
+  --color-text-links-hover: #c2d3e6;
+  color-scheme: dark;
 }
 
 html {

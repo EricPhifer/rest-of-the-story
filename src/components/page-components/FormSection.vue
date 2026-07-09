@@ -112,7 +112,7 @@ function errorsClear() {
             :aria-required="field.required ? 'true' : 'false'"
             :autocomplete="field.type === 'email' ? 'email' : 'on'"
             @input="e => handleInput(field.name, e.target.value)"
-            class="w-full border border-gray-300 px-3 py-2 rounded"
+            class="w-full border border-[var(--color-border)] px-3 py-2 rounded"
           />
 
           <!-- Textarea -->
@@ -123,7 +123,7 @@ function errorsClear() {
             :required="field.required"
             :aria-required="field.required ? 'true' : 'false'"
             @input="e => handleInput(field.name, e.target.value)"
-            class="w-full border border-gray-300 px-3 py-2 rounded"
+            class="w-full border border-[var(--color-border)] px-3 py-2 rounded"
             rows="5"
           ></textarea>
 
@@ -135,7 +135,7 @@ function errorsClear() {
             :required="field.required"
             :aria-required="field.required ? 'true' : 'false'"
             @change="e => handleInput(field.name, e.target.value)"
-            class="w-full border border-gray-300 px-3 py-2 rounded"
+            class="w-full border border-[var(--color-border)] px-3 py-2 rounded"
           >
             <option disabled value="">Please select</option>
             <option
@@ -150,7 +150,7 @@ function errorsClear() {
           <!-- Error Message -->
           <span
             v-if="errors[field.name]"
-            class="text-sm text-red-600 mt-1"
+            class="text-sm text-[var(--color-alert-light)] mt-1"
             role="alert"
           >
             {{ errors[field.name] }}

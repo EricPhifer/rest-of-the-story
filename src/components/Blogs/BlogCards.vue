@@ -65,7 +65,7 @@ const img = (source, w, h) => {
     </header>
 
     <div v-if="loading" class="space-y-6">
-      <div v-for="n in limit" :key="'sk-' + n" class="h-40 rounded-lg bg-gray-100 animate-pulse"></div>
+      <div v-for="n in limit" :key="'sk-' + n" class="h-40 rounded-lg bg-[var(--color-surface-muted)] animate-pulse"></div>
     </div>
 
     <p v-else-if="posts.length === 0">
@@ -80,7 +80,7 @@ const img = (source, w, h) => {
             :class="index % 2 === 1 ? 'md:flex-row-reverse' : ''"
           >
             <RouterLink :to="postUrl(post)" class="w-full md:w-2/5">
-              <div class="w-full h-40 md:h-48 bg-gray-100 rounded-lg overflow-hidden">
+              <div class="w-full h-40 md:h-48 bg-[var(--color-surface-muted)] rounded-lg overflow-hidden">
                 <img
                   v-if="post.mainImage?.asset"
                   :src="img(post.mainImage, 960, 640)"

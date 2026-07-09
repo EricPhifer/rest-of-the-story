@@ -2,7 +2,7 @@
   <header
     v-if="block"
     id="top"
-    class="w-full h-18 md:h-24 flex items-center justify-between px-4 py-2 bg-[var(--color-off-white)] shadow-md relative"
+    class="w-full h-18 md:h-24 flex items-center justify-between px-4 py-2 bg-[var(--color-background)] shadow-md relative"
   >
     <Logo :logo="block.logo" />
 
@@ -64,6 +64,16 @@
         </button>
       </div>
 
+      <!-- Light/dark toggle -->
+      <button
+        type="button"
+        class="p-2 text-primary-600 hover:text-[var(--color-accent-dark)] transition-colors"
+        :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        @click="toggleTheme"
+      >
+        <FontAwesomeIcon :icon="['fas', theme === 'dark' ? 'sun' : 'moon']" class="text-2xl" />
+      </button>
+
       <!-- Hamburger Icon (mobile) -->
       <button
         class="md:hidden z-20 p-1"
@@ -100,7 +110,7 @@
       <nav
         v-if="menuOpen"
         id="mobile-menu"
-        class="navigation absolute top-full left-0 w-full bg-white shadow-md md:hidden z-50"
+        class="navigation absolute top-full left-0 w-full bg-[var(--color-surface)] shadow-md md:hidden z-50"
         role="navigation"
         aria-label="Mobile navigation"
       >
@@ -132,6 +142,9 @@ import { navigationQuery } from '@/queries/navigation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Logo from './Logo.vue'
 import AlgoliaSearch from '@/components/search/AlgoliaSearch.vue'
+import { useTheme } from '@/composables/useTheme'
+
+const { theme, toggle: toggleTheme } = useTheme()
 
 const block = ref(null)
 const menuOpen = ref(false)

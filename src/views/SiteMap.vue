@@ -1,5 +1,5 @@
 <template>
-  <section class="sitemap-page bg-[var(--color-off-white)] min-h-screen py-12 px-4">
+  <section class="sitemap-page bg-[var(--color-background)] min-h-screen py-12 px-4">
     <div class="max-w-5xl mx-auto">
       <!-- Page Title -->
       <h1 class="text-3xl font-bold mb-2 text-center text-[var(--color-black)]">

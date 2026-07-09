@@ -21,7 +21,7 @@
     <div
       v-for="(faq, idx) in faqs"
       :key="idx"
-      class="max-w-4xl mx-auto border-b border-gray-300 py-4"
+      class="max-w-4xl mx-auto border-b border-[var(--color-border)] py-4"
     >
       <button
         @click="toggle(idx)"
@@ -51,7 +51,7 @@
           v-if="openIndex === idx"
           :id="`faq-panel-${idx}`"
           role="region"
-          class="mt-3 px-8 prose prose-lg text-gray-700 text-left"
+          class="mt-3 px-8 prose prose-lg text-[var(--color-text-muted)] text-left"
         >
           <PortableText :value="faq.answer" />
         </div>

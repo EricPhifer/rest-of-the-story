@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // configured in Sanity (social + contact). parseIcon() falls back to fa-question
 // for anything unregistered, so if the CMS starts using a new icon, add it here.
 import {
-  faAngleRight, faMagnifyingGlass, faXmark, faQuestion,
+  faAngleRight, faMagnifyingGlass, faXmark, faQuestion, faSun, faMoon,
   faHouseChimney, faMapPin, faEnvelope, faPhone, faStore, faMessage, faMobile,
 } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
-  faAngleRight, faMagnifyingGlass, faXmark, faQuestion,
+  faAngleRight, faMagnifyingGlass, faXmark, faQuestion, faSun, faMoon,
   faHouseChimney, faMapPin, faEnvelope, faPhone, faStore, faMessage, faMobile,
   faFacebook, faInstagram, faGoogle, faYoutube,
 )

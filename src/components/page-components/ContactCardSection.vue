@@ -35,7 +35,7 @@ function parseIcon(iconClass) {
               target="_blank"
               rel="noopener"
               :aria-label="item.label"
-              class="social-icon text-3xl text-[var(--color-secondary-dark)] hover:text-gray-900"
+              class="social-icon text-3xl text-[var(--color-secondary-dark)] hover:text-[var(--color-text)]"
             >
               <FontAwesomeIcon :icon="parseIcon(item.icon)" aria-hidden="true" class="text-5xl hover:color-[var(--color-secondary-light)] hover:no-underline"/>
             </a>

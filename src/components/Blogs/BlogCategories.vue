@@ -50,17 +50,17 @@ const img = (source, w, h) => {
 <template>
   <section class="text-section blog-categories" :class="sectionClasses">
     <header v-if="title" class="mb-6">
-      <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ title }}</h2>
-      <p v-if="description" class="mt-2 text-gray-700 max-w-2xl">{{ description }}</p>
+      <h2 class="text-xl md:text-2xl font-bold text-[var(--color-text)]">{{ title }}</h2>
+      <p v-if="description" class="mt-2 text-[var(--color-text-muted)] max-w-2xl">{{ description }}</p>
     </header>
 
     <div v-if="loading" class="flex justify-center">
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
-        <div v-for="n in 6" :key="'sk-' + n" class="aspect-square rounded-lg bg-gray-100 animate-pulse"></div>
+        <div v-for="n in 6" :key="'sk-' + n" class="aspect-square rounded-lg bg-[var(--color-surface-muted)] animate-pulse"></div>
       </div>
     </div>
 
-    <p v-else-if="categories.length === 0" class="text-gray-600">
+    <p v-else-if="categories.length === 0" class="text-[var(--color-text-muted)]">
       No categories available yet.
     </p>
 
@@ -68,12 +68,12 @@ const img = (source, w, h) => {
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">
         <li v-for="cat in categories" :key="cat.slug?.current || cat._id">
           <RouterLink
-            class="category-card block aspect-square rounded-lg overflow-hidden border-2 border-[var(--color-primary-light)] bg-[var(--color-primary-light)] hover:border-[var(--color-accent)] hover:shadow-lg transition-all duration-200"
+            class="category-card block aspect-square rounded-lg overflow-hidden border-2 border-[var(--color-surface-muted)] bg-[var(--color-surface-muted)] hover:border-[var(--color-accent)] hover:shadow-lg transition-all duration-200"
             :to="catUrl(cat)"
           >
             <div class="flex flex-col h-full p-4 gap-2">
               <div class="flex items-center justify-center flex-shrink-0">
-                <h3 class="font-semibold text-gray-900 text-center text-lg md:text-xl lg:text-2xl">{{ cat.title }}</h3>
+                <h3 class="font-semibold text-[var(--color-text)] text-center text-lg md:text-xl lg:text-2xl">{{ cat.title }}</h3>
               </div>
               <div class="flex-grow overflow-hidden rounded-lg">
                 <img

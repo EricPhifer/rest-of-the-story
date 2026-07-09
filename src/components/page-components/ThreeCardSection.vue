@@ -43,7 +43,7 @@ const { block } = defineProps({
         :class="[
           'flex flex-col h-full',
         card.iconImage
-          ? 'bg-[var(--color-white)] overflow-hidden'
+          ? 'bg-[var(--color-surface)] overflow-hidden'
           : 'bg-[var(--color-accent-dark)] text-[var(--color-white)]']"
       >
         <!-- icon or image -->
@@ -56,10 +56,10 @@ const { block } = defineProps({
         </div>
         <div
           v-else-if="card.number"
-          class="flex justify-center text-[var(--color-black)]"
+          class="flex justify-center text-[var(--color-text)]"
         >
           <div
-            class="bg-[var(--color-white)] w-[65px] h-[65px] p-2 border-4 border-[var(--color-accent-dark)] rounded-full drop-shadow -translate-y-4"
+            class="bg-[var(--color-surface)] w-[65px] h-[65px] p-2 border-4 border-[var(--color-accent-dark)] rounded-full drop-shadow -translate-y-4"
           >
             <span class="text-5xl">{{ card.number }}</span>
           </div>

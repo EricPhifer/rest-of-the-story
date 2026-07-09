@@ -14,7 +14,7 @@
 <template>
   <section 
     id="contact"
-    class="contact my-24 py-12 text-gray-900 overflow-x-hidden"
+    class="contact my-24 py-12 text-[var(--color-text)] overflow-x-hidden"
     role="region"
     aria-labelledby="contact-heading"
   >
@@ -47,7 +47,7 @@
               </template>
               <span
                 v-if="entry.note"
-                class="italic text-sm text-gray-600"
+                class="italic text-sm text-[var(--color-text-muted)]"
               >
                 ({{ entry.note }})
               </span>
@@ -65,7 +65,7 @@
             block.hours ? '' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10']"
           >
             <div class="flex items-start gap-3">
-              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-[var(--color-text-muted)]" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.addressIcon]" />
               </span>
               <div class="text-left">
@@ -76,7 +76,7 @@
             </div>
 
             <div class="flex items-start gap-3">
-              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-[var(--color-text-muted)]" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.phoneIcon]" />
               </span>
               <a
@@ -88,7 +88,7 @@
             </div>
 
             <div class="flex items-start gap-3">
-              <span class="text-lg sm:text-xl md:text-2xl text-gray-700" aria-hidden="true">
+              <span class="text-lg sm:text-xl md:text-2xl text-[var(--color-text-muted)]" aria-hidden="true">
                 <FontAwesomeIcon :icon="['fas', contact.emailIcon]" />
               </span>
               <a

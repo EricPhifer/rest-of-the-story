@@ -1,17 +1,17 @@
 <!-- src/views/blog-pages/BlogCategoryPage.vue -->
 <template>
-  <div class="bg-[var(--color-off-white)] min-h-screen">
+  <div class="bg-[var(--color-background)] min-h-screen">
     <!-- Loading (category meta) -->
     <section v-if="status === 'loading'" class="container mx-auto px-2 md:px-4 py-10">
-      <div class="h-40 rounded-lg bg-gray-100 animate-pulse mb-6"></div>
-      <div class="h-8 w-2/3 bg-gray-200 rounded mb-3 animate-pulse"></div>
-      <div class="h-4 w-5/6 bg-gray-200 rounded animate-pulse"></div>
+      <div class="h-40 rounded-lg bg-[var(--color-surface-muted)] animate-pulse mb-6"></div>
+      <div class="h-8 w-2/3 bg-[var(--color-surface-muted)] rounded mb-3 animate-pulse"></div>
+      <div class="h-4 w-5/6 bg-[var(--color-surface-muted)] rounded animate-pulse"></div>
     </section>
 
     <!-- Error / Not found -->
     <section v-else-if="status === 'error'" class="container mx-auto px-2 md:px-4 py-24 text-center">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Category not found</h1>
-      <p class="text-gray-600 mb-6">We couldn’t find that category. It may have been renamed or unpublished.</p>
+      <h1 class="text-3xl font-bold text-[var(--color-text)] mb-2">Category not found</h1>
+      <p class="text-[var(--color-text-muted)] mb-6">We couldn’t find that category. It may have been renamed or unpublished.</p>
       <RouterLink
         to="/blog-pages/category"
         class="inline-block px-4 py-2 rounded-md bg-primary-700 text-white hover:bg-primary-800"
@@ -25,14 +25,14 @@
       <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb" class="mb-4 text-left">
         <RouterLink to="/blog" class="text-sm text-primary-700 hover:underline">← All Articles</RouterLink>
-        <span class="text-gray-400 mx-2">/</span>
+        <span class="text-[var(--color-text-muted)] mx-2">/</span>
         <RouterLink to="/blog-pages/category" class="text-sm text-primary-700 hover:underline">Categories</RouterLink>
       </nav>
 
       <!-- Header -->
       <header class="mb-8 text-left">
-        <h1 class="text-xl md:text-2xl font-bold text-gray-900 pb-2 border-b-4 border-[var(--color-accent)]">{{ category.title }}</h1>
-        <p v-if="category.description" class="text-gray-700 mt-2 max-w-3xl">
+        <h1 class="text-xl md:text-2xl font-bold text-[var(--color-text)] pb-2 border-b-4 border-[var(--color-accent)]">{{ category.title }}</h1>
+        <p v-if="category.description" class="text-[var(--color-text-muted)] mt-2 max-w-3xl">
           {{ category.description }}
         </p>
       </header>

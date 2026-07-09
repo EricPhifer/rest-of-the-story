@@ -13,8 +13,16 @@
         v-if="logo?.asset"
         :src="urlFor(logo)"
         :alt="logo.alt || 'Logo for The Rest of the Story'"
-        class="h-full w-full object-contain"
+        class="h-full w-full object-contain site-logo"
        />
       </RouterLink>
      </div>
 </template>
+
+<!-- Global (unscoped): the logo is a dark wordmark; render it near-white in dark
+     mode so it stays legible on the dark header. -->
+<style>
+:root[data-theme="dark"] .site-logo {
+  filter: brightness(0) invert(0.92);
+}
+</style>

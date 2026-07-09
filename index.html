@@ -5,6 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Resolve theme before paint (stored preference, else OS) to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+
     <!-- 2. DNS-prefetch / preconnect for third-party origins -->
     <link rel="dns-prefetch" href="//scripts.simpleanalyticscdn.com" />
     <link rel="preconnect" href="https://scripts.simpleanalyticscdn.com" crossorigin />
