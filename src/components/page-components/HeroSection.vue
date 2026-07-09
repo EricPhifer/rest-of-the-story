@@ -38,6 +38,20 @@
   const imageUrl = props.block.image
   const button   = props.block.button
 
+  // Responsive hero image (the LCP element). Serve widths matched to the viewport
+  // so phones don't download a desktop-sized image. ~5:3 crop.
+  const HERO_WIDTHS = [640, 1024, 1600, 2000]
+  const heroSrc = computed(() =>
+    imageUrl ? urlFor(imageUrl, { width: 1280, height: 768, fit: 'crop' }) : ''
+  )
+  const heroSrcset = computed(() =>
+    imageUrl
+      ? HERO_WIDTHS
+          .map(w => `${urlFor(imageUrl, { width: w, height: Math.round(w * 0.6), fit: 'crop' })} ${w}w`)
+          .join(', ')
+      : ''
+  )
+
   function isVersion1(version) {
     return version.startsWith('1.')
   }
@@ -63,11 +77,22 @@
 <template>
   <section
     v-if="imageUrl"
-    :style="`background-image: url(${urlFor(imageUrl, { width: 2000, height: 1200, fit: 'crop' })})`"
-    class="hero relative h-[60svh] md:h-[80svh] bg-center bg-cover bg-no-repeat overflow-hidden"
+    class="hero relative h-[60svh] md:h-[80svh] overflow-hidden"
     role="region"
     aria-labelledby="hero-heading"
   >
+    <!-- Responsive background image. It's the LCP element, so it loads eagerly
+         with high priority (never lazy). Decorative -> empty alt. -->
+    <img
+      :src="heroSrc"
+      :srcset="heroSrcset"
+      sizes="100vw"
+      alt=""
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+
     <!-- decorative overlay -->
     <div 
       class="absolute inset-0 bg-[var(--color-secondary-dark)]/40" 
