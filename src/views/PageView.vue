@@ -41,6 +41,12 @@ const props = defineProps({
   },
 })
 
+// A hero section supplies the page's <h1>. When a page has no hero heading,
+// render an sr-only <h1> from the page title so every page has exactly one.
+const hasHeroHeading = computed(() =>
+  (page.value?.content || []).some(b => b._type === 'heroSection' && b.heading)
+)
+
 const SECTION_COMPONENTS = {
   heroSection: HeroSection,
   textSection: TextSection,
@@ -118,6 +124,7 @@ watch(
   </div>
 
   <div v-else-if="!error && page">
+    <h1 v-if="!hasHeroHeading && page.title" class="sr-only">{{ page.title }}</h1>
     <template v-for="block in page.content" :key="block._key">
       <!-- Standard mapped sections -->
       <component

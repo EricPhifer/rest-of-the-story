@@ -3,6 +3,8 @@
   <section
     v-if="htmlString"
     class="w-full h-[400px] relative overflow-hidden"
+    role="region"
+    aria-label="Store location map"
   >
     <div class="absolute inset-0" v-html="htmlString"></div>
   </section>

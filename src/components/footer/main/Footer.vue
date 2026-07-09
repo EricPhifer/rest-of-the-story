@@ -123,7 +123,7 @@
               </p>
               <RouterLink
                 :to="`/${footer.main.blogSection.buttonSlug}`"
-                class="inline-block px-4 py-2 rounded bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] transition-colors"
+                class="inline-block px-4 py-2 rounded bg-[var(--color-accent)] text-[var(--color-off-black)] font-semibold hover:bg-[var(--color-accent-light)] transition-colors"
               >
                 {{ footer.main.blogSection.buttonText }}
               </RouterLink>
@@ -152,6 +152,7 @@
                   type="text"
                   name="name"
                   placeholder="Your Name"
+                  aria-label="Your name"
                   class="w-full px-3 py-2 text-black rounded-sm"
                   required
                 />
@@ -159,6 +160,7 @@
                   type="email"
                   name="email"
                   :placeholder="footer.main.newsletterForm.placeholder"
+                  aria-label="Email address"
                   class="w-full px-3 py-2 text-black rounded-sm"
                   required
                 />

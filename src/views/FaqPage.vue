@@ -5,7 +5,7 @@
       <img
         v-if="heroImage"
         :src="urlFor(heroImage)"
-        :alt="title"
+        alt=""
         class="w-full h-full object-cover"
       />
       <div class="hero-text-bg absolute inset-0 flex items-center justify-center px-4">
@@ -25,7 +25,9 @@
     >
       <button
         @click="toggle(idx)"
-        class="w-full text-left flex justify-between items-center focus:outline-none"
+        :aria-expanded="openIndex === idx"
+        :aria-controls="`faq-panel-${idx}`"
+        class="w-full text-left flex justify-between items-center rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-secondary-dark)]"
       >
         <span class="text-lg font-medium">{{ faq.question }}</span>
         <svg
@@ -47,6 +49,8 @@
       <transition name="fade">
         <div
           v-if="openIndex === idx"
+          :id="`faq-panel-${idx}`"
+          role="region"
           class="mt-3 px-8 prose prose-lg text-gray-700 text-left"
         >
           <PortableText :value="faq.answer" />

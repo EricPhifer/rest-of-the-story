@@ -137,8 +137,13 @@ const block = ref(null)
 const menuOpen = ref(false)
 const searchOpen = ref(false)
 
-const toggleMenu = () => {
+const toggleMenu = async () => {
   menuOpen.value = !menuOpen.value
+  if (menuOpen.value) {
+    // move keyboard focus into the menu when it opens
+    await nextTick()
+    document.querySelector('#mobile-menu a')?.focus()
+  }
 }
 
 const toggleSearch = async () => {

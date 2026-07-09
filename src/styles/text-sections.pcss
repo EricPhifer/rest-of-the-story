@@ -58,14 +58,17 @@
   @apply ml-6 mb-4;
 }
 
-/* link styles with clear hover state */
+/* link styles with clear hover state.
+   accent-dark (not accent) for AA contrast on light backgrounds. */
 .text-section a {
-  @apply text-[var(--color-accent)] underline transition;
+  @apply text-[var(--color-accent-dark)] underline transition;
 }
-.text-section a:hover,
-.text-section a:focus {
-  @apply text-[var(--color-accent-dark)];
-  outline: none;
+.text-section a:hover {
+  @apply text-[var(--color-secondary-dark)];
+}
+.text-section a:focus-visible {
+  outline: 3px solid var(--color-secondary-dark);
+  outline-offset: 2px;
 }
 
 .image-section .overlay {

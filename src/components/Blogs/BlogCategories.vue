@@ -106,10 +106,12 @@ const img = (source, w, h) => {
   border-bottom: none;
 }
 
-.text-section.blog-categories :deep(a:hover),
-.text-section.blog-categories :deep(a:focus) {
+.text-section.blog-categories :deep(a:hover) {
   text-decoration: none;
   border-bottom: none;
-  outline: none;
+}
+.text-section.blog-categories :deep(a:focus-visible) {
+  outline: 3px solid var(--color-secondary-dark);
+  outline-offset: 2px;
 }
 </style>
