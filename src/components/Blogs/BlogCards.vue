@@ -74,7 +74,7 @@ const img = (source, w, h) => {
 
     <ul v-else class="blog-cards-list space-y-6">
       <li v-for="(post, index) in posts" :key="post.slug?.current || post._id" class="w-full flex justify-center">
-        <article class="w-full max-w-[750px] rounded-xl bg-dark bg-[var(--color-primary-dark)] p-5 shadow-sm">
+        <article class="w-full max-w-[750px] rounded-xl bg-[var(--color-secondary-dark)] p-5 shadow-sm">
           <div
             class="flex flex-col md:flex-row gap-4"
             :class="index % 2 === 1 ? 'md:flex-row-reverse' : ''"

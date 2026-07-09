@@ -14,6 +14,21 @@
   import Navigation from './components/navigation/Navigation.vue';
   import { useSiteSettingsStore } from '@/store/useSiteSettingsStore'
   import Footer from './components/footer/main/Footer.vue';
+  import { useHead } from '@vueuse/head'
+
+  // Global title template: every page tab gets the brand + location for SEO.
+  // Pages whose title already includes the brand (e.g. the homepage) are left
+  // untouched, and a page can still fully override via its Sanity seo.title.
+  const BRAND = 'The Rest of the Story'
+  useHead({
+    titleTemplate: (title) => {
+      if (!title || title === 'Loading…') {
+        return `${BRAND} | Kids & Maternity Consignment in Elizabeth, CO`
+      }
+      if (title.includes(BRAND)) return title
+      return `${title} | ${BRAND}, Elizabeth CO`
+    },
+  })
 
   const siteSettingsStore = useSiteSettingsStore()
 
