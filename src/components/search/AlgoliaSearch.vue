@@ -59,7 +59,14 @@ onMounted(() => {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
-  color: var(--color-text); /* theme-aware so the icon stays legible in dark mode */
+}
+/* Icon color: theme-aware, and !important to beat the runtime's injected theme
+   which otherwise renders a fixed slate that's low-contrast on the dark header. */
+.ais-AutocompleteDetachedSearchButton,
+.ais-AutocompleteDetachedSearchButtonIcon,
+.ais-AutocompleteDetachedSearchIcon {
+  color: var(--color-text) !important;
+  fill: var(--color-text) !important;
 }
 .ais-AutocompleteDetachedSearchButtonPlaceholder,
 .ais-AutocompleteDetachedSearchButtonQuery {
