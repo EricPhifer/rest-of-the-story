@@ -1,4 +1,5 @@
 <script setup>
+  import { computed } from 'vue'
   import { PortableText } from '@portabletext/vue'
   import { RouterLink } from 'vue-router'
   import { urlFor } from '@/sanity'
@@ -11,7 +12,26 @@
     isHomePage: {
       type: Boolean,
       default: true
+    },
+    // Optional keyword/location H1 (e.g. the homepage passes this). When set, it
+    // becomes the single <h1> and the CMS hero heading renders as a tagline
+    // subhead beneath it. When empty, the CMS heading is the <h1>.
+    seoHeading: {
+      type: String,
+      default: ''
     }
+  })
+
+  // Plain-text lines from the CMS hero heading (PortableText). The heading is
+  // plain text with no inline marks, so extracting lines lets us control the
+  // heading level ourselves and guarantee exactly one <h1> in the hero — the
+  // CMS previously stored the tagline as two separate h1 blocks (double H1).
+  const headingLines = computed(() => {
+    const blocks = Array.isArray(props.block.heading) ? props.block.heading : []
+    return blocks
+      .filter(b => b?._type === 'block' && Array.isArray(b.children))
+      .map(b => b.children.filter(c => c?._type === 'span').map(c => c.text).join(''))
+      .filter(Boolean)
   })
 
   const appVersion = __APP_VERSION__
@@ -57,12 +77,24 @@
     <!-- content: full-size flex centering -->
     <div class="relative z-10 flex items-center justify-center h-full w-full px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col items-center text-center">
-        <!-- heading -->
-        <PortableText
-          v-if="block.heading"
-          :value="block.heading"
-          id="hero-heading"
-        ></PortableText>
+        <!-- heading: exactly one <h1> per hero -->
+        <template v-if="seoHeading">
+          <!-- Keyword + location H1 for SEO and screen readers only (visually
+               hidden). The visible hero lead is the brand tagline below. -->
+          <h1 id="hero-heading" class="sr-only">{{ seoHeading }}</h1>
+          <!-- Visible hero heading: the emotional brand tagline -->
+          <p v-if="headingLines.length" class="hero-tagline">
+            <template v-for="(line, i) in headingLines" :key="i"
+              >{{ line }}<br v-if="i < headingLines.length - 1"
+            /></template>
+          </p>
+        </template>
+        <!-- No seoHeading: the CMS heading is the single <h1> (line-broken) -->
+        <h1 v-else-if="headingLines.length" id="hero-heading" class="hero-title">
+          <template v-for="(line, i) in headingLines" :key="i"
+            >{{ line }}<br v-if="i < headingLines.length - 1"
+          /></template>
+        </h1>
 
         <!-- body copy -->
         <div class="subtitle max-w-2xl mb-6 text-white">

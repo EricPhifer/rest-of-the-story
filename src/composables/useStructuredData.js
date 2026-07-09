@@ -3,29 +3,58 @@ import { useHead } from '@vueuse/head'
 const SITE_NAME = 'The Rest of the Story Consignment'
 const SITE_URL = 'https://therestofthestory.store'
 
+const LOCAL_BUSINESS_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'ConsignmentShop',
+  name: 'The Rest of the Story',
+  description:
+    'Kids and maternity consignment shop in Elizabeth, CO offering pre-loved clothing, accessories, and homeschool learning materials.',
+  url: SITE_URL,
+  telephone: '+17203695465',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '114 Tabor St. #101',
+    addressLocality: 'Elizabeth',
+    addressRegion: 'CO',
+    postalCode: '80107',
+    addressCountry: 'US'
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '10:00',
+      closes: '17:30'
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '10:00',
+      closes: '16:00'
+    }
+  ],
+  priceRange: '$',
+  sameAs: ['https://www.youtube.com/@therestofthestory']
+}
+
 /**
- * Inject Organization schema (can be called once in App.vue or main layout)
+ * Inject LocalBusiness (ConsignmentShop) schema. Intended for the homepage only.
+ * Pass a reactive getter so the schema is added/removed as the route changes in
+ * the SPA — e.g. `useLocalBusinessSchema(() => slug === 'home')`.
+ *
+ * @param {() => boolean} [isActive] - when it returns false, no schema is emitted.
  */
-export function useOrganizationSchema() {
-  useHead({
-    script: [
-      {
-        type: 'application/ld+json',
-        innerHTML: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'LocalBusiness',
-          name: SITE_NAME,
-          url: SITE_URL,
-          description: 'High-quality, pre-loved clothing and essentials for families in Elizabeth, CO.',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Elizabeth',
-            addressRegion: 'CO',
-            addressCountry: 'US'
-          }
-        })
-      }
-    ]
+export function useLocalBusinessSchema(isActive = () => true) {
+  useHead(() => {
+    if (!isActive()) return {}
+    return {
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(LOCAL_BUSINESS_SCHEMA)
+        }
+      ]
+    }
   })
 }
 

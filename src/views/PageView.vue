@@ -3,6 +3,16 @@ import { onMounted, ref, watch, computed } from 'vue'
 import { client } from '@/sanity'
 import pageQuery from '@/queries/pages'
 import { useHead } from '@vueuse/head'
+import { useLocalBusinessSchema } from '@/composables/useStructuredData'
+
+// Homepage title fallback when the Sanity `seo.title` field is empty.
+// A CMS-set seo.title always wins over this.
+const HOME_TITLE =
+  'The Rest of the Story | Kids & Maternity Consignment in Elizabeth, CO'
+
+// Homepage <h1>: keyword + location. Passed to the hero so it renders as the
+// single H1 while the CMS hero heading (the brand tagline) drops to a subhead.
+const HOME_H1 = 'Kids & Maternity Consignment in Elizabeth, CO'
 
 // Import components
 import NotFound from '@/components/NotFound.vue'
@@ -63,12 +73,16 @@ async function fetchPage(slug) {
   }
 }
 
+// LocalBusiness (ConsignmentShop) JSON-LD — homepage only.
+useLocalBusinessSchema(() => props.slug === 'home')
+
 // reactive head so tags update without stacking
 useHead(() => {
   const d = page.value
   if (!d) return { title: 'Loading…' }
 
-  const title = d.seo?.title || d.title
+  const isHome = props.slug === 'home'
+  const title = d.seo?.title || (isHome ? HOME_TITLE : d.title)
   const desc  = d.seo?.description || d.excerpt || ''
   const url   = typeof window !== 'undefined' ? window.location.href : `/${props.slug}`
 
@@ -110,6 +124,9 @@ watch(
         v-if="resolveComponent(block._type)"
         :is="resolveComponent(block._type)"
         :block="block"
+        v-bind="block._type === 'heroSection' && slug === 'home'
+          ? { seoHeading: HOME_H1 }
+          : {}"
       />
 
       <!-- Blog sections -->

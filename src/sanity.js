@@ -1,9 +1,12 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
+// Prefer env vars; fall back to known literals so a missing Netlify env var
+// can't take the live site down. Remove the fallbacks once the vars are
+// confirmed present in every build environment (local + Netlify dashboard).
 export const client = createClient({
-  projectId: 'xbjigamf',
-  dataset: 'production',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'xbjigamf',
+  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   apiVersion: '2023-06-01',
   useCdn: true,
 })
