@@ -24,9 +24,9 @@
     <section v-else class="container mx-auto px-2 md:px-4 py-10">
       <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb" class="mb-4 text-left">
-        <RouterLink to="/blog" class="text-sm text-primary-700 hover:underline">← All Articles</RouterLink>
+        <RouterLink to="/blog" class="text-sm text-[var(--color-text-links)] hover:underline">← All Articles</RouterLink>
         <span class="text-[var(--color-text-muted)] mx-2">/</span>
-        <RouterLink to="/blog-pages/category" class="text-sm text-primary-700 hover:underline">Categories</RouterLink>
+        <RouterLink to="/blog-pages/category" class="text-sm text-[var(--color-text-links)] hover:underline">Categories</RouterLink>
       </nav>
 
       <!-- Header -->

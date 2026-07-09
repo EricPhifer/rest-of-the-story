@@ -28,12 +28,12 @@
     <article v-else class="container mx-auto px-2 md:px-4 py-10 max-w-4xl">
       <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb" class="mb-6 text-left">
-        <RouterLink to="/blog" class="text-sm text-primary-700 hover:underline">← All Articles</RouterLink>
+        <RouterLink to="/blog" class="text-sm text-[var(--color-text-links)] hover:underline">← All Articles</RouterLink>
         <template v-if="post.categories && post.categories.length > 0">
           <span class="text-[var(--color-text-muted)] mx-2">/</span>
           <RouterLink
             :to="`/blog-pages/category/${post.categories[0].slug?.current}`"
-            class="text-sm text-primary-700 hover:underline"
+            class="text-sm text-[var(--color-text-links)] hover:underline"
           >
             {{ post.categories[0].title }}
           </RouterLink>
@@ -63,14 +63,14 @@
             <template v-for="cat in post.categories" :key="cat.slug?.current || cat.title">
               <RouterLink
                 v-if="cat.slug?.current"
-                class="inline-block text-xs px-2 py-0.5 rounded-full bg-lime-200 text-lime-900 hover:underline"
+                class="inline-block text-xs px-2 py-0.5 rounded-full bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] hover:underline"
                 :to="`/blog-pages/category/${cat.slug.current}`"
               >
                 {{ cat.title }}
               </RouterLink>
               <span
                 v-else
-                class="inline-block text-xs px-2 py-0.5 rounded-full bg-lime-200 text-lime-900"
+                class="inline-block text-xs px-2 py-0.5 rounded-full bg-[var(--color-accent-light)] text-[var(--color-accent-dark)]"
               >
                 {{ cat.title }}
               </span>

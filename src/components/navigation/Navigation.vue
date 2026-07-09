@@ -34,34 +34,10 @@
            the widget renders as a compact button that opens a fullscreen modal, so
            it's always visible here. On desktop it's an inline input that collapses
            behind the toggle. -->
+      <!-- Site search: the widget itself is a compact button that opens a
+           fullscreen search modal in one click (no separate toggle needed). -->
       <div class="flex items-center">
-        <div
-          class="md:transition-all md:duration-300 md:ease-in-out"
-          :class="searchOpen
-            ? 'md:w-64 md:opacity-100 md:overflow-visible md:mr-1'
-            : 'md:w-0 md:opacity-0 md:overflow-hidden'"
-        >
-          <!-- Fixed inner width so the widget mounts with a real width on desktop
-               even while the outer wrapper is collapsed to 0. -->
-          <div class="md:w-64">
-            <AlgoliaSearch />
-          </div>
-        </div>
-
-        <!-- Desktop-only collapse toggle (mobile uses the widget's own button) -->
-        <button
-          type="button"
-          data-search-toggle
-          class="hidden md:inline-flex p-1.5 rounded-full text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
-          :aria-expanded="searchOpen.toString()"
-          aria-label="Toggle search"
-          @click="toggleSearch"
-        >
-          <FontAwesomeIcon
-            :icon="['fas', searchOpen ? 'xmark' : 'magnifying-glass']"
-            class="text-xl"
-          />
-        </button>
+        <AlgoliaSearch />
       </div>
 
       <!-- Light/dark toggle -->
@@ -150,7 +126,6 @@ const { theme, toggle: toggleTheme } = useTheme()
 
 const block = ref(null)
 const menuOpen = ref(false)
-const searchOpen = ref(false)
 const hamburgerRef = ref(null)
 const mobileMenuRef = ref(null)
 
@@ -175,19 +150,9 @@ const toggleMenu = () => {
   menuOpen.value ? closeMenu() : openMenu()
 }
 
-const toggleSearch = async () => {
-  searchOpen.value = !searchOpen.value
-  if (searchOpen.value) {
-    // Focus the widget's input once revealed (desktop inline mode).
-    await nextTick()
-    document.querySelector('#autocomplete input')?.focus()
-  }
-}
-
 const handleKeydown = (event) => {
   if (event.key === 'Escape' || event.key === 'Esc') {
     closeMenu()
-    searchOpen.value = false
     return
   }
   // Trap Tab within the open mobile menu.

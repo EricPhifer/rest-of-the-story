@@ -219,20 +219,13 @@
     return [prefixMap[stylePart] || 'fas', namePart || 'question']
   }
 
-  // Jump to the header search and open it. On mobile the widget is a detached
-  // button that opens a fullscreen modal; on desktop it's collapsed behind the
-  // toggle, so we click the toggle and focus the revealed input.
+  // Open the header search modal. The widget is a detached trigger
+  // (a div[role=button]) on all breakpoints, so just click it.
   function focusSiteSearch() {
     document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' })
-    const container = document.getElementById('autocomplete')
-    const isMobile = window.matchMedia('(max-width: 767px)').matches
-    if (isMobile) {
-      // Mobile widget is a detached trigger (a div[role=button]) that opens a modal
-      container?.querySelector('.ais-AutocompleteDetachedSearchButton')?.click()
-    } else {
-      document.querySelector('[data-search-toggle]')?.click()
-      setTimeout(() => container?.querySelector('#autocomplete input, input')?.focus(), 350)
-    }
+    document
+      .querySelector('#autocomplete .ais-AutocompleteDetachedSearchButton')
+      ?.click()
   }
 
   // Fetch footer data on mount
