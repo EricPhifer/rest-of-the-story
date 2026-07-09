@@ -1,3 +1,18 @@
 .contact h2 {
  @apply text-left border-b-4 border-[var(--color-accent)];
 }
+
+/* Contact cards (Follow / Call / Email): light-green with dark text in light
+   mode; flip to a dark surface with light text in dark mode. Inner text/icons/
+   links use text-current / border-current so they inherit this color. */
+.contact-card {
+  background: var(--color-accent-light);
+  color: var(--color-off-black);
+}
+.contact-card a {
+  color: inherit;
+}
+:root[data-theme="dark"] .contact-card {
+  background: var(--color-surface);
+  color: var(--color-text);
+}

@@ -162,7 +162,7 @@ function errorsClear() {
       <div class="md:col-span-2 flex justify-end mt-4">
         <button
           type="submit"
-          class="w-full sm:w-1/2 md:w-1/3 bg-[var(--color-secondary-dark)] text-white px-8 py-4 rounded hover:bg-[var(--color-secondary-light)] hover:text-[var(--color-secondary-dark)] transition-colors duration-200"
+          class="btn-cta w-full sm:w-1/2 md:w-1/3 px-8 py-4"
         >
           Submit
         </button>

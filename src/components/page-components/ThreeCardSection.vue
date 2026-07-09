@@ -89,7 +89,7 @@ const { block } = defineProps({
             :is="linkComponent"
             :href="linkComponent === 'a' ? getLinkPath(card.button.url) : undefined"
             :to="linkComponent !== 'a' ? getLinkPath(card.button.url) : undefined"
-            class="cta mt-auto inline-block"
+            class="btn-cta mt-auto uppercase text-sm px-4 py-2"
           >
             {{ card.button.text }}
           </component>

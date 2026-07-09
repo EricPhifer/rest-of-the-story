@@ -22,7 +22,7 @@
           >
             <RouterLink
               :to="`/${link.slug}`"
-              class="text-primary-600 hover:underline font-semibold text-xl"
+              class="text-[var(--color-text)] hover:underline font-semibold text-xl"
             >
               {{ link.label }}
             </RouterLink>
@@ -52,14 +52,14 @@
         <button
           type="button"
           data-search-toggle
-          class="hidden md:inline-flex p-2 text-primary-600 hover:text-[var(--color-accent-dark)] transition-colors"
+          class="hidden md:inline-flex p-1.5 rounded-full text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
           :aria-expanded="searchOpen.toString()"
           aria-label="Toggle search"
           @click="toggleSearch"
         >
           <FontAwesomeIcon
             :icon="['fas', searchOpen ? 'xmark' : 'magnifying-glass']"
-            class="text-2xl"
+            class="text-xl"
           />
         </button>
       </div>
@@ -67,11 +67,11 @@
       <!-- Light/dark toggle -->
       <button
         type="button"
-        class="p-2 text-primary-600 hover:text-[var(--color-accent-dark)] transition-colors"
+        class="p-1.5 rounded-full text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
         :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
         @click="toggleTheme"
       >
-        <FontAwesomeIcon :icon="['fas', theme === 'dark' ? 'sun' : 'moon']" class="text-2xl" />
+        <FontAwesomeIcon :icon="['fas', theme === 'dark' ? 'sun' : 'moon']" class="text-xl" />
       </button>
 
       <!-- Hamburger Icon (mobile) -->
@@ -86,7 +86,7 @@
         <svg
           v-if="!menuOpen"
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-primary-600"
+          class="h-6 w-6 text-[var(--color-text)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -96,7 +96,7 @@
         <svg
           v-else
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-primary-600"
+          class="h-6 w-6 text-[var(--color-text)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -125,7 +125,7 @@
           >
             <RouterLink
               :to="`/${link.slug}`"
-              class="block text-primary-600 hover:underline font-medium"
+              class="block text-[var(--color-text)] hover:underline font-medium"
               @click="closeMenu({ restoreFocus: false })"
             >
               {{ link.label }}
