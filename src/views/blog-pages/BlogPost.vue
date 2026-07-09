@@ -18,7 +18,7 @@
       <p class="text-[var(--color-text-muted)] mb-6">We couldn’t find that article. It may have been moved or unpublished.</p>
       <RouterLink
         to="/blog"
-        class="inline-block px-4 py-2 rounded-md bg-primary-700 text-white hover:bg-primary-800"
+        class="inline-block px-4 py-2 rounded-md btn-cta"
       >
         Back to Articles
       </RouterLink>

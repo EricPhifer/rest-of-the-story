@@ -22,7 +22,7 @@ const props = defineProps({
         <RouterLink
           v-if="btn.internalLink?.slug?.current"
           :to="{ name: 'Page', params: { slug: btn.internalLink.slug.current } }"
-          class="buttonesque block w-full sm:inline-block sm:w-auto px-5 py-3 font-medium rounded transition bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="btn-cta block w-full sm:inline-block sm:w-auto px-5 py-3 text-center"
           :aria-label="`Go to ${btn.text}`"
         >
           {{ btn.text }}
@@ -34,7 +34,7 @@ const props = defineProps({
           :href="btn.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="buttonesque block w-full sm:inline-block sm:w-auto px-5 py-3 font-medium rounded transition bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="btn-cta block w-full sm:inline-block sm:w-auto px-5 py-3 text-center"
           :aria-label="`Open external link: ${btn.text}`"
         >
           {{ btn.text }}

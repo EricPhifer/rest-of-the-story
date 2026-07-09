@@ -14,7 +14,7 @@
       <p class="text-[var(--color-text-muted)] mb-6">We couldn’t find that category. It may have been renamed or unpublished.</p>
       <RouterLink
         to="/blog-pages/category"
-        class="inline-block px-4 py-2 rounded-md bg-primary-700 text-white hover:bg-primary-800"
+        class="inline-block px-4 py-2 rounded-md btn-cta"
       >
         Back to Categories
       </RouterLink>
@@ -47,7 +47,7 @@
       <!-- Load more button -->
       <div v-if="posts.length > 0 && hasMore" class="mt-8 flex justify-center">
         <button
-          class="px-4 py-2 rounded-md bg-primary-700 text-white hover:bg-primary-800 disabled:opacity-50"
+          class="px-4 py-2 rounded-md btn-cta disabled:opacity-50"
           :disabled="loadingMore"
           @click="loadMore"
         >
