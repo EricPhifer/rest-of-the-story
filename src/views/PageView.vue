@@ -3,7 +3,7 @@ import { onMounted, ref, watch, computed } from 'vue'
 import { client } from '@/sanity'
 import pageQuery from '@/queries/pages'
 import { useHead } from '@vueuse/head'
-import { useLocalBusinessSchema } from '@/composables/useStructuredData'
+import { useLocalBusinessSchema, truncateForDescription } from '@/composables/useStructuredData'
 
 // Homepage title fallback when the Sanity `seo.title` field is empty.
 // A CMS-set seo.title always wins over this.
@@ -79,6 +79,25 @@ async function fetchPage(slug) {
   }
 }
 
+// Fallback meta description: plain text pulled from the page's section bodies
+// (hero subtitle, text sections) when no seo.description/excerpt is set. Avoids
+// shipping an empty <meta name="description"> on pages that don't set one.
+function deriveDescription(content) {
+  if (!Array.isArray(content)) return ''
+  const parts = []
+  for (const block of content) {
+    if (!Array.isArray(block?.body)) continue
+    const text = block.body
+      .filter(b => b?._type === 'block' && Array.isArray(b.children))
+      .map(b => b.children.filter(c => c?._type === 'span').map(c => c.text).join(''))
+      .join(' ')
+      .trim()
+    if (text) parts.push(text)
+    if (parts.join(' ').length >= 160) break
+  }
+  return truncateForDescription(parts.join(' ').trim(), 160)
+}
+
 // LocalBusiness (ConsignmentShop) JSON-LD — homepage only.
 useLocalBusinessSchema(() => props.slug === 'home')
 
@@ -89,7 +108,7 @@ useHead(() => {
 
   const isHome = props.slug === 'home'
   const title = d.seo?.title || (isHome ? HOME_TITLE : d.title)
-  const desc  = d.seo?.description || d.excerpt || ''
+  const desc  = d.seo?.description || d.excerpt || deriveDescription(d.content)
   const url   = typeof window !== 'undefined' ? window.location.href : `/${props.slug}`
 
   // Prefer page-level mainImage, fall back to hero image if present
