@@ -106,10 +106,13 @@ useHead(() => {
   const d = page.value
   if (!d) return { title: 'Loading…' }
 
+  const SITE = 'https://therestofthestory.store'
   const isHome = props.slug === 'home'
   const title = d.seo?.title || (isHome ? HOME_TITLE : d.title)
   const desc  = d.seo?.description || d.excerpt || deriveDescription(d.content)
-  const url   = typeof window !== 'undefined' ? window.location.href : `/${props.slug}`
+  // Per-page canonical (also used for og:url). Without this, every page inherited
+  // the static homepage canonical and looked like a duplicate of the home page.
+  const canonical = isHome ? `${SITE}/` : `${SITE}/${props.slug}`
 
   // Prefer page-level mainImage, fall back to hero image if present
   const heroImg = d.content?.find?.(b => b._type === 'heroSection')?.image?.asset?.url
@@ -121,8 +124,11 @@ useHead(() => {
       { name: 'description', content: desc },
       { property: 'og:title', content: title },
       { property: 'og:description', content: desc },
-      { property: 'og:url', content: url },
+      { property: 'og:url', content: canonical },
       ...(img ? [{ property: 'og:image', content: img }] : []),
+    ],
+    link: [
+      { rel: 'canonical', href: canonical },
     ],
   }
 })
