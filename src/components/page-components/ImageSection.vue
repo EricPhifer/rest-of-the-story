@@ -47,7 +47,7 @@ const headingId = `hero-${block?._key || 'section'}-heading`
       <h2
         v-if="block.heading"
         :id="headingId"
-        class="border-b-3 border-[var(--color-accent)] text-3xl md:text-6xl font-bold mb-4"
+        class="border-b-3 border-[var(--color-accent)] text-3xl md:text-5xl font-bold mb-4"
       >
         {{ block.heading }}
       </h2>
