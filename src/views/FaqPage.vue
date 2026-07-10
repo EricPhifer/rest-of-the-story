@@ -10,7 +10,7 @@
       />
       <div class="hero-text-bg absolute inset-0 flex items-center justify-center px-4">
         <h1
-          class="text-white text-3xl md:text-5xl font-bold text-center opacity-100"
+          class="text-white text-3xl md:text-5xl font-bold text-center opacity-100 leading-snug"
         >
           {{ title }}
         </h1>
