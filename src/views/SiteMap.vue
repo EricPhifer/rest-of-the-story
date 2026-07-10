@@ -2,15 +2,15 @@
   <section class="sitemap-page bg-[var(--color-background)] min-h-screen py-12 px-4">
     <div class="max-w-5xl mx-auto">
       <!-- Page Title -->
-      <h1 class="text-3xl font-bold mb-2 text-center text-[var(--color-black)]">
+      <h1 class="text-3xl font-bold mb-2 text-center text-[var(--color-text)]">
         Sitemap
       </h1>
-      <p class="text-center text-[var(--color-primary-dark)] mb-10">
+      <p class="text-center text-[var(--color-text-muted)] mb-10">
         Browse all pages on our website
       </p>
 
       <!-- Loading State -->
-      <div v-if="loading" class="text-center py-8 text-[var(--color-primary-dark)]">
+      <div v-if="loading" class="text-center py-8 text-[var(--color-text-muted)]">
         Loading sitemap...
       </div>
 
@@ -84,7 +84,7 @@
       </nav>
 
       <!-- Empty State -->
-      <div v-if="!loading && isEmpty" class="text-center py-8 text-[var(--color-primary-dark)]">
+      <div v-if="!loading && isEmpty" class="text-center py-8 text-[var(--color-text-muted)]">
         No pages found.
       </div>
     </div>
@@ -154,7 +154,8 @@ function formatDate(iso) {
 
 <style scoped>
 .sitemap-card {
-  background: var(--color-white);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-left: 4px solid var(--color-accent);
   padding: 1.5rem;
   border-radius: 0.25rem;
@@ -163,10 +164,10 @@ function formatDate(iso) {
 .sitemap-heading {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--color-secondary-dark);
+  color: var(--color-text);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-primary-light);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .sitemap-list {
@@ -181,26 +182,26 @@ function formatDate(iso) {
 }
 
 .sitemap-link {
-  color: var(--color-secondary-dark);
+  color: var(--color-text-links);
   text-decoration: none;
   transition: color 0.15s ease;
   border-bottom: none;
 }
 
 .sitemap-link:hover {
-  color: var(--color-accent-dark);
-  border-bottom: 1px solid var(--color-accent-dark);
+  color: var(--color-text-links-hover);
+  border-bottom: 1px solid var(--color-accent);
 }
 
 .post-count {
-  color: var(--color-primary-dark);
+  color: var(--color-text-muted);
   font-size: 0.875rem;
   margin-left: 0.25rem;
 }
 
 .post-date {
   display: block;
-  color: var(--color-primary-dark);
+  color: var(--color-text-muted);
   font-size: 0.75rem;
   margin-top: 0.125rem;
 }
