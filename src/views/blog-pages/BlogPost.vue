@@ -63,14 +63,14 @@
             <template v-for="cat in post.categories" :key="cat.slug?.current || cat.title">
               <RouterLink
                 v-if="cat.slug?.current"
-                class="inline-block text-xs px-2 py-0.5 rounded-full bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] hover:underline"
+                class="blog-tag inline-block text-xs px-2 py-0.5 rounded-full hover:underline"
                 :to="`/blog-pages/category/${cat.slug.current}`"
               >
                 {{ cat.title }}
               </RouterLink>
               <span
                 v-else
-                class="inline-block text-xs px-2 py-0.5 rounded-full bg-[var(--color-accent-light)] text-[var(--color-accent-dark)]"
+                class="blog-tag inline-block text-xs px-2 py-0.5 rounded-full"
               >
                 {{ cat.title }}
               </span>
@@ -206,6 +206,18 @@ function img(source, w, h) {
 </script>
 
 <style scoped>
+  /* Category pills — theme-aware so text/bg keep contrast in both modes:
+     light-green pill with dark text in light mode; dark-green pill with white
+     text in dark mode (a bright pill also looked out of place on the dark page). */
+  .blog-tag {
+    background: var(--color-accent-light);
+    color: var(--color-off-black);
+  }
+  :root[data-theme="dark"] .blog-tag {
+    background: var(--color-accent-dark);
+    color: #fff;
+  }
+
   /* Paragraph spacing and alignment */
   .prose :where(p):not(:where([class~="not-prose"] *)) {
     margin-block: 1em;
