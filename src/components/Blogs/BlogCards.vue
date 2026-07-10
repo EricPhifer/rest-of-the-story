@@ -92,7 +92,7 @@ const img = (source, w, h) => {
             </RouterLink>
 
             <div class="w-full md:w-3/5 flex flex-col">
-              <h3 class="text-lg md:text-xl lg:text-2xl border-b-3 border-(var(--color-accent-light))">{{ post.title }}</h3>
+              <h3 class="text-lg md:text-xl lg:text-2xl text-white border-b-3 border-(var(--color-accent-light))">{{ post.title }}</h3>
               <p v-if="post.excerpt" class="excerpt mt-2 text-sm text-white/90">
                 {{ formatExcerpt(post.excerpt) }}
               </p>
