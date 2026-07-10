@@ -14,8 +14,19 @@
  @apply text-left mb-6;
 }
 
-/* Card CTA buttons use the shared .btn-cta class (see global.pcss) for
-   consistent color/hover/active + AA contrast. */
+/* Card CTA buttons use the shared .btn-cta class (see global.pcss). Per design,
+   the label is white in light mode and dark in dark mode (the default .btn-cta
+   label is dark). Hover keeps white text on the darker-green hover background. */
+.cards .btn-cta,
+.cards .btn-cta:hover {
+  color: #fff;
+}
+:root[data-theme="dark"] .cards .btn-cta {
+  color: var(--color-off-black);
+}
+:root[data-theme="dark"] .cards .btn-cta:hover {
+  color: #fff;
+}
 
 .contact-cards a {
  @apply border-2 border-transparent hover:border-[var(--color-accent)] transition;
