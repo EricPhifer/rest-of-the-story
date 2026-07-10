@@ -47,7 +47,7 @@ const headingId = `hero-${block?._key || 'section'}-heading`
       <h2
         v-if="block.heading"
         :id="headingId"
-        class="border-b-3 border-[var(--color-accent)] text-3xl md:text-5xl font-bold mb-4"
+        class="border-b-3 border-[var(--color-accent)] text-2xl md:text-4xl font-bold mb-4"
       >
         {{ block.heading }}
       </h2>
@@ -72,6 +72,14 @@ const headingId = `hero-${block?._key || 'section'}-heading`
 </template>
 
 <style scoped>
+/* A bit more breathing room between body paragraphs */
+.image-section :deep(.prose p) {
+  margin-bottom: 1.25rem;
+}
+.image-section :deep(.prose p:last-child) {
+  margin-bottom: 0;
+}
+
 /* Disable parallax on small screens for performance & motion comfort */
 @media (max-width: 767.98px) {
   .image-section {
