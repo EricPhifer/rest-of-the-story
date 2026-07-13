@@ -47,11 +47,18 @@
     return block.imageFit || 'auto' // 'auto', 'cover', 'contain'
   })
 
-  // Generate optimized image URL
-  const optimizedImageUrl = computed(() => {
-    if (!imageSource?.asset) return null
-    return urlFor(imageSource, { maxWidth: 800 })
-  })
+  // Responsive image. Displayed ~full-width on mobile, half-width on desktop, so
+  // serve widths matched to that instead of the full-resolution original.
+  // (Sanity's max-w is a soft constraint that doesn't resize — only w= does.)
+  const IMG_WIDTHS = [400, 600, 800, 1200]
+  const optimizedImageUrl = computed(() =>
+    imageSource?.asset ? urlFor(imageSource, { width: 800 }) : null
+  )
+  const imageSrcset = computed(() =>
+    imageSource?.asset
+      ? IMG_WIDTHS.map(w => `${urlFor(imageSource, { width: w })} ${w}w`).join(', ')
+      : ''
+  )
 
   const sectionId = computed(() => {
     const heading = block.heading?.toLowerCase() || ''
@@ -98,6 +105,8 @@
         >
           <img
             :src="optimizedImageUrl"
+            :srcset="imageSrcset"
+            sizes="(min-width: 768px) 50vw, 100vw"
             :alt="block.altText || block.heading || 'Section image'"
             loading="lazy"
             class="rounded shadow"
