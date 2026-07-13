@@ -34,8 +34,10 @@
               >
                 {{ link.label }}
               </RouterLink>
-              <!-- Site search lives in the header; this jumps to it and focuses it -->
+              <!-- Site search lives in the header; this jumps to it and focuses it.
+                   Hidden unless the header widget actually rendered (see detectSiteSearch). -->
               <button
+                v-if="searchAvailable"
                 type="button"
                 @click="focusSiteSearch"
                 class="mt-1 flex items-center gap-2 text-base sm:text-lg uppercase hover:text-[var(--color-accent-light)] transition-colors duration-200"
@@ -190,7 +192,7 @@
 </template>
 
 <script setup>
-  import { onMounted } from 'vue'
+  import { onMounted, onUnmounted, ref } from 'vue'
   import { getActivePinia, setActivePinia, createPinia } from 'pinia'
   // Store
   import { useFooterStore } from '@/store/useFooterStore'
@@ -228,11 +230,45 @@
       ?.click()
   }
 
+  // Failsafe: only offer "Search the site" if the header search actually
+  // rendered. The Algolia widget mounts async (env-gated + loaded from a CDN),
+  // so if its trigger never appears — missing env vars, blocked/failed script —
+  // this footer link would be a dead button. Poll briefly for the real trigger
+  // and hide the link unless it's present.
+  const searchAvailable = ref(false)
+  let searchPoll = null
+  function detectSiteSearch() {
+    const found = () =>
+      !!document.querySelector('#autocomplete .ais-AutocompleteDetachedSearchButton')
+    if (found()) {
+      searchAvailable.value = true
+      return
+    }
+    let attempts = 0
+    searchPoll = setInterval(() => {
+      attempts += 1
+      if (found()) {
+        searchAvailable.value = true
+        clearInterval(searchPoll)
+        searchPoll = null
+      } else if (attempts >= 20) {
+        // ~6s elapsed — give up; leave the link hidden.
+        clearInterval(searchPoll)
+        searchPoll = null
+      }
+    }, 300)
+  }
+
   // Fetch footer data on mount
   onMounted(() => {
     if (!footer.loaded && !footer.isLoading) {
       footer.fetchFooter()
     }
+    detectSiteSearch()
+  })
+
+  onUnmounted(() => {
+    if (searchPoll) clearInterval(searchPoll)
   })
 </script>
 
