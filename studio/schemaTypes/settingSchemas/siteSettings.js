@@ -4,6 +4,16 @@ export default {
   type: 'document',
   title: 'Site Settings',
   fields: [
+    // Master switch for site-wide search. Kept off until there's enough
+    // blog/product content indexed to be worth surfacing.
+    {
+      name: 'searchEnabled',
+      title: 'Enable site search',
+      type: 'boolean',
+      description:
+        'Master switch for the search feature (the magnifying-glass in the header and the "Search the site" link in the footer). Leave OFF until the blog and product content are ready to be found. When OFF, the search UI is hidden everywhere on the site.',
+      initialValue: false,
+    },
     {
       name: 'white',
       title: 'White Color',

@@ -3,6 +3,7 @@ import groq from 'groq'
 
 const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0]{
+    searchEnabled,
     whiteColor{hex},
     offWhiteColor{hex},
     blackColor{hex},

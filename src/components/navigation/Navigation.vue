@@ -36,7 +36,7 @@
            behind the toggle. -->
       <!-- Site search: the widget itself is a compact button that opens a
            fullscreen search modal in one click (no separate toggle needed). -->
-      <div class="flex items-center">
+      <div v-if="searchEnabled" class="flex items-center">
         <AlgoliaSearch />
       </div>
 
@@ -114,15 +114,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { client } from '@/sanity'
 import { navigationQuery } from '@/queries/navigation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Logo from './Logo.vue'
 import AlgoliaSearch from '@/components/search/AlgoliaSearch.vue'
 import { useTheme } from '@/composables/useTheme'
+import { useSiteSettingsStore } from '@/store/useSiteSettingsStore'
 
 const { theme, toggle: toggleTheme } = useTheme()
+
+// CMS master switch for search (fetched by App.vue). Treat anything other than
+// an explicit `true` as off, so the feature stays hidden until deliberately
+// enabled — and the footer's "Search the site" link auto-hides with it, since
+// it keys off whether this widget actually mounts.
+const siteSettings = useSiteSettingsStore()
+const searchEnabled = computed(() => siteSettings.settings?.searchEnabled === true)
 
 const block = ref(null)
 const menuOpen = ref(false)
