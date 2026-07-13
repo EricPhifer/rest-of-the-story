@@ -251,8 +251,9 @@
         searchAvailable.value = true
         clearInterval(searchPoll)
         searchPoll = null
-      } else if (attempts >= 20) {
-        // ~6s elapsed — give up; leave the link hidden.
+      } else if (attempts >= 40) {
+        // ~12s elapsed — give up; leave the link hidden. The window is generous
+        // because the header search now defers its load to browser idle.
         clearInterval(searchPoll)
         searchPoll = null
       }

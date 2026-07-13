@@ -36,12 +36,25 @@ onMounted(() => {
     return
   }
 
-  const params = new URLSearchParams({ appId, apiKey, experienceId, env })
-  const script = document.createElement('script')
-  script.id = SCRIPT_ID
-  script.src = `https://cdn.jsdelivr.net/npm/@algolia/experiences/dist/experiences.js?${params.toString()}`
-  script.async = true
-  document.body.appendChild(script)
+  const loadWidget = () => {
+    // Guard again — idle callback may fire after another mount already loaded it.
+    if (document.getElementById(SCRIPT_ID)) return
+    const params = new URLSearchParams({ appId, apiKey, experienceId, env })
+    const script = document.createElement('script')
+    script.id = SCRIPT_ID
+    script.src = `https://cdn.jsdelivr.net/npm/@algolia/experiences/dist/experiences.js?${params.toString()}`
+    script.async = true
+    document.body.appendChild(script)
+  }
+
+  // Defer the ~155KB Experiences runtime (and its long task) until the browser
+  // is idle, so it stays out of the initial/LCP load window. The timeout caps
+  // the wait so the search trigger still appears promptly on busy pages.
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(loadWidget, { timeout: 2000 })
+  } else {
+    setTimeout(loadWidget, 1500)
+  }
 })
 </script>
 
