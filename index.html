@@ -21,6 +21,9 @@
     </script>
 
     <!-- 2. DNS-prefetch / preconnect for third-party origins -->
+    <!-- Sanity: content API (CORS fetch) + image CDN (the LCP hero image). -->
+    <link rel="preconnect" href="https://xbjigamf.apicdn.sanity.io" crossorigin />
+    <link rel="preconnect" href="https://cdn.sanity.io" />
     <link rel="dns-prefetch" href="//scripts.simpleanalyticscdn.com" />
     <link rel="preconnect" href="https://scripts.simpleanalyticscdn.com" crossorigin />
 
